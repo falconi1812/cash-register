@@ -1,0 +1,52 @@
+.scrollFather{
+  height: auto;
+  max-height: 47em;
+}
+.scrollSonVentes {
+  min-height: 10rem;
+  max-height: 58.4vh;
+  overflow-y: auto;
+}
+
+.scrollFatherPayement{
+  min-height: 43rem;
+  height: auto;
+  max-height: 47rem;
+}
+
+.scrollSonPayement{
+  min-height: 10rem;
+  max-height: 30.2vh;
+  overflow-y: auto;
+}
+
+.buttomPad{
+ margin: 0.1em;
+}
+.cartecredit{
+
+}
+
+.tab{
+  swipeable: true;
+}
+
+.carousel .carousel-item {
+  display: none;
+  width: auto;
+  height: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.collapsible {
+
+  border-color: #3e2723;
+
+}
+
+.collapsible-body {
+  border-bottom-color: #3e2723;
+  padding: 1rem;
+}
