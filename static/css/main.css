@@ -1,17 +1,17 @@
 .scrollFather{
   height: auto;
-  max-height: 47em;
+  max-height: 60em;
 }
 .scrollSonVentes {
   min-height: 10rem;
-  max-height: 58.4vh;
+  max-height: 48.4vh;
   overflow-y: auto;
 }
 
 .scrollFatherPayement{
   min-height: 43rem;
   height: auto;
-  max-height: 47rem;
+  max-height: 60rem;
 }
 
 .scrollSonPayement{
@@ -49,4 +49,16 @@
 .collapsible-body {
   border-bottom-color: #3e2723;
   padding: 1rem;
+}
+
+
+/*Piker time*/
+.picker__date-display, .picker__weekday-display{
+    background-color: #8d6e63;
+}
+div.picker__day.picker__day--infocus.picker__day--selected.picker__day--highlighted {
+    background-color: #8d6e63;
+}
+button.picker__today, button.picker__close {
+    color: #8d6e63;
 }
