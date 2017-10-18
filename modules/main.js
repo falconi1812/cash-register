@@ -27,6 +27,8 @@ let totalToPay = 0;
 let total = 0;
 let  totalInList = 0;
 
+var $lastValues = {};
+
 const productsForSell = {
                           "adulte" : {
                              "name":"Adulte",
@@ -87,11 +89,11 @@ const productsForSell = {
                       };
 
 
-function counting(id, name){
-      let count = $("."+id+""  ).length;
-      $( '#'+name+'').remove();
-      let html = "<h6 class = 'center' id = "+name+" >"+(count)+"</h6>";
-      return $( "#"+id+"" ).append(html);
+function counting(id, name) {
+      // let count = $("."+id+""  ).length;
+      // $( '#'+name+'').remove();
+      // let html = "<h6 class = 'center' id = "+name+" >"+(count)+"</h6>";
+      // return $( "#"+id+"" ).append(html);
 }
 
 function countingToPay(id, name){
@@ -101,12 +103,16 @@ function countingToPay(id, name){
       return $( "#"+id+"" ).append(html);
 }
 
-function countingAll(){
+function countingAll() {
+  Object.keys(productsForSell).map(function(key) {
+    let html = `<h6 class = 'center' id = '${key}' >${productsForSell[key].inList}</h6>`;
+    $( "#" + productsForSell[key].icon ).append(html);
+  });
 
-  counting('accessibility', 'Adulte');
-  counting('child_care', 'Enfant');
-  counting('dialpad', 'Billes-Adultes');
-  counting('blur_on', 'Billes-Enfants');
+  // counting('accessibility', 'Adulte');
+  // counting('child_care', 'Enfant');
+  // counting('dialpad', 'Billes-Adultes');
+  // counting('blur_on', 'Billes-Enfants');
   countingToPay('Payaccessibility', 'Adulte_');
   countingToPay('Paychild_care', 'Enfant_');
   countingToPay('Paydialpad', 'Billes-Adultes_');
