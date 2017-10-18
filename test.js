@@ -1,8 +1,4 @@
 
-
-
-
-
 /**
  * Funcion para mostrar todas las funciones ejecutadas (debug).
  * @author Christian Falcon
@@ -26,10 +22,24 @@
 //     }
 // }
 
-
 // VARIABLES:::::::::::::::::
 let totalToPay = 0;
 let total = 0;
+let  totalInList = 0;
+
+var productsForSell = { "product" :
+                            [
+                                { "name":"Adulte", "icon":"accessibility", "price": "85" },
+                                { "name":"Enfant", "icon":"child_care", "price": "85" },
+                                { "name":"Billes-Adultes", "icon":"dialpad", "price": "85" },
+                                { "name":"Billes-Enfants", "icon":"blur_on", "price": "85" },
+                                { "name":"Costume de lapin", "icon":"pets", "price": "85" },
+                                { "name":"Combie Jetable", "icon":"person_outline", "price": "85" },
+                                { "name":"Boisson", "icon":"local_cafe", "price": "85" },
+                                { "name":"Mangé", "icon":"restaurant", "price": "85" },
+                                { "name":"Christian", "icon":"restaurant", "price": "85" }
+                            ]
+                      };
 
 
 function counting(id, name){
@@ -38,14 +48,29 @@ function counting(id, name){
       let html = "<h6 class = 'center' id = "+name+" >"+(count)+"</h6>";
       return $( "#"+id+"" ).append(html);
 }
+
+function countingToPay(id, name){
+      let count = $("."+id+""  ).length;
+      $( '#'+name+'').remove();
+      let html = "<h6 class = 'center' id = "+name+" >"+(count)+"</h6>";
+      return $( "#"+id+"" ).append(html);
+}
+
 function countingAll(){
+
   counting('accessibility', 'Adulte');
   counting('child_care', 'Enfant');
   counting('dialpad', 'Billes-Adultes');
   counting('blur_on', 'Billes-Enfants');
+  countingToPay('Payaccessibility', 'Adulte_');
+  countingToPay('Paychild_care', 'Enfant_');
+  countingToPay('Paydialpad', 'Billes-Adultes_');
+  countingToPay('Payblur_on', 'Billes-Enfants_');
   calculateTotal();
+  calculateTotalInList();
   diference(total, totalToPay);
 }
+
 function createProduct(name, icon, list, price){
    let html ="<li>\
                  <div class='collapsible-header black-text "+icon+"'><i class='material-icons' >" + icon + "</i>"+name+"</div>\
@@ -54,7 +79,7 @@ function createProduct(name, icon, list, price){
                        <a onclick='deleteProduct($(this))' class='waves-effect waves-light red btn buttomPad'>\
                          <i class='large material-icons'>close</i>\
                        </a>\
-                       <a onclick='sentToPay($(this))' class='waves-effect waves-light btn buttomPad' data-name="+name+" data-icon="+icon+" data-price="+price+">\
+                       <a onclick='sentToPay($(this))' class='waves-effect waves-light btn buttomPad click"+icon+"' data-name="+name+" data-icon="+icon+" data-price="+price+">\
                          <i class='large material-icons'>arrow_forward</i>\
                        </a>\
                     </span>\
@@ -97,7 +122,7 @@ function sentToPay(object){
              </li>";
      deleteProduct(object);
 
-  return $( "#toPay" ).append(html) ,calculateTotal(), diference(total, totalToPay);
+  return $( "#toPay" ).append(html) ,calculateTotal(), diference(total, totalToPay), countingAll();;
 }
 function sentToList(object){
 
@@ -117,6 +142,7 @@ function sentToList(object){
                    </span>\
                 </div>\
              </li>";
+
     deleteProduct(object);
     calculateTotal();
   return $( "#list" ).append(html), diference(total, totalToPay);
@@ -133,22 +159,17 @@ function datepickerFrench(){
     		monthsShort: [ 'Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec' ],
     		weekdaysFull: [ 'Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi' ],
     		weekdaysShort: [ 'Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam' ],
-    		weekdaysLetter: [ 'D', 'L', 'M', 'M', 'J', 'V', 'S' ],
+    		weekdaysLetter: [ 'D', 'L', 'M', 'M',
+        'J', 'V', 'S' ],
     		today: 'Aujourd\'hui',
     		clear: 'Réinitialiser',
     		close: 'Accepter',
     		format: 'yyyy-mm-dd'
 });
 }
-
-
-
-
 function getLocation(){
 
   let date = document.getElementById("picksomedate").value;
-
-
 
   console.log(date);
 
@@ -177,20 +198,16 @@ function getLocation(){
 // EXECUTING // // EXECUTING // // EXECUTING // // EXECUTING // // EXECUTING //
 
 
+
 // debug(function(nombre, fn){console.log("llamada a " + nombre)});
 
 
 
 function products(){
 // generateProduct(Name, Icon, Price);
-   generateProduct("Adulte","accessibility", 85);
-   generateProduct("Enfant","child_care", 85);
-   generateProduct("Billes-Adultes","dialpad", 85);
-   generateProduct("Billes-Enfants","blur_on", 85);
-   generateProduct("Costume de lapin","pets", 85);
-   generateProduct("Combie Jetable","person_outline", 85);
-   generateProduct("Boisson","local_cafe", 85);
-   generateProduct("Mangé","restaurant", 85);
+   for (i = 0; i < productsForSell.product.length ; i++) {
+     generateProduct(productsForSell.product[i].name, productsForSell.product[i].icon, 85);
+   }
    countingAll();
    calculateTotal();
    diference(total, totalToPay)
@@ -215,6 +232,24 @@ function calculateTotal(){
   $( '#totalcomplete').remove();
   let html = "<h5 id = 'totalcomplete' >Total : "+total.toFixed(2)+"</h5>";
   return $( "#total" ).append(html), total, diference(total, totalToPay);
+}
+
+function calculateTotalInList(){
+
+  let count1 = $(".accessibility").length * 50;
+  let count2 = $(".child_care").length * 30;
+  let count3 = $(".dialpad").length * 50;
+  let count4 = $(".blur_on").length * 20;
+  let count5 = $(".pets").length * 40;
+  let count6 = $(".person_outline").length * 8;
+  let count7 = $(".local_cafe").length * 2;
+  let count8 = $(".restaurant").length * 3;
+
+  totalInList = count1 + count2 + count3 + count4 + count5 + count6 + count7 + count8;
+
+  $( '#totalcomplete').remove();
+  let html = "<h5 id = 'totalcomplete' >Total : "+ totalInList.toFixed(2)+"</h5>";
+  return $( "#totallist" ).append(html), totalInList;
 }
 
 
@@ -251,10 +286,6 @@ function diference(total, totalpayed){
   return $( "#totaldiference" ).append(html);
 
 }
-
-
-
-
 
 
 function clickCard() {

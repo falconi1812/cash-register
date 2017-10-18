@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+m<!DOCTYPE html>
 
 <html>
   <head>
@@ -91,13 +91,10 @@
                <div class="card-content white-text">
                  <span class="card-title">List</span>
                  <div class="card-panel  col s12">
-                   <span class="brown-text text-darken-2 col s12 m3 center" id="accessibility"><i class="material-icons brown-text center">accessibility</i></span>
-                   <span class="brown-text text-darken-2 col s12 m3 center" id="dialpad"><i class="material-icons brown-text center">dialpad</i></span>
-                   <span class="brown-text text-darken-2 col s12 m3 center" id="child_care"><i class="material-icons brown-text center">child_care</i></span>
-                   <span class="brown-text text-darken-2 col s12 m3 center" id="blur_on"><i class="material-icons brown-text center">blur_on</i></span>
-
-
-
+                   <span onclick="$('.clickaccessibility').trigger('click');" class="brown-text text-darken-2 col s12 m3 center" id="accessibility"><i class="material-icons brown-text center">accessibility</i></span>
+                   <span onclick="$('.clickdialpad').trigger('click');" class="brown-text text-darken-2 col s12 m3 center" id="dialpad"><i class="material-icons brown-text center">dialpad</i></span>
+                   <span onclick="$('.clickchild_care').trigger('click');" class="brown-text text-darken-2 col s12 m3 center" id="child_care"><i class="material-icons brown-text center">child_care</i></span>
+                   <span onclick="$('.clickblur_on').trigger('click');" class="brown-text text-darken-2 col s12 m3 center" id="blur_on"><i class="material-icons brown-text center">blur_on</i></span>
                  </div>
                        <ul id="list" class="collapsible scrollSonVentes" data-collapsible="accordion">
                         <!-- LISTE DES ARTICLES -->
@@ -107,6 +104,9 @@
                         <!-- LISTE DES ARTICLES -->
                         <!-- LISTE DES ARTICLES -->
                        </ul>
+                 <div class="card-panel  col s12">
+                   <span id="totallist" class="blue-text text-darken-2 col s12 m4"></span>
+                 </div>
                </div>
              </div>
          </div>
@@ -117,6 +117,14 @@
              <div  class="card  brown darken-3 scrollFather scrollFatherPayement">
                <div class="card-content white-text">
                  <span class="card-title">Payement</span>
+                 <div class="card-panel  col s12">
+                   <span class="brown-text text-darken-2 col s12 m3 center" id="Payaccessibility"><i class="material-icons brown-text center">accessibility</i></span>
+                   <span class="brown-text text-darken-2 col s12 m3 center" id="Paydialpad"><i class="material-icons brown-text center">dialpad</i></span>
+                   <span class="brown-text text-darken-2 col s12 m3 center" id="Paychild_care"><i class="material-icons brown-text center">child_care</i></span>
+                   <span class="brown-text text-darken-2 col s12 m3 center" id="Payblur_on"><i class="material-icons brown-text center">blur_on</i></span>
+                 </div>
+
+
                        <ul id="toPay" class="collapsible scrollSonPayement" data-collapsible="accordion">
                          <!-- LISTE DES ARTICLES A PAYER -->
                          <!-- LISTE DES ARTICLES A PAYER -->
@@ -133,7 +141,7 @@
                </div>
 
                    <div class="row center-align">
-                   <a class="waves-effect waves-light btn-large brown darken-1 buttomPad" data-money="200" onclick="payed($(this))">200</a>
+                   <a class="waves-effect waves-light btn-large brown darken-1 buttomPad" data-money="200" onclick="payed($(this))" ondblclick="">200</a>
                    <a class="waves-effect waves-light btn-large blue darken-1 buttomPad" data-money="100" onclick="payed($(this))">100</a>
                    <a class="waves-effect waves-light btn-large buttomPad" data-money="50" onclick="payed($(this))">50</a>
                    <a class="waves-effect waves-light btn-large purple darken-1 buttomPad" data-money="20" onclick="payed($(this))">20</a>
