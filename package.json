@@ -17,13 +17,12 @@
   "author": "GitHub",
   "license": "CC0-1.0",
   "devDependencies": {
-    "materialize-css" : "^0.100.1",
-    "jquery" : "3.2.1",
-    "material-design-icons" : "*",
-    "mysql" :"*",
+    "materialize-css": "^0.100.1",
+    "jquery": "3.2.1",
+    "material-design-icons": "*",
+    "mysql": "*",
     "electron": "~1.7.8",
     "jquery-ui": "1.12.1",
     "sweetalert": "*"
-
   }
 }
