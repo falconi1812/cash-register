@@ -41,7 +41,7 @@
 }
 
 .collapsible {
-
+icon
   border-color: #3e2723;
 
 }
@@ -61,4 +61,9 @@ div.picker__day.picker__day--infocus.picker__day--selected.picker__day--highligh
 }
 button.picker__today, button.picker__close {
     color: #8d6e63;
+}
+
+
+.imgicon {
+  padding: 0.5%;
 }
