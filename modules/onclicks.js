@@ -105,3 +105,7 @@ function clickPayer(){
   icon: "success",
 });
 }
+
+function clickLocation(){
+    location.href = "terrain.html"
+}
