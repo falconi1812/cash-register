@@ -11,16 +11,14 @@
       <script src="node_modules/sweetalert/dist/sweetalert.min.js" type="text/javascript" > </script>
   </head>
 
-<body onload="products()">
 
+  <body onload="products()">
 
   <ul id="dropdown1" class="dropdown-content">
     <li class="divider"></li>
     <li><a href="index.html" class="red-text darken-4">Page d'accueil</a></li>
     <li class="divider"></li>
     <li><a href="" class="red-text darken-4">Configuration products</a></li>
-    <li class="divider"></li>
-    <li><a href="index.html" class="red-text darken-4">Page d'accueil</a></li>
     <li class="divider"></li>
   </ul>
 
@@ -34,16 +32,16 @@
       </ul>
       <ul class="side-nav" id="mobile-demo">
         <li><a href="index.html" class="red-text darken-4">Page d'accueil</a></li>
+        <li><a href="" class="red-text darken-4">Configuration products</a></li>
       </ul>
     </div>
   </nav>
 
 
 
-<div class="row ">
-<div class="col s12">     <!-- main div -->
+  <div class="row ">
 
-    <div class="col s12 m12 l4"> <!-- INFO vente 1 div -->
+    <div class="col s12 m12 l4  "> <!-- BIG container Left -->
       <div class="col s6 m12 hoverable">  <!--Container INFO -->
         <div class="card   light-blue darken-4">
           <div class="card-content white-text">
@@ -115,19 +113,20 @@
       <div class="card-content white-text">
         <span class="card-title center">LIST INFO</span>
         <div class="collection">
-          <a href="#!" class="collection-item teal-text darken-5"><span class="badge"></span> <h5><b>Total Actuel</h5><b></a>
-          <a  class="collection-item teal-text darken-5 bold-text"><span id="totalActuelList" class="badge "></span><h5><b>Total</h5><b></a>
+          <a  class="collection-item teal-text darken-5 bold-text"><h5 class="left">Total</h5><h5 id="totalList"class="right-align">0 Fr</h5></a>
         </div>
       </div>
     </div>
   </div>
 
   <div class="col s6 hoverable"> <!--Container PAYMENT INFO-->
-    <div  class="card   lime darken-4 center">
+    <div  class="card   lime darken-4">
       <div class="card-content white-text">
         <span class="card-title center">PAYMENT INFO</span>
-        <div id="topay" class"row">
-         <!-- LISTE DES ARTICLES A PAYER -->
+        <div class="collection">
+          <a  class="collection-item teal-text darken-5 bold-text"><h5 class="left">Total a Payer</h5><h5 id="totalPay"class="right-align">0 Fr</h5></a>
+          <a  class="collection-item teal-text darken-5 bold-text"><h5 class="left">Total Payé</h5><h5 id="totalPayed"class="right-align">0 Fr</h5></a>
+
         </div>
       </div>
     </div>
@@ -137,10 +136,26 @@
 </div>
 </div>
 
+<div class="fixed-action-btn toolbar">
+  <a class="btn-floating btn-large red darken-4">
+    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+  </a>
+  <ul>
+    <li class="waves-effect waves-light"><a href="#!"><i class="fa fa-money fa-4x" aria-hidden="true"></i></a></li>
+    <li class="waves-effect waves-light"><a href="#!"><i class="fa fa-credit-card fa-4x" aria-hidden="true"></i></a></li>
+    <li class="waves-effect waves-light"><a href="#!"><i class="fa fa-qrcode fa-4x" aria-hidden="true"></i></a></li>
+
+  </ul>
+</div>
+
+
+
+
+
    <script type="text/javascript" src="modules/config.js"> </script>
    <script type="text/javascript" src="modules/operations.js"> </script>
    <script type="text/javascript" src="modules/intervals.js"> </script>
-     <script type="text/javascript" src="modules/onclicks.js"> </script>
+   <script type="text/javascript" src="modules/onclicks.js"> </script>
    <script type="text/javascript" src="modules/main.js"> </script>
    <script src="static/hammer.min.js" onload="window.Hammer = module.exports;"></script>
    <script src="node_modules/materialize-css/dist/js/materialize.min.js" type="text/javascript" > </script>

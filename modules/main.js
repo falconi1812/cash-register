@@ -27,16 +27,16 @@ function generateProduct(productForSell, key) {
     name = productForSell.name;
     icon = productForSell.icon;
 
-    let html = '<a class="white-text imgicon " onclick="addNumberList(\''+key+'\')" aria-label="'+name+'"> \
-     <i  class="fa fa-'+icon+' fa-3x fa-border hoverable" aria-hidden="true" title="'+name+'"><i class="fa fa-plus" aria-hidden="true"></i></i>\
+    let html = '<a class="white-text imgicon " onclick="clickOnProduct(\''+key+'\')" aria-label="'+name+'"> \
+     <i  class="fa fa-'+icon+' fa-2x fa-border hoverable" aria-hidden="true" title="'+name+'"><i class="fa fa-plus" aria-hidden="true"></i></i>\
     </a>';
 
     let html2 = '<a class="white-text imgicon " onclick="clickInList(\''+key+'\')" aria-label="'+name+'"> \
-     <i id ="list'+name+'" class="fa fa-'+icon+' fa-3x fa-border hoverable" aria-hidden="true" title="'+name+'"></i>\
+     <i id ="list'+name+'" class="fa fa-'+icon+' fa-2x fa-border hoverable" aria-hidden="true" title="'+name+'"></i>\
     </a>';
 
-    let html3 = '<a class="white-text imgicon " onclick="" aria-label="'+name+'"> \
-     <i id ="pay'+name+'" class="fa fa-'+icon+' fa-3x fa-border hoverable" aria-hidden="true" title="'+name+'"></i>\
+    let html3 = '<a class="white-text imgicon " onclick="clickInPay(\''+key+'\')" aria-label="'+name+'"> \
+     <i id ="pay'+name+'" class="fa fa-'+icon+' fa-2x fa-border hoverable" aria-hidden="true" title="'+name+'"></i>\
     </a>';
 
 
