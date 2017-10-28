@@ -6,6 +6,10 @@
   "scripts": {
     "start": "http-server"
   },
+  "engines": {
+    "node": "8.6.0",
+    "npm": "5.4.2"
+  },
   "repository": "https://github.com/falconi1812/cash-register",
   "keywords": [],
   "author": "falconi",
@@ -17,6 +21,6 @@
     "mysql": "*",
     "jquery-ui": "1.12.1",
     "sweetalert": "*",
-    "http-server" : "*"
+    "http-server": "*"
   }
 }
