@@ -1,27 +1,20 @@
 {
-  "name": "electron-quick-start",
+  "name": "Cash-register-simple",
   "version": "1.0.0",
   "description": "A minimal Electron application",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "http-server"
   },
-  "repository": "https://github.com/electron/electron-quick-start",
-  "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
-  ],
-  "author": "GitHub",
+  "repository": "https://github.com/falconi1812/cash-register",
+  "keywords": [],
+  "author": "falconi",
   "license": "CC0-1.0",
   "devDependencies": {
     "materialize-css": "^0.100.1",
     "jquery": "3.2.1",
     "material-design-icons": "*",
     "mysql": "*",
-    "electron": "~1.7.8",
     "jquery-ui": "1.12.1",
     "sweetalert": "*"
   }
