@@ -16,6 +16,7 @@
     "material-design-icons": "*",
     "mysql": "*",
     "jquery-ui": "1.12.1",
-    "sweetalert": "*"
+    "sweetalert": "*",
+    "http-server" : "*"
   }
 }
