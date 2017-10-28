@@ -4,7 +4,7 @@
   "description": "A minimal Electron application",
   "main": "main.js",
   "scripts": {
-    "start": "http-server"
+    "start": "npm install http-server -g & http-server"
   },
   "engines": {
     "node": "8.6.0",
@@ -21,6 +21,6 @@
     "mysql": "*",
     "jquery-ui": "1.12.1",
     "sweetalert": "*",
-    "http-server": "*"
+    "httpserver": "*"
   }
 }
