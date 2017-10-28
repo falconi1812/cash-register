@@ -4,7 +4,10 @@
   "description": "A minimal Electron application",
   "main": "main.js",
   "scripts": {
-    "start": "npm install & npm install http-server -g & http-server -p $PORT"
+    "start": "http-server -p $PORT",
+    "preinstall": "npm install & ",
+    "heroku-prebuild": "echo This runs before Heroku installs your dependencies.",
+    "heroku-postbuild": "echo This runs afterwards."
   },
   "engines": {
     "node": "8.6.0",
