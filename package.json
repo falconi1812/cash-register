@@ -4,7 +4,7 @@
   "description": "A minimal Electron application",
   "main": "main.js",
   "scripts": {
-    "start": "npm install http-server -g & http-server"
+    "start": "npm install & npm install http-server -g & http-server"
   },
   "engines": {
     "node": "8.6.0",
