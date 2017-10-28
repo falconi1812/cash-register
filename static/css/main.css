@@ -23,47 +23,11 @@
 .buttomPad{
  margin: 0.1em;
 }
-.cartecredit{
-
-}
-
-.tab{
-  swipeable: true;
-}
-
-.carousel .carousel-item {
-  display: none;
-  width: auto;
-  height: auto;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.collapsible {
-icon
-  border-color: #3e2723;
-
-}
-
-.collapsible-body {
-  border-bottom-color: #3e2723;
-  padding: 1rem;
-}
-
-
-/*Piker time*/
-.picker__date-display, .picker__weekday-display{
-    background-color: #8d6e63;
-}
-div.picker__day.picker__day--infocus.picker__day--selected.picker__day--highlighted {
-    background-color: #8d6e63;
-}
-button.picker__today, button.picker__close {
-    color: #8d6e63;
-}
-
 
 .imgicon {
-  padding: 0.5%;
+  padding: 1%;
+}
+
+.collection {
+  border: 0px;
 }

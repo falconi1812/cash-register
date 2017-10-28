@@ -1,10 +1,12 @@
 
 
 let totalToPay = 0;
+let totalPayed = 0;
 let total = 0;
 let  totalInList = 0;
 const $lastValuesList = {};
 const $lastValuesPay = {};
+
 
 const productsForSell = {
                           "adulte" : {
