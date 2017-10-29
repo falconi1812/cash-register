@@ -70,7 +70,7 @@ function generateLocation(result){
   }
 
   else{
-  let obj = JSON.parse(result);
+  let obj = result;
   Object.keys(obj.Location).map(function(key) {
 
    let name = obj.Location[key].nom;
@@ -132,7 +132,7 @@ function getLocation(){
   type: "GET",
   data: "date="+ 2017 +"-" + 10 +"-" + 28,
   // data: "date="+ yyyy +"-" + mm +"-" + dd,     //TO GET ACTUAL DAY
-  dataType : 'html',
+  dataType : 'json',
   success: function(result){
 
     console.log(result);
