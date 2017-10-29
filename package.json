@@ -17,7 +17,7 @@
   "keywords": [],
   "author": "falconi",
   "license": "CC0-1.0",
-  "devDependencies": {
+  "dependencies": {
     "materialize-css": "^0.100.1",
     "jquery": "3.2.1",
     "material-design-icons": "*",
