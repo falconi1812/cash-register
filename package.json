@@ -1,28 +1,30 @@
 {
-  "name": "electron-quick-start",
+  "name": "Cash-register-simple",
   "version": "1.0.0",
   "description": "A minimal Electron application",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "http-server -p $PORT",
+    "preinstall": "npm install http-server -g",
+    "heroku-prebuild": "echo This runs before Heroku installs your dependencies.",
+    "heroku-postbuild": "echo This runs afterwards."
   },
-  "repository": "https://github.com/electron/electron-quick-start",
-  "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
-  ],
-  "author": "GitHub",
+  "engines": {
+    "node": "8.6.0",
+    "npm": "5.4.2"
+  },
+  "repository": "https://github.com/falconi1812/cash-register",
+  "keywords": [],
+  "author": "falconi",
   "license": "CC0-1.0",
-  "devDependencies": {
+  "dependencies": {
     "materialize-css": "^0.100.1",
     "jquery": "3.2.1",
     "material-design-icons": "*",
     "mysql": "*",
-    "electron": "~1.7.8",
     "jquery-ui": "1.12.1",
-    "sweetalert": "*"
+    "sweetalert": "*",
+    "http-server": "*",
+    "httpserver": "*"
   }
 }
