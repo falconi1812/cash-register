@@ -76,6 +76,13 @@ function generateLocation(result){
    let name = obj.Location[key].nom;
    let last_name = obj.Location[key].prenom;
    let type = obj.Location[key].type_rental;
+   let mail = obj.Location[key].mail;
+   let tel = obj.Location[key].tel;
+   let hour_start = obj.Location[key].hour_start;
+   let hour_end = obj.Location[key].hour_end;
+   let terrain = obj.Location[key].terrain;
+   let nb = obj.Location[key].nb;
+
 
    let html =   '<div class="col s12 m6 l6"> \
                  <div onclick="clickLocation()" class="hoverable">  \
@@ -83,10 +90,16 @@ function generateLocation(result){
                      <div class="card-content  black-text">\
                        <div class="row">\
                          <ul class="collection with-header">\
-                           <li class="collection-header center"><h4>'+name+'</h4></li>\
+                           <li class="collection-header center"><h5>'+name+'</h5></li>\
                            <a class="collection-item"><span class="badge black-text">'+name+'</span>Nom :</a>\
                            <a class="collection-item"><span class="badge black-text">'+last_name+'</span>Prenom :</a>\
                            <a class="collection-item"><span class="badge black-text">'+type+'</span>Type: </a>\
+                           <a class="collection-item"><span class="badge black-text">'+tel+'</span>tel: </a>\
+                           <a class="collection-item"><span class="badge black-text">'+mail+'</span>mail: </a>\
+                           <a class="collection-item"><span class="badge black-text">'+hour_start+'</span>Heure start: </a>\
+                           <a class="collection-item"><span class="badge black-text">'+hour_end+'</span>Heure end: </a>\
+                           <a class="collection-item"><span class="badge black-text">'+terrain+'</span>Terrain: </a>\
+                           <a class="collection-item"><span class="badge black-text">'+nb+'</span>Nombre: </a>\
                          </ul>\
                        </div>\
                      </div>\
