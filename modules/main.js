@@ -132,11 +132,7 @@ function getLocation(){
   type: "GET",
   data: "date="+ 2017 +"-" + 10 +"-" + 28,
   // data: "date="+ yyyy +"-" + mm +"-" + dd,     //TO GET ACTUAL DAY
-  dataType : 'html',
-  secure: true,
-          headers: {
-              'Access-Control-Allow-Origin': '*',
-          },
+  dataType : 'json',
   success: function(result){
 
     console.log(result);
