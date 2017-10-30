@@ -18,13 +18,14 @@
   "author": "falconi",
   "license": "CC0-1.0",
   "dependencies": {
-    "materialize-css": "^0.100.1",
-    "jquery": "3.2.1",
-    "material-design-icons": "*",
-    "mysql": "*",
-    "jquery-ui": "1.12.1",
-    "sweetalert": "*",
     "http-server": "*",
-    "httpserver": "*"
+    "httpserver": "*",
+    "instascan": "^1.0.0",
+    "jquery": "3.2.1",
+    "jquery-ui": "1.12.1",
+    "material-design-icons": "*",
+    "materialize-css": "^0.100.1",
+    "mysql": "*",
+    "sweetalert": "*"
   }
 }
