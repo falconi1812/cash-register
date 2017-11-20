@@ -47,12 +47,8 @@ function generateProduct(productForSell, key) {
 }
 
 function generateLocation(result){
-  let today = new Date();
-  let dd = today.getDate();
-  let mm = today.getMonth()+1; //January is 0!
-  let yyyy = today.getFullYear();
 
-  if (result == 'null'){
+  if (result == '{}'){
     let html =   '<div class="col s12 m12 l4"> \
                   </div>\
                   <div class="col s12 m12 l4"> \
@@ -60,7 +56,7 @@ function generateLocation(result){
                       <div class="card-content black-text">\
                         <div class="row">\
                           <ul class="collection with-header">\
-                             <li class="collection-header center"><h4>Pas de location pour <br> '+dd+'-'+mm+'-'+yyyy+'</h4></li>\
+                             <li class="collection-header center"><h4>Pas de location pour <br> Ajourd\'hui</h4></li>\
                           </ul>\
                         </div>\
                     </div>\
