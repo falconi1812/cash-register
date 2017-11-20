@@ -128,10 +128,8 @@ function getLocation(){
   let yyyy = today.getFullYear();
 
   $.ajax({
-  url: "http://paintballarea.ch/test.php",
+  url: "http://api-paintball.herokuapp.com/customers",
   type: "GET",
-  data: "date="+ 2017 +"-" + 10 +"-" + 28,
-  // data: "date="+ yyyy +"-" + mm +"-" + dd,     //TO GET ACTUAL DAY
   dataType : 'json',
   success: function(result){
 
