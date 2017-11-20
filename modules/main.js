@@ -117,9 +117,12 @@ function countingAll() {
 
 
 function getLocation(){
-  
+  jQuery.support.cors = true;
+  xhrFields: {
+        withCredentials: true
+    },
   $.ajax({
-  url: "http://api-paintball.herokuapp.com/customers",
+  url: "https://api-paintball.herokuapp.com/customers",
   type: "GET",
   dataType : 'json',
   success: function(result){
