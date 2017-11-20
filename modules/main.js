@@ -48,7 +48,7 @@ function generateProduct(productForSell, key) {
 
 function generateLocation(result){
 
-  if (result == jQuery.isEmptyObject({})){
+  if (Object.keys(result).length == 0 ){
     let html =   '<div class="col s12 m12 l4"> \
                   </div>\
                   <div class="col s12 m12 l4"> \
