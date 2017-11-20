@@ -52,7 +52,7 @@ function generateLocation(result){
   let mm = today.getMonth()+1; //January is 0!
   let yyyy = today.getFullYear();
 
-  if (result === "	none"){
+  if (result === "{}"){
     let html =   '<div class="col s12 m12 l4"> \
                   </div>\
                   <div class="col s12 m12 l4"> \
