@@ -52,7 +52,7 @@ function generateLocation(result){
   let mm = today.getMonth()+1; //January is 0!
   let yyyy = today.getFullYear();
 
-  if (result === "{}"){
+  if (result == 'null'){
     let html =   '<div class="col s12 m12 l4"> \
                   </div>\
                   <div class="col s12 m12 l4"> \
@@ -121,12 +121,7 @@ function countingAll() {
 
 
 function getLocation(){
-
-  let today = new Date();
-  let dd = today.getDate();
-  let mm = today.getMonth()+1; //January is 0!
-  let yyyy = today.getFullYear();
-
+  
   $.ajax({
   url: "http://api-paintball.herokuapp.com/customers",
   type: "GET",
