@@ -260,9 +260,25 @@ function clickInPay(key){
 
 
 
-function clickLocation(){
-    location.href = "terrain.html"
-}
+function clickLocation(code_loc){
+    console.log(code_loc);
+    let url = LOCATIONS.replace("{locationid}",code_loc);
+
+       $.ajax({
+           url: url,
+           type: 'GET',
+           dataType: 'json',
+           success: function (data) {
+             console.log(data);
+             
+
+           },
+
+       });
+
+    }
+
+
 
 
 
