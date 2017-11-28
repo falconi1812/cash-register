@@ -80,7 +80,7 @@ function generateLocation(result){
 
 
    let html =   '<div class="col s12 m6 l6"> \
-                 <div onclick="clickLocation(\''+code+'\')" class="hoverable">  \
+                 <div onclick="writeLocation(\''+code+'\')" class="hoverable">  \
                    <div class="card light-blue darken-2">\
                      <div class="card-content  black-text">\
                        <div class="row">\
@@ -149,4 +149,56 @@ function parseResult(result){
 
 
   return data;
+}
+
+
+function printClient(element){
+
+  let name = element.client.name;
+  let type = element.type_id;
+  let email = element.client.email;
+  let phone = element.client.phone;
+  let hour_start = element.hour_start;
+  let hour_end = element.hour_end;
+  let terrain = element.terrain_id;
+  let players = element.players;
+  let code = element.code;
+
+  let html = '<a href="#modal2" class="modal-trigger brand-logo center">'+name+'</a>'
+
+  let html2 = '<table>\
+                  <tr> \
+                   <td><b>Email:</b></td>\
+                   <td>'+email+'</td>\
+                 </tr>\
+                  <tr> \
+                   <td><b>Phone:</b></td>\
+                   <td>'+phone+'</td>\
+                 </tr>\
+                  <tr> \
+                   <td><b>Terrain:</b></td>\
+                   <td>'+terrain+'</td>\
+                 </tr>\
+                  <tr> \
+                   <td><b>Hour Start:</b></td>\
+                   <td>'+hour_start+'</td>\
+                 </tr>\
+                  <tr> \
+                   <td><b>Hour End:</b></td>\
+                   <td>'+hour_end+'</td>\
+                 </tr>\
+                  <tr> \
+                   <td><b>Initial Players:</b></td>\
+                   <td>'+players+'</td>\
+                 </tr>'
+
+  $('#name_lastName').append(html);
+  $('#modal2_content').append(html2);
+
+
+
+
+
+
+
 }

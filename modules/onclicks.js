@@ -258,19 +258,26 @@ function clickInPay(key){
   }
 
 
+function writeLocation(code_loc){
 
+  window.open("http://localhost:8080/terrain?code_loc=" + code_loc, "_self");
+}
 
-function clickLocation(code_loc){
+function clickLocation(){
+
+    let code_loc =  location.search.split('code_loc=')[1]
+
     console.log(code_loc);
-    let url = LOCATIONS.replace("{locationid}",code_loc);
+
+    let urls = LOCATIONS.replace("{locationid}",code_loc);
 
        $.ajax({
-           url: url,
+           url: urls,
            type: 'GET',
            dataType: 'json',
            success: function (data) {
              console.log(data);
-             
+             printClient(data);
 
            },
 
