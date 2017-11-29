@@ -13,7 +13,6 @@ function clickOnProduct(key){
     })
     .then((value) => {
       switch (value) {
-
         case "un":
             productsForSell[key].inList = ++productsForSell[key].inList
             totalInList = totalInList + productsForSell[key].price
@@ -42,10 +41,10 @@ function clickOnProduct(key){
             className: "red",
             buttons: false,
             timer: 600,
-    });
+          });
       }
     });
-    }
+  }
 
 function clickInList(key){
     swal({ title : "Selectioner votre option" ,
@@ -66,7 +65,6 @@ function clickInList(key){
   })
     .then((value) => {
       switch (value) {
-
         case "Suprimer":
           swal("Combien?", {
           content: "input",
@@ -284,10 +282,6 @@ function clickLocation(){
        });
 
     }
-
-
-
-
 
 function clickCash(){
 
