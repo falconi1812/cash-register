@@ -1,7 +1,6 @@
 ## Install
 Easy enough steps:
 
-* ```sudo npm install```
 * ```sudo npm install http-server -g```
 *  ```sudo npm install```
 * ```http-server```
