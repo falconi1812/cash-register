@@ -1,12 +1,11 @@
 ## Install
 Easy enough steps:
 
-* ```npm install http-server -g```
-*  ``` npm install```
+* ```sudo npm install```
+* ```sudo npm install http-server -g```
+*  ```sudo npm install```
 * ```http-server```
-
-You may need to use sudo sometimes.
 
 Go to localhost:8000 and should be it.
 
-### You may need to turn on CORS
+### You need to add the extension CORS and turn it on.
