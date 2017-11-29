@@ -18,7 +18,7 @@
   "author": "falconi",
   "license": "CC0-1.0",
   "dependencies": {
-    "http-server": "*",
+    "http-server": "^0.10.0",
     "httpserver": "*",
     "instascan": "^1.0.0",
     "jquery": "3.2.1",

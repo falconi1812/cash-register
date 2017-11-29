@@ -1,19 +1,15 @@
-
-
 function products(){
   let i = 0;
 
   Object.keys(productsForSell).map(function(key) {
        generateProduct(productsForSell[key], key);
 
-       if(i == 2 | i == 5 | i == 8 | i == 11 | i == 14){
-
+        if(i == 2 | i == 5 | i == 8 | i == 11 | i == 14){
         let html = '</div>\
                     <div class="row">';
         $('#products').append(html);
         $('#list').append(html);
         $('#topay').append(html);
-
        }
        i++;
    });
@@ -40,11 +36,9 @@ function generateProduct(productForSell, key) {
      <i id ="pay'+name+'" class="fa fa-'+icon+' fa-2x fa-border hoverable" aria-hidden="true" title="'+name+'"></i>\
     </a>';
 
-
      $('#products').append(html);
      $('#list').append(html2);
      $('#topay').append(html3);
-
 }
 
 function generateLocation(result){
@@ -77,8 +71,6 @@ function generateLocation(result){
    let terrain = element.terrain;
    let players = element.players;
    let code = element.code;
-
-
    let html =   '<div class="col s12 m6 l6"> \
                  <div onclick="writeLocation(\''+code+'\')" class="hoverable">  \
                    <div class="card light-blue darken-2">\
@@ -99,13 +91,13 @@ function generateLocation(result){
                    </div>\
                  </div>\
                </div>';
+
     $('#locations').append(html);
   });
 }
 }
 
 function countingAll() {
-
   Object.keys(productsForSell).map(function(key) {
     $( "#list"+productsForSell[key].name+"").append(productsForSell[key].inList);
     $( "#pay"+productsForSell[key].name+"").append(productsForSell[key].inSell);
@@ -119,14 +111,10 @@ function getLocation(){
   type: "GET",
   dataType : 'json',
   success: function(result){
-
     generateLocation(parseResult(result));
-
-    }
-
+          }
   });
 }
-
 
 function parseResult(result){
   console.log(result);
@@ -143,14 +131,9 @@ function parseResult(result){
     data[i].players = element.location.players;
     data[i].code = element.location.code;
     data[i].terrain = element.location.terrain.name;
-
-
   })
-
-
   return data;
 }
-
 
 function printClient(element){
 
@@ -163,9 +146,7 @@ function printClient(element){
   let terrain = element.terrain_id;
   let players = element.players;
   let code = element.code;
-
   let html = '<a href="#modal2" class="modal-trigger brand-logo center">'+name+'</a>'
-
   let html2 = '<table>\
                   <tr> \
                    <td><b>Email:</b></td>\
@@ -191,14 +172,6 @@ function printClient(element){
                    <td><b>Initial Players:</b></td>\
                    <td>'+players+'</td>\
                  </tr>'
-
   $('#name_lastName').append(html);
   $('#modal2_content').append(html2);
-
-
-
-
-
-
-
 }

@@ -13,7 +13,6 @@ function clickOnProduct(key){
     })
     .then((value) => {
       switch (value) {
-
         case "un":
             productsForSell[key].inList = ++productsForSell[key].inList
             totalInList = totalInList + productsForSell[key].price
@@ -42,10 +41,10 @@ function clickOnProduct(key){
             className: "red",
             buttons: false,
             timer: 600,
-    });
+          });
       }
     });
-    }
+  }
 
 function clickInList(key){
     swal({ title : "Selectioner votre option" ,
@@ -66,7 +65,6 @@ function clickInList(key){
   })
     .then((value) => {
       switch (value) {
-
         case "Suprimer":
           swal("Combien?", {
           content: "input",
@@ -259,8 +257,7 @@ function clickInPay(key){
 
 
 function writeLocation(code_loc){
-
-  window.open("http://localhost:8080/terrain?code_loc=" + code_loc, "_self");
+  window.open("terrain?code_loc=" + code_loc, "_self");
 }
 
 function clickLocation(){
@@ -284,10 +281,6 @@ function clickLocation(){
        });
 
     }
-
-
-
-
 
 function clickCash(){
 
