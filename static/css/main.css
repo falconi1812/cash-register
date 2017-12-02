@@ -1,28 +1,34 @@
-.scrollFather{
+.scrollFather {
   height: auto;
   max-height: 60em;
 }
+
 .scrollSonVentes {
   min-height: 10rem;
   max-height: 48.4vh;
   overflow-y: auto;
 }
-.scrollFatherPayement{
+
+.scrollFatherPayement {
   min-height: 43rem;
   height: auto;
   max-height: 60rem;
 }
-.scrollSonPayement{
+
+.scrollSonPayement {
   min-height: 10rem;
   max-height: 30.2vh;
   overflow-y: auto;
 }
-.buttomPad{
- margin: 0.1em;
+
+.buttomPad {
+  margin: 0.1em;
 }
+
 .imgicon {
   padding: 1%;
 }
+
 .collection {
   border: 0px;
 }
