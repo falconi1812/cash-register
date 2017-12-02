@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .fa-6x {
     font-size: 6em !important;
 }
@@ -16,4 +17,34 @@
 .card{
 
   margin: 1.23em  !important;
+=======
+.collapsible-header i {
+  width: 4rem;
+  font-size: 4em;
+  display: inline-block;
+  text-align: center;
+  margin-right: 2rem;
+  text-align: center;
+}
+
+.collapsible-header {
+  text-align: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  line-height: 1.5;
+  padding: 1.5rem;
+  background-color: #fff;
+  border-bottom: 2px solid #ddd;
+}
+.collapsible {
+  border-top: 2px solid #ddd;
+  border-right: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+  margin: 0.5rem 0 1rem 0;
+  text-align: center;
+>>>>>>> 747daf12681ddd9f467eab21727da317d8068460
 }
