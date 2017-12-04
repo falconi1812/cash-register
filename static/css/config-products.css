@@ -14,10 +14,14 @@
   font-size: 9em !important;
 }
 
+<<<<<<< HEAD
 .fa-10x {
   font-size: 10em !important;
 }
 
 .card {
   margin: 1.23em !important;
+=======
+  margin: 1.23em  !important;
+>>>>>>> d0e691df9c600187218253a82c5d36f0211ee64e
 }
