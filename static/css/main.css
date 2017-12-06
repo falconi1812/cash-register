@@ -26,3 +26,8 @@
 .collection {
   border: 0px;
 }
+
+
+.swal-button--Suprimer {
+  background-color: #b71c1c;
+}

@@ -1,64 +1,36 @@
 
 function clickOnProduct(key){
 
-      swal({ text : "Ajouter -> "+productsForSell[key].name+"" ,
-      buttons: {
-        Un: {
-          value: "un",
-        },
-        Choisir: {
-          value: "choisir",
-        }
-      }
-    })
-    .then((value) => {
-      switch (value) {
-        case "un":
-            productsForSell[key].inList = ++productsForSell[key].inList
-            totalInList = totalInList + productsForSell[key].price
-            Materialize.toast( 1 + '  '+ productsForSell[key].name +'   -> List', 3000);
-            $("#totalList").html(totalInList + " Fr");
-          break;
-          case "choisir":
-
-              swal("Combien?", {
-              content: "input",
-              })
-              .then((value) => {
-                if (value == "0"|value == 0){
-                swal({  title :" Il faut écrire un numero",  icon: "warning",});
-               }
-               else {
-               productsForSell[key].inList = productsForSell[key].inList + parseInt(value);
-               Materialize.toast( +value +'  '+ productsForSell[key].name +'   -> List', 3000);
-               totalInList = totalInList + productsForSell[key].price * parseInt(value);
-               $("#totalList").html(totalInList + " Fr");
-               }
-              });
-              break;
-          default:
-          swal("Operation cancelé!", {
-            className: "red",
-            buttons: false,
-            timer: 600,
-          });
-      }
-    });
+  swal("Ajouter -> "+productsForSell[key].name , {
+  content: "input",
+  })
+  .then((value) => {
+    if (value == "0"|value == 0){
+    swal({  title :" Il faut écrire un numero",  icon: "warning",});
+   }
+   else {
+   addNumberList(key, parseInt(value));
+   Materialize.toast( +value +'  '+ productsForSell[key].name +'   -> List', 3000);
+   totalInList = totalInList + productsForSell[key].price * parseInt(value);
+   $("#totalList").html(totalInList + " Fr");
+   }
+  });
   }
 
 function clickInList(key){
     swal({ title : "Selectioner votre option" ,
     buttons: {
-      Suprimer: {
+      "Suprimer": {
         value: "Suprimer",
       },
-      Tout: {
+
+      "Tout": {
         value: "tout",
       },
-      Un: {
+      "Un": {
         value: "un",
       },
-      Choisir: {
+      "=>": {
         value: "choisir",
       }
     }
@@ -71,7 +43,8 @@ function clickInList(key){
           })
           .then((value) => {
             if (productsForSell[key].inList > 0 && productsForSell[key].inList >=  parseInt(value)){
-            productsForSell[key].inList = productsForSell[key].inList - parseInt(value);
+
+            removeNumberList(key, parseInt(value));
 
             totalInList = totalInList - productsForSell[key].price * parseInt(value);
 
@@ -84,6 +57,7 @@ function clickInList(key){
         break;
 
         case "tout":
+
           productsForSell[key].inSell = productsForSell[key].inSell + productsForSell[key].inList;
           totalInList = totalInList - productsForSell[key].price * productsForSell[key].inList;
 
@@ -266,7 +240,7 @@ function clickLocation(){
 
     console.log(code_loc);
 
-    let urls = LOCATIONS.replace("{locationid}",code_loc);
+    let urls = LOCATIONSGET.replace("{locationid}",code_loc);
 
        $.ajax({
            url: urls,
