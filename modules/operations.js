@@ -1,66 +1,63 @@
 
 function addNumberList(key, quantity){
 
-
-    let dataJson =
-    {
+    let dataJson = {
       "add": {
         "products_in_list": quantity,
         "products_in_payment": 0
-    }
-  };
+      }
+    };
 
-  let response =  productsAjax(key, dataJson);
-   productsForSell[key].inList = response.responseJSON.products_in_list;
-  }
-
+  productsAjax(key, dataJson);
+}
 
 function removeNumberList(key, quantity){
 
-  let dataJson =
-    {
+  let dataJson = {
       "remove": {
         "products_in_list": quantity,
         "products_in_payment": 0
       }
-    }
-    let response =  productsAjax(key, dataJson);
-     productsForSell[key].inList = response.responseJSON.products_in_list;
-    }
-
+    };
+    productsAjax(key, dataJson);
+  }
 
 function addNumberPay(key, quantity){
 
-  let data =
-    {
+  let dataJson = {
       "add": {
-        "products_in_payment": quantity,
-        "products_in_payment": 0
+        "products_in_list": 0,
+        "products_in_payment": quantity
         }
-    }
-    let response =  productsAjax(key, dataJson);
-     productsForSell[key].inSell = response.responseJSON.products_in_payment;
-    }
-
-
+    };
+    productsAjax(key, dataJson);
+  }
 
 function removeNumberPay(key, quantity){
-  let data =
-    {
+
+  let dataJson = {
       "remove": {
-        "products_in_payment": quantity,
-        "products_in_payment": 0
+        "products_in_list": 0,
+        "products_in_payment": quantity
+      }
+    };
+    productsAjax(key, dataJson);
+  }
+
+function editproduct(key, add_List, remove_List, add_Pay, remove_Pay){
+
+  let dataJson = {
+      "add": {
+        "products_in_list": add_List,
+        "products_in_payment": add_Pay
+      },
+      "remove": {
+        "products_in_list": remove_List,
+        "products_in_payment": remove_Pay
       }
     }
-    let response =  productsAjax(key, dataJson);
-     productsForSell[key].inSell = response.responseJSON.products_in_payment;
-    }
-
-
-
-
-
-
+  productsAjax(key, dataJson);
+}
 
 
 function productsAjax(key, dataJson){
@@ -69,9 +66,7 @@ function productsAjax(key, dataJson){
 
   let urls = LOCATIONPUT;
    urls = urls.replace("{location_code}", code_loc) ;
-   urls = urls.replace("{product_id}", productsForSell[key].id);
-
-   console.log(urls)
+   urls = urls.replace("{product_id}", key);
 
   return $.ajax({
   url: urls,

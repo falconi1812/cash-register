@@ -1,50 +1,102 @@
-function products(){
-  let i = 0;
+function printProducts(){
 
-  Object.keys(productsForSell).map(function(key) {
-       generateProduct(productsForSell[key], key);
+  let result = getProducts();
+  let products = result.responseJSON.products;
+  let totalInList = 0;
+  let totalInPay = 0;
 
-        if(i == 2 | i == 5 | i == 8 | i == 11 | i == 14){
-        let html = '</div>\
-                    <div class="row">';
-        $('#products').append(html);
-        $('#list').append(html);
-        $('#topay').append(html);
-       }
-       i++;
-   });
+  for(i = 0; i < products.length ; i++){
+    console.log(i);
+    let name = products[i].name;
+    let icon = products[i].icon_name;
+    let price = products[i].price;
+    let products_in_list = products[i].products_in_list;
+    let products_in_payment = products[i].products_in_payment;
+    let id = products[i].id;
 
-   countingAll();
-   let html = '</div>';
-   $('#products').append(html);
-   $('#list').append(html);
+    let html = '<a class="white-text imgicon col m12 l4" onclick="clickOnProduct(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')" aria-label="' + name + '"> \
+       <i  class="fa fa-' + icon + ' fa-4x fa-border hoverable" aria-hidden="true" title="' + name + '"></i></i>\
+      </a>';
+
+    let html2 = '<a class="white-text imgicon col m12 l4" onclick="clickInList(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')" aria-label="' + name + '"> \
+       <i id ="list'+ name +'" class="fa fa-' + icon + ' fa-3x fa-border hoverable" aria-hidden="true" title="' + name + '">'+products_in_list+'</i>\
+      </a>';
+
+    let html3 = '<a class="white-text imgicon col m12 l4" onclick="clickInPay(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')" aria-label="' + name + '"> \
+       <i id ="pay'+ name +'" class="fa fa-' + icon + ' fa-3x fa-border hoverable" aria-hidden="true" title="' + name + '">'+products_in_payment+'</i>\
+      </a>';
+
+      $('#products').append(html);
+      $('#list').append(html2);
+      $('#topay').append(html3)
+
+      totalInList += products_in_list * price;
+      totalInPay += products_in_payment * price;
+  }
+
+  $('#totalList').html(totalInList);
+  $('#totalPay').html(totalInPay);
 }
 
-function generateProduct(productForSell, key) {
-    name = productForSell.name;
-    icon = productForSell.icon;
 
-    let html = '<a class="white-text imgicon " onclick="clickOnProduct(\''+key+'\')" aria-label="'+name+'"> \
-     <i  class="fa fa-'+icon+' fa-2x fa-border hoverable" aria-hidden="true" title="'+name+'"><i class="fa fa-plus" aria-hidden="true"></i></i>\
-    </a>';
-
-    let html2 = '<a class="white-text imgicon " onclick="clickInList(\''+key+'\')" aria-label="'+name+'"> \
-     <i id ="list'+name+'" class="fa fa-'+icon+' fa-2x fa-border hoverable" aria-hidden="true" title="'+name+'"></i>\
-    </a>';
-
-    let html3 = '<a class="white-text imgicon " onclick="clickInPay(\''+key+'\')" aria-label="'+name+'"> \
-     <i id ="pay'+name+'" class="fa fa-'+icon+' fa-2x fa-border hoverable" aria-hidden="true" title="'+name+'"></i>\
-    </a>';
-
-     $('#products').append(html);
-     $('#list').append(html2);
-     $('#topay').append(html3);
+function getPay(key){
+  let result = getProducts();
+  let product = result.responseJSON.products[key].products_in_payment;
+  return product;
 }
 
-function generateLocation(result){
 
-  if (result.length == 0 ){
-    let html =   '<div class="col s12 m12 l4"> \
+function getList(key){
+  let result = getProducts();
+  let product = result.responseJSON.products[key].products_in_list;
+  return product;
+}
+
+
+function actualize(){
+  let result = getProducts();
+  let products = result.responseJSON.products;
+  let totalInList = 0;
+  let totalInPay = 0;
+
+  products.forEach(function(key){
+  let products_in_list = key.products_in_list;
+  let products_in_payment = key.products_in_payment;
+  let price = key.price;
+  let name = key.name;
+
+    $('#list'+ name).html(products_in_list);
+    $('#pay'+ name).html(products_in_payment);
+
+
+    totalInList += products_in_list * price;
+    totalInPay += products_in_payment * price;
+    })
+
+    $('#totalList').html(totalInList);
+    $('#totalPay').html(totalInPay);
+
+
+}
+
+function getProducts() {
+  let code_loc = location.search.split('code_loc=')[1]
+  let urls = LOCATIONSGET.replace("{locationid}", code_loc);
+  return $.ajax({
+    url: urls,
+    type: 'GET',
+    dataType: 'json',
+    async: false,
+    success: function(data) {
+      return data.products;
+    },
+  });
+}
+
+function generateLocation(result) {
+
+  if (result.length == 0) {
+    let html = '<div class="col s12 m12 l4"> \
                   </div>\
                   <div class="col s12 m12 l4"> \
                     <div class="card light-blue darken-2">\
@@ -57,34 +109,32 @@ function generateLocation(result){
                     </div>\
                   </div>\
                 </div>';
-     $('#locations').append(html);
-  }
-
-  else{
-   result.forEach(function(element){
-   let name = element.client_name;
-   let type = element.type;
-   let email = element.client_email;
-   let phone = element.phone;
-   let hour_start = element.hour_start;
-   let hour_end = element.hour_end;
-   let terrain = element.terrain;
-   let players = element.players;
-   let code = element.code;
-   let html =   '<div class="col s12 m6 l6"> \
-                 <div onclick="writeLocation(\''+code+'\')" class="hoverable">  \
+    $('#locations').append(html);
+  } else {
+    result.forEach(function(element) {
+      let name = element.client_name;
+      let type = element.type;
+      let email = element.client_email;
+      let phone = element.phone;
+      let hour_start = element.hour_start;
+      let hour_end = element.hour_end;
+      let terrain = element.terrain;
+      let players = element.players;
+      let code = element.code;
+      let html = '<div class="col s12 m6 l6"> \
+                 <div onclick="writeLocation(\'' + code + '\')" class="hoverable">  \
                    <div class="card light-blue darken-2">\
                      <div class="card-content  black-text">\
                        <div class="row">\
                          <ul class="collection with-header">\
-                           <li class="collection-header center"><h5>'+name+'</h5></li>\
-                           <a class="collection-item"><span class="badge black-text">'+type+'</span>Type: </a>\
-                           <a class="collection-item"><span class="badge black-text">'+phone+'</span>tel: </a>\
-                           <a class="collection-item"><span class="badge black-text">'+email+'</span>mail: </a>\
-                           <a class="collection-item"><span class="badge black-text">'+hour_start+'</span>Heure start: </a>\
-                           <a class="collection-item"><span class="badge black-text">'+hour_end+'</span>Heure end: </a>\
-                           <a class="collection-item"><span class="badge black-text">'+terrain+'</span>Terrain: </a>\
-                           <a class="collection-item"><span class="badge black-text">'+players+'</span>Nombre: </a>\
+                           <li class="collection-header center"><h5>' + name + '</h5></li>\
+                           <a class="collection-item"><span class="badge black-text">' + type + '</span>Type: </a>\
+                           <a class="collection-item"><span class="badge black-text">' + phone + '</span>tel: </a>\
+                           <a class="collection-item"><span class="badge black-text">' + email + '</span>mail: </a>\
+                           <a class="collection-item"><span class="badge black-text">' + hour_start + '</span>Heure start: </a>\
+                           <a class="collection-item"><span class="badge black-text">' + hour_end + '</span>Heure end: </a>\
+                           <a class="collection-item"><span class="badge black-text">' + terrain + '</span>Terrain: </a>\
+                           <a class="collection-item"><span class="badge black-text">' + players + '</span>Nombre: </a>\
                          </ul>\
                        </div>\
                      </div>\
@@ -92,36 +142,34 @@ function generateLocation(result){
                  </div>\
                </div>';
 
-    $('#locations').append(html);
-  });
-}
+      $('#locations').append(html);
+    });
+  }
 }
 
 function countingAll() {
-  Object.keys(productsForSell).map(function(key) {
-    $( "#list"+productsForSell[key].name+"").append(productsForSell[key].inList);
-    $( "#pay"+productsForSell[key].name+"").append(productsForSell[key].inSell);
+  productForSell.forEach(function(key) {
+    $("#list" + key.name + "").append(key.products_in_list);
+    $("#pay" + key.name + "").append(key.products_in_payment);
   });
 }
 
-function getLocation(){
+function getLocation() {
   jQuery.support.cors = true;
   $.ajax({
-  url: CLIENTS,
-  type: "GET",
-  dataType : 'json',
-  success: function(result){
-    generateLocation(parseResult(result));
-          }
+    url: CLIENTS,
+    type: "GET",
+    dataType: 'json',
+    success: function(result) {
+      generateLocation(parseResult(result));
+    }
   });
 }
 
-function parseResult(result){
-  console.log(result);
+function parseResult(result) {
   let data = [];
-  result.forEach(function(element, i){
+  result.forEach(function(element, i) {
     data[i] = {};
-    //console.log(element);
     data[i].client_name = element.client.name + " " + element.client.last_name;
     data[i].client_email = element.client.email;
     data[i].type = element.location.type.name;
@@ -135,7 +183,7 @@ function parseResult(result){
   return data;
 }
 
-function printClient(element){
+function printClient(element) {
 
   let name = element.client.name;
   let type = element.type_id;
@@ -146,32 +194,35 @@ function printClient(element){
   let terrain = element.terrain_id;
   let players = element.players;
   let code = element.code;
-  let html = '<a href="#modal2" class="modal-trigger brand-logo center">'+name+'</a>'
+  let html = '<a href="#modal2" class="modal-trigger brand-logo center">' + name + '</a>'
   let html2 = '<table>\
                   <tr> \
                    <td><b>Email:</b></td>\
-                   <td>'+email+'</td>\
+                   <td>' + email + '</td>\
                  </tr>\
                   <tr> \
                    <td><b>Phone:</b></td>\
-                   <td>'+phone+'</td>\
+                   <td>' + phone + '</td>\
                  </tr>\
                   <tr> \
                    <td><b>Terrain:</b></td>\
-                   <td>'+terrain+'</td>\
+                   <td>' + terrain + '</td>\
                  </tr>\
                   <tr> \
                    <td><b>Hour Start:</b></td>\
-                   <td>'+hour_start+'</td>\
+                   <td>' + hour_start + '</td>\
                  </tr>\
                   <tr> \
                    <td><b>Hour End:</b></td>\
-                   <td>'+hour_end+'</td>\
+                   <td>' + hour_end + '</td>\
                  </tr>\
                   <tr> \
                    <td><b>Initial Players:</b></td>\
-                   <td>'+players+'</td>\
+                   <td>' + players + '</td>\
                  </tr>'
   $('#name_lastName').append(html);
   $('#modal2_content').append(html2);
+
 }
+
+printProducts();
