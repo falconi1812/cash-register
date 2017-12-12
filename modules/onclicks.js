@@ -1,42 +1,109 @@
 function clickOnProduct(key) {
 
-  swal({
-      text: "Ajouter -> " + productsForSell[key].name + "",
-      buttons: {
-        Un: {
-          value: "un",
-        },
-        Choisir: {
-          value: "choisir",
-        }
+function clickOnProduct(name, price, id, key){
+
+
+  swal("Ajouter -> "+ name , {
+  content: "input",
+  })
+  .then((value) => {
+      if (value == 0){
+      swal({  title :" Il faut écrire un numero",  icon: "warning",});
+     }
+     else {
+     addNumberList(id, parseInt(value));
+     actualize();
+     Materialize.toast( +value +'  '+ name +'   -> List', 3000);
+     }
+  });
+  }
+
+function clickInList(name, price, id, key){
+
+  let list_total = getList(key);
+
+    swal({ title : "Selectioner votre option" ,
+    buttons: {
+      "Suprimer": {
+        value: "Suprimer",
+      },
+
+      "Tout": {
+        value: "tout",
+      },
+      "Un": {
+        value: "un",
+      },
+      "=>": {
+        value: "choisir",
       }
     })
     .then((value) => {
       switch (value) {
+        case "Suprimer":
+          swal("Combien?", {
+          content: "input",
+          })
+          .then((value) => {
+
+            if (list_total > 0 && list_total >=  parseInt(value)){
+            removeNumberList(id, parseInt(value));
+            actualize();
+            Materialize.toast(parseInt(value) +'  '+ name +'   Deleted', 3000);
+
+          }
+          else {
+            swal({  title :" Il n'y a pas assez ---> "+ name ,  icon: "warning",});
+          }
+          });
+        break;
+
+        case "tout":
+
+          if (list_total > 0){
+
+          editproduct(id, 0, list_total, list_total, 0);
+          actualize();
+          Materialize.toast( list_total +'  '+ name +'   -> Payment', 3000);
+          }
+          else {
+
+            swal({  title :" Il n'y plus de "+ products[key].name ,  icon: "warning",});
+          }
+          break;
+
         case "un":
-          productsForSell[key].inList = ++productsForSell[key].inList
-          totalInList = totalInList + productsForSell[key].price
-          Materialize.toast(1 + '  ' + productsForSell[key].name + '   -> List', 3000);
-          $("#totalList").html(totalInList + " Fr");
+          if (list_total > 0){
+
+            editproduct(id, 0, 1, 1, 0);
+            actualize();
+            Materialize.toast( 1 +'  '+ products[key].name +'   -> Payment', 3000);
+
+          }
+          else {
+            swal({  title :" Il n'y plus de "+ products[key].name ,  icon: "warning",});
+          }
           break;
         case "choisir":
-
-          swal("Combien?", {
+          swal("Combien?:", {
               content: "input",
             })
             .then((value) => {
-              if (value == "0" | value == 0) {
-                swal({
-                  title: " Il faut écrire un numero",
-                  icon: "warning",
-                });
-              } else {
-                productsForSell[key].inList = productsForSell[key].inList + parseInt(value);
-                Materialize.toast(+value + '  ' + productsForSell[key].name + '   -> List', 3000);
-                totalInList = totalInList + productsForSell[key].price * parseInt(value);
-                $("#totalList").html(totalInList + " Fr");
-              }
-            });
+
+                if (list_total > 0 && list_total >=  parseInt(value)){
+
+                editproduct(id, 0, parseInt(value), parseInt(value), 0)
+                Materialize.toast( +value +'  '+ name +'   -> Payment', 3000);
+                actualize();
+
+                }
+                else if (value == "0"|value == 0){
+                swal({  title :" Il faut écrire un numero",  icon: "warning",});
+                }
+               else {
+                  swal({  title :" Il n'y a pas assez ---> "+ name ,  icon: "warning",});
+                }
+              });
           break;
         default:
           swal("Operation cancelé!", {
@@ -46,222 +113,82 @@ function clickOnProduct(key) {
           });
       }
     });
-}
+    }
 
-function clickInList(key) {
-  swal({
-      title: "Selectioner votre option",
-      buttons: {
-        Suprimer: {
-          value: "Suprimer",
-        },
-        Tout: {
-          value: "tout",
-        },
-        Un: {
-          value: "un",
-        },
-        Choisir: {
-          value: "choisir",
-        }
+function clickInPay(name, price, id, key){
+
+  let pay_total = getPay(key);
+
+    swal({ title : "Selectioner votre option" ,
+    buttons: {
+      Suprimer: {
+        value: "Suprimer",
+      },
+      Tout: {
+        value: "tout",
+      },
+      Un: {
+        value: "un",
+      },
+      "<=": {
+        value: "choisir",
       }
-    })
-    .then((value) => {
-      switch (value) {
-        case "Suprimer":
-          swal("Combien?", {
-              content: "input",
-            })
-            .then((value) => {
-              if (productsForSell[key].inList > 0 && productsForSell[key].inList >= parseInt(value)) {
-                productsForSell[key].inList = productsForSell[key].inList - parseInt(value);
+    }
+  })
+  .then((value) => {
+    switch (value) {
 
-                totalInList = totalInList - productsForSell[key].price * parseInt(value);
+      case "Suprimer":
+        swal("Combien?", {
+        content: "input",
+        })
+        .then((value) => {
+          if (pay_total > 0 && pay_total >=  parseInt(value)){
+          removeNumberPay(id, parseInt(value));
+          actualize();
+          Materialize.toast(parseInt(value) +'  '+ name +'   Deleted', 3000);
 
-                $("#totalList").html(totalInList + " Fr");
-              } else {
-                swal({
-                  title: " Il n'y a pas assez ---> " + productsForSell[key].name,
-                  icon: "warning",
-                });
-              }
-            });
-          break;
+        }
+        else {
+          swal({  title :" Il n'y a pas assez ---> "+ name ,  icon: "warning",});
+        }
+        });
+      break;
 
-        case "tout":
-          productsForSell[key].inSell = productsForSell[key].inSell + productsForSell[key].inList;
-          totalInList = totalInList - productsForSell[key].price * productsForSell[key].inList;
+      case "tout":
 
-          totalToPay = totalToPay + productsForSell[key].price * productsForSell[key].inList;
+        editproduct(id, pay_total, 0, 0, pay_total);
+        actualize();
+        Materialize.toast( +pay_total +'  '+ name +' <-- List', 3000);
+        break;
 
-          $("#totalPay").html(totalToPay + "Fr");
-          $("#totalList").html(totalInList + " Fr");
-
-          Materialize.toast(+productsForSell[key].inList + '  ' + productsForSell[key].name + '   -> Payment', 3000);
-          productsForSell[key].inList = 0;
-          break;
-
-        case "un":
-          if (productsForSell[key].inList > 0) {
-
-            productsForSell[key].inSell = ++productsForSell[key].inSell;
-            productsForSell[key].inList = --productsForSell[key].inList;
-            totalInList = totalInList - productsForSell[key].price;
-            totalToPay = totalToPay + productsForSell[key].price;
-
-            $("#totalPay").html(totalToPay + "Fr");
-            $("#totalList").html(totalInList + " Fr");
-            Materialize.toast(1 + '  ' + productsForSell[key].name + '   -> Payment', 3000);
-
-          } else {
-            swal({
-              title: " Il n'y plus de " + productsForSell[key].name,
-              icon: "warning",
-            });
-          }
-          break;
+      case "un":
+        if (pay_total > 0){
+          editproduct(id, 1, 0, 0, 1);
+          actualize();
+          Materialize.toast( 1 +'  '+ name +'   <- List', 3000);
+        }
+        else {
+          swal({  title :" Il n'y plus de "+ name ,  icon: "warning",});
+        }
+        break;
         case "choisir":
           swal("Combien?:", {
               content: "input",
             })
             .then((value) => {
 
-              if (productsForSell[key].inList > 0 && productsForSell[key].inList >= parseInt(value)) {
-                productsForSell[key].inSell = productsForSell[key].inSell + parseInt(value);
-                productsForSell[key].inList = productsForSell[key].inList - parseInt(value);
+              if (pay_total > 0 && pay_total >=  parseInt(value)){
 
-                Materialize.toast(+value + '  ' + productsForSell[key].name + '   -> Payment', 3000);
-
-                totalInList = totalInList - productsForSell[key].price * parseInt(value);
-                totalToPay = totalToPay + productsForSell[key].price * parseInt(value);
-
-                $("#totalPay").html(totalToPay + "Fr");
-                $("#totalList").html(totalInList + " Fr");
-
-              } else if (value == "0" | value == 0) {
-                swal({
-                  title: " Il faut écrire un numero",
-                  icon: "warning",
-                });
-              } else {
-                swal({
-                  title: " Il n'y a pas assez ---> " + productsForSell[key].name,
-                  icon: "warning",
-                });
+              editproduct(id, parseInt(value), 0, 0, parseInt(value));
+              actualize();
+              Materialize.toast( +value +'  '+ name +'   <- List', 3000);
               }
-            });
-          break;
-        default:
-          swal("Operation cancelé!", {
-            className: "red",
-            buttons: false,
-            timer: 600,
-          });
-      }
-    });
-}
-
-function clickInPay(key) {
-  swal({
-      title: "Selectioner votre option",
-      buttons: {
-        Suprimer: {
-          value: "Suprimer",
-        },
-        Tout: {
-          value: "tout",
-        },
-        Un: {
-          value: "un",
-        },
-        Choisir: {
-          value: "choisir",
-        }
-      }
-    })
-    .then((value) => {
-      switch (value) {
-
-        case "Suprimer":
-          swal("Combien?", {
-              content: "input",
-            })
-            .then((value) => {
-              if (productsForSell[key].inSell > 0 && productsForSell[key].inSell >= parseInt(value)) {
-                productsForSell[key].inSell = productsForSell[key].inSell - parseInt(value);
-
-                totalToPay = totalToPay - productsForSell[key].price * parseInt(value);
-
-                $("#totalPay").html(totalToPay + " Fr");
-              } else {
-                swal({
-                  title: " Il n'y a pas assez ---> " + productsForSell[key].name,
-                  icon: "warning",
-                });
+              else if (value == 0){
+              swal({  title :" Il faut écrire un numero",  icon: "warning",});
               }
-            });
-          break;
-
-        case "tout":
-          productsForSell[key].inList = productsForSell[key].inList + productsForSell[key].inSell;
-          totalToPay = totalToPay - productsForSell[key].price * productsForSell[key].inSell;
-
-          totalInList = totalInList + productsForSell[key].price * productsForSell[key].inSell;
-
-          $("#totalPay").html(totalToPay + "Fr");
-          $("#totalList").html(totalInList + " Fr");
-
-          Materialize.toast(+productsForSell[key].inSell + '  ' + productsForSell[key].name + ' <-- List', 3000);
-          productsForSell[key].inSell = 0;
-          break;
-
-        case "un":
-          if (productsForSell[key].inSell > 0) {
-
-            productsForSell[key].inList = ++productsForSell[key].inList;
-            productsForSell[key].inSell = --productsForSell[key].inSell;
-            totalInList = totalInList + productsForSell[key].price;
-            totalToPay = totalToPay - productsForSell[key].price;
-
-            $("#totalPay").html(totalToPay + "Fr");
-            $("#totalList").html(totalInList + " Fr");
-            Materialize.toast(1 + '  ' + productsForSell[key].name + '   <- List', 3000);
-
-          } else {
-            swal({
-              title: " Il n'y plus de " + productsForSell[key].name,
-              icon: "warning",
-            });
-          }
-          break;
-        case "choisir":
-          swal("Combien?:", {
-              content: "input",
-            })
-            .then((value) => {
-
-              if (productsForSell[key].inSell > 0 && productsForSell[key].inSell >= parseInt(value)) {
-                productsForSell[key].inSell = productsForSell[key].inSell - parseInt(value);
-                productsForSell[key].inList = productsForSell[key].inList + parseInt(value);
-
-                Materialize.toast(+value + '  ' + productsForSell[key].name + '   <- List', 3000);
-
-                totalInList = totalInList + productsForSell[key].price * parseInt(value);
-                totalToPay = totalToPay - productsForSell[key].price * parseInt(value);
-
-                $("#totalPay").html(totalToPay + "Fr");
-                $("#totalList").html(totalInList + " Fr");
-
-              } else if (value == "0" | value == 0) {
-                swal({
-                  title: " Il faut écrire un numero",
-                  icon: "warning",
-                });
-              } else {
-                swal({
-                  title: " Il n'y a pas assez ---> " + productsForSell[key].name,
-                  icon: "warning",
-                });
+             else {
+                swal({  title :" Il n'y a pas assez ---> "+ name ,  icon: "warning",});
               }
             });
           break;
@@ -284,19 +211,19 @@ function clickLocation() {
 
   let code_loc = location.search.split('code_loc=')[1]
 
-  console.log(code_loc);
 
-  let urls = LOCATIONS.replace("{locationid}", code_loc);
+    let urls = LOCATIONSGET.replace("{locationid}",code_loc);
 
-  $.ajax({
-    url: urls,
-    type: 'GET',
-    dataType: 'json',
-    success: function(data) {
-      console.log(data);
-      printClient(data);
+       $.ajax({
+           url: urls,
+           type: 'GET',
+           dataType: 'json',
+           success: function (data) {
+             productForSell = data.products;
+             printClient(data);
 
-    },
+
+           },
 
   });
 
@@ -311,5 +238,47 @@ function clickCC() {
 }
 
 function clickQR() {
+
+}
+
+
+function printClient(element) {
+  let name = element.client.name;
+  let type = element.location.type_id;
+  let email = element.client.email;
+  let phone = element.client.phone;
+  let hour_start = element.location.hour_start;
+  let hour_end = element.location.hour_end;
+  let terrain = element.location.terrain_id;
+  let players = element.location.players;
+  let code = element.location.code;
+  let html = '<a href="#modal2" class="modal-trigger brand-logo center">' + name + '</a>'
+  let html2 = '<table>\
+                  <tr> \
+                   <td><b>Email:</b></td>\
+                   <td>' + email + '</td>\
+                 </tr>\
+                  <tr> \
+                   <td><b>Phone:</b></td>\
+                   <td>' + phone + '</td>\
+                 </tr>\
+                  <tr> \
+                   <td><b>Terrain:</b></td>\
+                   <td>' + terrain + '</td>\
+                 </tr>\
+                  <tr> \
+                   <td><b>Hour Start:</b></td>\
+                   <td>' + hour_start + '</td>\
+                 </tr>\
+                  <tr> \
+                   <td><b>Hour End:</b></td>\
+                   <td>' + hour_end + '</td>\
+                 </tr>\
+                  <tr> \
+                   <td><b>Initial Players:</b></td>\
+                   <td>' + players + '</td>\
+                 </tr>'
+  $('#name_lastName').append(html);
+  $('#modal2_content').append(html2);
 
 }

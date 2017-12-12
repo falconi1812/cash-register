@@ -1,34 +1,53 @@
-.scrollFather {
-  height: auto;
-  max-height: 60em;
+a.white-text.imgicon {
+    padding-bottom: 2%;
 }
 
-.scrollSonVentes {
-  min-height: 10rem;
-  max-height: 48.4vh;
-  overflow-y: auto;
+a.white-text.imgicon.col.m12.l4 {
+    padding-bottom: 20%;
 }
 
-.scrollFatherPayement {
-  min-height: 43rem;
-  height: auto;
-  max-height: 60rem;
-}
-
-.scrollSonPayement {
-  min-height: 10rem;
-  max-height: 30.2vh;
-  overflow-y: auto;
-}
-
-.buttomPad {
-  margin: 0.1em;
-}
-
-.imgicon {
+a.white-text.imgicon.col.m12.l4{
   padding: 1%;
+  padding-bottom: 2%;
 }
 
-.collection {
-  border: 0px;
+input.swal-content__input{
+  font-size: 5rem;
+  text-align: center;
+  height : auto;
+}
+
+.swal-text{
+  font-size: 2.5rem;
+}
+.swal-button{
+  font-size: 1.5rem;
+}
+
+.btn-large i {
+    font-size: 2rem;
+}
+
+.fa-6x {
+  font-size: 6em !important;
+}
+
+.fa-7x {
+  font-size: 7em !important;
+}
+
+.fa-8x {
+  font-size: 8em !important;
+}
+
+.fa-9x {
+  font-size: 9em !important;
+}
+
+.fa-10x {
+  font-size: 10em !important;
+}
+
+.swal-button--Suprimer {
+  background-color: #b71c1c;
 }

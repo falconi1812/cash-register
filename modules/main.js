@@ -1,44 +1,96 @@
-function products() {
-  let i = 0;
+function printProducts(){
 
-  Object.keys(productsForSell).map(function(key) {
-    generateProduct(productsForSell[key], key);
+  let result = getProducts();
+  let products = result.responseJSON.products;
+  let totalInList = 0;
+  let totalInPay = 0;
 
-    if (i == 2 | i == 5 | i == 8 | i == 11 | i == 14) {
-      let html = '</div>\
-                    <div class="row">';
+  for(i = 0; i < products.length ; i++){
+    console.log(i);
+    let name = products[i].name;
+    let icon = products[i].icon_name;
+    let price = products[i].price;
+    let products_in_list = products[i].products_in_list;
+    let products_in_payment = products[i].products_in_payment;
+    let id = products[i].id;
+
+    let html = '<a class="white-text imgicon col m12 l4" onclick="clickOnProduct(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')" aria-label="' + name + '"> \
+       <i  class="fa fa-' + icon + ' fa-4x fa-border hoverable" aria-hidden="true" title="' + name + '"></i></i>\
+      </a>';
+
+    let html2 = '<a class="white-text imgicon col m12 l4" onclick="clickInList(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')" aria-label="' + name + '"> \
+       <i id ="list'+ name +'" class="fa fa-' + icon + ' fa-3x fa-border hoverable" aria-hidden="true" title="' + name + '">'+products_in_list+'</i>\
+      </a>';
+
+    let html3 = '<a class="white-text imgicon col m12 l4" onclick="clickInPay(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')" aria-label="' + name + '"> \
+       <i id ="pay'+ name +'" class="fa fa-' + icon + ' fa-3x fa-border hoverable" aria-hidden="true" title="' + name + '">'+products_in_payment+'</i>\
+      </a>';
+
       $('#products').append(html);
-      $('#list').append(html);
-      $('#topay').append(html);
-    }
-    i++;
-  });
+      $('#list').append(html2);
+      $('#topay').append(html3)
 
-  countingAll();
-  let html = '</div>';
-  $('#products').append(html);
-  $('#list').append(html);
+      totalInList += products_in_list * price;
+      totalInPay += products_in_payment * price;
+  }
+
+  $('#totalList').html(totalInList);
+  $('#totalPay').html(totalInPay);
 }
 
-function generateProduct(productForSell, key) {
-  name = productForSell.name;
-  icon = productForSell.icon;
 
-  let html = '<a class="white-text imgicon " onclick="clickOnProduct(\'' + key + '\')" aria-label="' + name + '"> \
-     <i  class="fa fa-' + icon + ' fa-2x fa-border hoverable" aria-hidden="true" title="' + name + '"><i class="fa fa-plus" aria-hidden="true"></i></i>\
-    </a>';
+function getPay(key){
+  let result = getProducts();
+  let product = result.responseJSON.products[key].products_in_payment;
+  return product;
+}
 
-  let html2 = '<a class="white-text imgicon " onclick="clickInList(\'' + key + '\')" aria-label="' + name + '"> \
-     <i id ="list' + name + '" class="fa fa-' + icon + ' fa-2x fa-border hoverable" aria-hidden="true" title="' + name + '"></i>\
-    </a>';
 
-  let html3 = '<a class="white-text imgicon " onclick="clickInPay(\'' + key + '\')" aria-label="' + name + '"> \
-     <i id ="pay' + name + '" class="fa fa-' + icon + ' fa-2x fa-border hoverable" aria-hidden="true" title="' + name + '"></i>\
-    </a>';
+function getList(key){
+  let result = getProducts();
+  let product = result.responseJSON.products[key].products_in_list;
+  return product;
+}
 
-  $('#products').append(html);
-  $('#list').append(html2);
-  $('#topay').append(html3);
+
+function actualize(){
+  let result = getProducts();
+  let products = result.responseJSON.products;
+  let totalInList = 0;
+  let totalInPay = 0;
+
+  products.forEach(function(key){
+  let products_in_list = key.products_in_list;
+  let products_in_payment = key.products_in_payment;
+  let price = key.price;
+  let name = key.name;
+
+    $('#list'+ name).html(products_in_list);
+    $('#pay'+ name).html(products_in_payment);
+
+
+    totalInList += products_in_list * price;
+    totalInPay += products_in_payment * price;
+    })
+
+    $('#totalList').html(totalInList);
+    $('#totalPay').html(totalInPay);
+
+
+}
+
+function getProducts() {
+  let code_loc = location.search.split('code_loc=')[1]
+  let urls = LOCATIONSGET.replace("{locationid}", code_loc);
+  return $.ajax({
+    url: urls,
+    type: 'GET',
+    dataType: 'json',
+    async: false,
+    success: function(data) {
+      return data.products;
+    },
+  });
 }
 
 function generateLocation(result) {
@@ -96,9 +148,9 @@ function generateLocation(result) {
 }
 
 function countingAll() {
-  Object.keys(productsForSell).map(function(key) {
-    $("#list" + productsForSell[key].name + "").append(productsForSell[key].inList);
-    $("#pay" + productsForSell[key].name + "").append(productsForSell[key].inSell);
+  productForSell.forEach(function(key) {
+    $("#list" + key.name + "").append(key.products_in_list);
+    $("#pay" + key.name + "").append(key.products_in_payment);
   });
 }
 
@@ -115,11 +167,9 @@ function getLocation() {
 }
 
 function parseResult(result) {
-  console.log(result);
   let data = [];
   result.forEach(function(element, i) {
     data[i] = {};
-    //console.log(element);
     data[i].client_name = element.client.name + " " + element.client.last_name;
     data[i].client_email = element.client.email;
     data[i].type = element.location.type.name;
@@ -172,4 +222,7 @@ function printClient(element) {
                  </tr>'
   $('#name_lastName').append(html);
   $('#modal2_content').append(html2);
+
 }
+
+printProducts();
