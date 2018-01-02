@@ -1,4 +1,4 @@
-function clickOnProduct(key) {
+
 
 function clickOnProduct(name, price, id, key){
 
@@ -37,7 +37,7 @@ function clickInList(name, price, id, key){
       "=>": {
         value: "choisir",
       }
-    })
+    }
     .then((value) => {
       switch (value) {
         case "Suprimer":
@@ -112,8 +112,10 @@ function clickInList(name, price, id, key){
             timer: 600,
           });
       }
-    });
-    }
+    })
+
+  });
+}
 
 function clickInPay(name, price, id, key){
 
@@ -224,9 +226,7 @@ function clickLocation() {
 
 
            },
-
   });
-
 }
 
 function clickCash() {
@@ -242,7 +242,8 @@ function clickQR() {
 }
 
 
-function printClient(element) {
+function printClient(element){
+
   let name = element.client.name;
   let type = element.location.type_id;
   let email = element.client.email;

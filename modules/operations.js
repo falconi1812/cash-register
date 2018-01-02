@@ -76,7 +76,6 @@ function productsAjax(key, dataJson){
   async:false,
   success: function(data){
      return data;
-  }
-
+   }
   });
-};
+}

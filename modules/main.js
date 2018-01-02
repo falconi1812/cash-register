@@ -225,4 +225,6 @@ function printClient(element) {
 
 }
 
-printProducts();
+
+
+//printProducts();

@@ -16,7 +16,7 @@
   </script>
 </head>
 
-<body onload="">
+<body onload="printListProducts()">
 
   <ul id="dropdown1" class="dropdown-content">
     <li class="divider"></li>
@@ -34,34 +34,6 @@
   </div>
 
   <!-- Modal Structure -->
-  <div id="modal1" class="modal modal-fixed-footer">
-    <div class="modal-content">
-      <h4>Modal Header</h4>
-      <div class="row">
-        <form class="col s12">
-          <div class="row">
-            <div class="input-field col s6">
-              <input placeholder="Ex: Adultes" id="first_name" type="text" class="validate">
-              <label for="first_name">Name</label>
-            </div>
-            <div class="input-field col s6">
-              <input placeholder="Ex: male" id="first_name" type="text" class="validate">
-              <label for="first_name">Icon Name</label>
-            </div>
-            <div class="input-field col s6">
-              <input placeholder="Ex: 50" id="first_name" type="text" class="validate">
-              <label for="first_name">Price in Fr</label>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat red-text">Cancel</a>
-      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat green-text">Agree</a>
-    </div>
-  </div>
-
 
   <nav>
     <div class="nav-wrapper red darken-4 z-depth-5">
@@ -76,113 +48,12 @@
     </div>
   </nav>
 
-  <div class="container row">
-    <div class=" col s1">
-    </div>
-    <div class="card col s3 hoverable">
-      <div class="card-image waves-effect waves-block waves-light center-align">
-        <i class="activator fa fa-child fa-10x"></i>
-      </div>
-      <div class="card-content">
-        <span class="card-title activator grey-text text-darken-4">Enfants <p class="right">30Fr</p></span>
-      </div>
-      <div class="card-action right-align">
-        <a class="blue-text modal-trigger" href="#modal1">Edit</a>
-      </div>
-      <div class="card-reveal">
-        <span class="card-title grey-text text-darken-4">Enfants<i class="fa fa-times-circle-o right"></i></span>
-        <p>
-          Icon Name: fa-child<br><br> Description: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad.<br>
-        </p>
-      </div>
-    </div>
-    <div class="card col s3">
-      <div class="card-image waves-effect waves-block waves-light center-align">
-        <i class="activator fa fa-child fa-10x"></i>
-      </div>
-      <div class="card-content">
-        <span class="card-title activator grey-text text-darken-4">Enfants <p class="right">30Fr</p></span>
-      </div>
-      <div class="card-action right-align">
-        <a class="blue-text" href="#">Edit</a>
-      </div>
-      <div class="card-reveal">
-        <span class="card-title grey-text text-darken-4">Enfants<i class="fa fa-times-circle-o right"></i></span>
-        <p>
-          Icon Name: fa-child<br><br> Description: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad.<br>
-        </p>
-      </div>
-    </div>
-    <div class="card col s3">
-      <div class="card-image waves-effect waves-block waves-light center-align">
-        <i class="activator fa fa-child fa-10x"></i>
-      </div>
-      <div class="card-content">
-        <span class="card-title activator grey-text text-darken-4">Enfants <p class="right">30Fr</p></span>
-      </div>
-      <div class="card-action right-align">
-        <a class="blue-text" href="#">Edit</a>
-      </div>
-      <div class="card-reveal">
-        <span class="card-title grey-text text-darken-4">Enfants<i class="fa fa-times-circle-o right"></i></span>
-        <p>
-          Icon Name: fa-child<br><br> Description: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad.<br>
-        </p>
-      </div>
-    </div>
-    <div class=" col s1">
-    </div>
-    <div class="card col s3">
-      <div class="card-image waves-effect waves-block waves-light center-align">
-        <i class="activator fa fa-child fa-10x"></i>
-      </div>
-      <div class="card-content">
-        <span class="card-title activator grey-text text-darken-4">Enfants <p class="right">30Fr</p></span>
-      </div>
-      <div class="card-action right-align">
-        <a class="blue-text" href="#">Edit</a>
-      </div>
-      <div class="card-reveal">
-        <span class="card-title grey-text text-darken-4">Enfants<i class="fa fa-times-circle-o right"></i></span>
-        <p>
-          Icon Name: fa-child<br><br> Description: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad.<br>
-        </p>
-      </div>
-    </div>
-    <div class="card col s3">
-      <div class="card-image waves-effect waves-block waves-light center-align">
-        <i class="activator fa fa-child fa-10x"></i>
-      </div>
-      <div class="card-content">
-        <span class="card-title activator grey-text text-darken-4">Enfants <p class="right">30Fr</p></span>
-      </div>
-      <div class="card-action right-align">
-        <a class="blue-text" href="#">Edit</a>
-      </div>
-      <div class="card-reveal">
-        <span class="card-title grey-text text-darken-4">Enfants<i class="fa fa-times-circle-o right"></i></span>
-        <p>
-          Icon Name: fa-child<br><br> Description: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad.<br>
-        </p>
-      </div>
-    </div>
-    <div class="card col s3">
-      <div class="card-image waves-effect waves-block waves-light center-align">
-        <i class="activator fa fa-child fa-10x"></i>
-      </div>
-      <div class="card-content">
-        <span class="card-title activator grey-text text-darken-4">Enfants <p class="right">30Fr</p></span>
-      </div>
-      <div class="card-action right-align">
-        <a class="blue-text" href="#">Edit</a>
-      </div>
-      <div class="card-reveal">
-        <span class="card-title grey-text text-darken-4">Enfants<i class="fa fa-times-circle-o right"></i></span>
-        <p>
-          Icon Name: fa-child<br><br> Description: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad.<br>
-        </p>
-      </div>
-    </div>
+
+
+  <div id="products_list" class="container row">
+
+
+
 
   </div>
 
@@ -194,8 +65,9 @@
       $('.modal').modal();
     });
   </script>
-  <script src="node_modules/materialize-css/dist/js/materialize.min.js" type="text/javascript">
-  </script>
+  <script src="node_modules/materialize-css/dist/js/materialize.min.js" type="text/javascript"></script>
+  <script src="modules/products.js" type="text/javascript"></script>
+
 </body>
 
 </html>

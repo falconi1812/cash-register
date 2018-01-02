@@ -18,6 +18,6 @@
   font-size: 10em !important;
 }
 
-.card {
-  margin: 1.23em !important;
+.modal.modal-fixed-footer {
+  height: 40%;
 }
