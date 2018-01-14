@@ -23,6 +23,7 @@ list.forEach(function(product){
   let name = product.name;
   let price = product.price;
   let icon = product.icon_name;
+  let id = product.id;
 
   let html2 = '<div id="modal_' + name + '" class="modal modal-fixed-footer">  \
     <div class="modal-content">  \
@@ -31,15 +32,15 @@ list.forEach(function(product){
         <form class="col s12">  \
           <div class="row">  \
             <div class="input-field col s6">  \
-              <input value="' + name + '" id="first_name" type="text" class="validate">  \
+              <input value="' + name + '" id="input_name_'+ id +'" type="text" class="validate">  \
               <label for="first_name">Name</label>  \
             </div>  \
             <div class="input-field col s6">  \
-              <input value="' + icon + '" id="first_name" type="text" class="validate">  \
+              <input value="' + icon + '" id="input_icon_'+ id +'" type="text" class="validate">  \
               <label for="first_name">Icon Name</label>  \
             </div>  \
             <div class="input-field col s6">  \
-              <input value="' + price + '" id="first_name" type="text" class="validate">  \
+              <input value="' + price + '" id="input_price_'+ id +'" type="text" class="validate">  \
               <label for="first_name">Price in Fr</label>  \
             </div>  \
           </div>  \
@@ -47,8 +48,9 @@ list.forEach(function(product){
       </div>  \
     </div>  \
     <div class="modal-footer">  \
-      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat red-text">Cancel</a>  \
-      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat green-text">Agree</a>  \
+      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat orange-text">Cancel</a>  \
+      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat red-text">Suprimer</a> \
+      <a href="#!" onclick="modifyProduct('+ id +')" class="modal-action modal-close waves-effect waves-green btn-flat green-text">Modifier</a>  \
     </div>  \
   </div>';
 

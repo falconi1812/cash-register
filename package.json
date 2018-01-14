@@ -26,6 +26,7 @@
     "material-design-icons": "*",
     "materialize-css": "^0.100.1",
     "mysql": "*",
-    "sweetalert": "*"
+    "sweetalert": "*",
+    "select2": "~4.0"
   }
 }

@@ -283,3 +283,21 @@ function printClient(element){
   $('#modal2_content').append(html2);
 
 }
+
+function modifyProduct(id){
+
+console.log(id);
+
+  let dataJson = {
+
+    "icon_id": 2,
+    "name": $( "#input_name_"+ id +"" ).val(),
+    "price": $( "#input_price_"+ id +"" ).val()
+    }
+
+    console.log(dataJson);
+    modifyProductAjax(id, dataJson);
+    location.reload();
+
+
+}

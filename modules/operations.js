@@ -79,3 +79,20 @@ function productsAjax(key, dataJson){
    }
   });
 }
+
+function modifyProductAjax(key, dataJson){
+
+  let urls = PRODUCTSPUT;
+  urls = urls.replace("{product_id}", key);
+
+  return $.ajax({
+  url: urls,
+  type: 'PUT',
+  contentType: 'application/json',
+  data: JSON.stringify(dataJson),
+  async:false,
+  success: function(data){
+     return data;
+   }
+  });
+}
