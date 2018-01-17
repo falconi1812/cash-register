@@ -1,3 +1,6 @@
+const ICONSLIST = getIcons().responseJSON;
+
+
 function getListProducts(){
   let urls = PRODUCTS;
   return $.ajax({
@@ -12,20 +15,44 @@ function getListProducts(){
 }
 
 
+function getIcons(){
+  let urls = ICONS;
+  return $.ajax({
+  url: urls,
+  type: 'GET',
+  contentType: 'application/json',
+  async:false,
+  success: function(data){
+     return data;
+    }
+  });
+}
 
+
+function printIconsList(){
+  let html  = '<datalist id="icons">'
+
+  ICONSLIST.forEach(function(icon){
+    let name = icon.name;
+    let ref = icon.ref;
+    let id = icon.id;
+    html =  html + '<option value="'+ id +'">'+ name +'</option>'
+  })
+  html = html + '</datalist>'
+  $('body').append(html);
+}
 
 function printListProducts(){
 
-  let list = getListProducts().responseJSON.products;
+    let list = getListProducts().responseJSON.products;
 
-
-list.forEach(function(product){
+  list.forEach(function(product){
   let name = product.name;
   let price = product.price;
-  let icon = product.icon_name;
+  let icon = product.icon_id;
   let id = product.id;
 
-  let html2 = '<div id="modal_' + name + '" class="modal modal-fixed-footer">  \
+  let html = '<div id="modal_' + name + '" class="modal modal-fixed-footer">  \
     <div class="modal-content">  \
       <h4>' + name + '</h4>  \
       <div class="row">  \
@@ -35,14 +62,13 @@ list.forEach(function(product){
               <input value="' + name + '" id="input_name_'+ id +'" type="text" class="validate">  \
               <label for="first_name">Name</label>  \
             </div>  \
-            <div class="input-field col s6">  \
-              <input value="' + icon + '" id="input_icon_'+ id +'" type="text" class="validate">  \
-              <label for="first_name">Icon Name</label>  \
             </div>  \
             <div class="input-field col s6">  \
               <input value="' + price + '" id="input_price_'+ id +'" type="text" class="validate">  \
               <label for="first_name">Price in Fr</label>  \
             </div>  \
+            <div class="input-field col s6">  \
+              <input value="' + icon + '" list="icons" name="icons">  \
           </div>  \
         </form>  \
       </div>  \
@@ -54,7 +80,7 @@ list.forEach(function(product){
     </div>  \
   </div>';
 
-  $('body').append(html2);
+  $('body').append(html);
 
 
   });

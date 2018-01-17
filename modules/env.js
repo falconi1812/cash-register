@@ -6,3 +6,4 @@ const LOCATIONSGET = MAIN + "/locations/{locationid}";
 const LOCATIONPUT = MAIN + "/locations/products/{location_code}/{product_id}";
 const PRODUCTS = MAIN + "/products";
 const PRODUCTSPUT = MAIN + "/products/{product_id}";
+const ICONS = MAIN + "/icons";
