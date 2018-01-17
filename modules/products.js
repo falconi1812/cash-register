@@ -68,7 +68,7 @@ function printListProducts(){
               <label for="first_name">Price in Fr</label>  \
             </div>  \
             <div class="input-field col s6">  \
-              <input value="' + icon + '" list="icons" name="icons">  \
+              <select class="icons-select"></select>  \
           </div>  \
         </form>  \
       </div>  \
@@ -84,7 +84,7 @@ function printListProducts(){
 
 
   });
-
+  let icons = getIcons();
   list.forEach(function(product){
 
     let name = product.name;
@@ -109,5 +109,28 @@ function printListProducts(){
     </div> ' ;
     $('#products_list').append(html);
 
+
   });
+
+  this.init_select2(icons);
+
 }
+
+  function init_select2(icons)
+  {
+    return icons.then(function(data) {
+        result = [];
+        for (i = 0; i < data.length; i ++ ) {
+            name = "<div>" + '<i class="fa ' + data[i].ref + '"></i> ' + data[i].name + "</div>";
+            result[i] = {id: data[i].id, text: name};
+        };
+
+        $('.icons-select').select2({
+          placeholder: 'Select an option',
+          cache: true,
+          data: result,
+          templateResult: function (d) { return $(d.text); },
+          templateSelection: function (d) { return $(d.text); }
+        });
+      });
+  }
