@@ -286,18 +286,29 @@ function printClient(element){
 
 function modifyProduct(id){
 
-console.log(id);
-
   let dataJson = {
 
-    "icon_id": 2,
+    "icon_id": $( "#input_icon_"+ id +"" ).val(),
     "name": $( "#input_name_"+ id +"" ).val(),
     "price": $( "#input_price_"+ id +"" ).val()
     }
 
-    console.log(dataJson);
+
     modifyProductAjax(id, dataJson);
     location.reload();
 
 
+}
+
+function createProduct(){
+console.log("createProduct()")
+  let dataJson = {
+
+    "icon_id": $( "#input_icon_create_product" ).val(),
+    "name": $( "#input_name_create_product" ).val(),
+    "price": $( "#input_price_create_product" ).val()
+    }
+
+    createProductAjax(dataJson);
+    location.reload();
 }

@@ -96,3 +96,42 @@ function modifyProductAjax(key, dataJson){
    }
   });
 }
+
+function createProductAjax(dataJson){
+
+  let urls = PRODUCTS;
+  return $.ajax({
+  url: urls,
+  type: 'POST',
+  contentType: 'application/json',
+  data: JSON.stringify(dataJson),
+  async:false,
+  success: function(data){
+     return data;
+   }
+  });
+}
+
+function deleteProduct(id){
+
+
+  let dataJson = {
+                  "ok": true
+                };
+
+
+  let urls = PRODUCTSDELETE;
+  urls = urls.replace("{product_id}", id);
+  return $.ajax({
+  url: urls,
+  type: 'DELETE',
+  contentType: 'application/json',
+  data: JSON.stringify(dataJson),
+  async:false,
+  success: function(data){
+     return data;
+   }
+  });
+  location.reload();
+  
+}

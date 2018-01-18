@@ -16,7 +16,7 @@
     <script src="node_modules/sweetalert/dist/sweetalert.min.js" type="text/javascript" > </script>
   </head>
 
-  <body onload="">
+  <body onload="printProducts()">
 
     <div id="modal2" class="modal">
       <div class="modal-content" id="modal2_content">
@@ -110,23 +110,11 @@
         <li class="waves-effect waves-light"><a href="#!"><i class="fa fa-credit-card fa-4x" aria-hidden="true"></i></a></li>
         <li class="waves-effect waves-light">
         <!-- Modal Trigger QR-->
-        <a onclick="scanner.start()" class="waves-effect waves-light modal-trigger" href="#modal1"><i class="fa fa-qrcode fa-4x" aria-hidden="true"></i></a></li>
+        <a onclick="" class="waves-effect waves-light modal-trigger" href=""><i class="fa fa-qrcode fa-4x" aria-hidden="true"></i></a></li>
       </ul>
     </div>
 
-<!-- Modal Structure QR -->
-    <div id="modal1" class="modal">
-      <div class="modal-content center">
-        <h4>Lecteur QR</h4>
-        <video id="preview"></video>
-      </div>
-      <div class="modal-footer">
-        <a href="#!"  onclick="scanner.stop()" class="modal-action modal-close waves-effect waves-green btn-flat">Utiliser Code QR</a>
-      </div>
-    </div>
 
-
-    <script type="text/javascript" src="modules/config.js"> </script>
     <script type="text/javascript" src="modules/main.js"> </script>
     <script type="text/javascript" src="modules/onclicks.js"> </script>
 
@@ -135,32 +123,11 @@
     <script> $( document ).ready(function() {$('.tabs').tabs({swipeable: true});});</script>
     <script>$(".button-collapse").sideNav();</script>
 
-    <script type="text/javascript">
-       let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
-       scanner.addListener('scan', function (content) {
-         swal({ title : "Votre QR : '"+content+"'",})
-       });
-       Instascan.Camera.getCameras().then(function (cameras) {
-         if (cameras.length > 0) {
-           scanner.start(cameras[0]);
-         }
-         else {
-           console.error('No cameras found.');
-           swal({ title : "Pas de camera trouvé",})
-         }
-        }).catch(function (e) {
-           console.error(e);
-           swal({ title : "Erreur: "+e+"",})
-         });
-    </script>
-
    <script type="text/javascript">
 
      $(document).ready(function(){
        $('.modal').modal();
-       scanner.stop();
        clickLocation();
-        
      });
 
    </script>

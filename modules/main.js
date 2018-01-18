@@ -8,22 +8,22 @@ function printProducts(){
   for(i = 0; i < products.length ; i++){
     console.log(i);
     let name = products[i].name;
-    let icon = products[i].icon_name;
+    let icon = products[i].icon_ref;
     let price = products[i].price;
     let products_in_list = products[i].products_in_list;
     let products_in_payment = products[i].products_in_payment;
     let id = products[i].id;
 
     let html = '<a class="white-text imgicon col m12 l4" onclick="clickOnProduct(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')" aria-label="' + name + '"> \
-       <i  class="fa fa-' + icon + ' fa-4x fa-border hoverable" aria-hidden="true" title="' + name + '"></i></i>\
+       <i  class="fa ' + icon + ' fa-4x fa-border hoverable" aria-hidden="true" title="' + name + '"></i></i>\
       </a>';
 
     let html2 = '<a class="white-text imgicon col m12 l4" onclick="clickInList(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')" aria-label="' + name + '"> \
-       <i id ="list'+ name +'" class="fa fa-' + icon + ' fa-3x fa-border hoverable" aria-hidden="true" title="' + name + '">'+products_in_list+'</i>\
+       <i id ="list'+ name +'" class="fa ' + icon + ' fa-3x fa-border hoverable" aria-hidden="true" title="' + name + '">'+products_in_list+'</i>\
       </a>';
 
     let html3 = '<a class="white-text imgicon col m12 l4" onclick="clickInPay(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')" aria-label="' + name + '"> \
-       <i id ="pay'+ name +'" class="fa fa-' + icon + ' fa-3x fa-border hoverable" aria-hidden="true" title="' + name + '">'+products_in_payment+'</i>\
+       <i id ="pay'+ name +'" class="fa ' + icon + ' fa-3x fa-border hoverable" aria-hidden="true" title="' + name + '">'+products_in_payment+'</i>\
       </a>';
 
       $('#products').append(html);

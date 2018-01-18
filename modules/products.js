@@ -44,12 +44,12 @@ function printIconsList(){
 
 function printListProducts(){
 
-    let list = getListProducts().responseJSON.products;
+  let list = getListProducts().responseJSON.products;
 
   list.forEach(function(product){
   let name = product.name;
   let price = product.price;
-  let icon = product.icon_id;
+  let icon = product.icon_ref;
   let id = product.id;
 
   let html = '<div id="modal_' + name + '" class="modal modal-fixed-footer">  \
@@ -68,32 +68,30 @@ function printListProducts(){
               <label for="first_name">Price in Fr</label>  \
             </div>  \
             <div class="input-field col s6">  \
-              <select class="icons-select"></select>  \
+              <select value="' + icon + '" class="icons-select" id="input_icon_' + id + '"></select>  \
           </div>  \
         </form>  \
       </div>  \
     </div>  \
     <div class="modal-footer">  \
       <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat orange-text">Cancel</a>  \
-      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat red-text">Suprimer</a> \
+      <a href="#!" onclick="deleteProduct('+ id +'); location.reload();" class="modal-action modal-close waves-effect waves-green btn-flat red-text">Suprimer</a> \
       <a href="#!" onclick="modifyProduct('+ id +')" class="modal-action modal-close waves-effect waves-green btn-flat green-text">Modifier</a>  \
     </div>  \
   </div>';
 
   $('body').append(html);
-
-
   });
   let icons = getIcons();
   list.forEach(function(product){
 
     let name = product.name;
     let price = product.price;
-    let icon = product.icon_name;
+    let icon = product.icon_ref;
 
     let html = '<div class="card col s3 offset-s1 hoverable container"> \
       <div class="card-image waves-effect waves-block waves-light center-align"> \
-        <i class="activator fa fa-' + icon + ' fa-10x"></i> \
+        <i class="activator fa ' + icon + ' fa-10x"></i> \
       </div> \
       <div class="card-content"> \
         <span class="card-title activator grey-text text-darken-4">' + name + ' <p class="right">' + price + '</p></span> \
@@ -103,17 +101,15 @@ function printListProducts(){
       <div class="card-reveal"> \
         <span class="card-title grey-text text-darken-4">' + name + '<i class="fa fa-times-circle-o right"></i></span> \
         <p> \
-          Icon Name: fa-' + icon + '<br><br> Description: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad.<br> \
+          Icon Name: ' + icon + '<br><br> Description: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad.<br> \
         </p> \
       </div> \
     </div> ' ;
     $('#products_list').append(html);
 
-
   });
 
   this.init_select2(icons);
-
 }
 
   function init_select2(icons)
@@ -121,16 +117,34 @@ function printListProducts(){
     return icons.then(function(data) {
         result = [];
         for (i = 0; i < data.length; i ++ ) {
-            name = "<div>" + '<i class="fa ' + data[i].ref + '"></i> ' + data[i].name + "</div>";
+            name = "<div>" + '<i class="right fa fa-2x ' + data[i].ref + '"></i> ' + data[i].name + "</div>";
             result[i] = {id: data[i].id, text: name};
         };
 
         $('.icons-select').select2({
-          placeholder: 'Select an option',
           cache: true,
           data: result,
           templateResult: function (d) { return $(d.text); },
           templateSelection: function (d) { return $(d.text); }
         });
       });
+
+
+  }
+
+
+
+
+  function actualize_icons_select2(){
+
+    let list = getListProducts().responseJSON.products;
+
+    list.forEach(function(product){
+
+      let icon_id = product.icon_id;
+      let id = product.id;
+      $("#input_icon_" + id).val(icon_id);
+      $("#input_icon_" + id).trigger('change');
+      });
+
   }
