@@ -114,7 +114,7 @@ function printListProducts(){
 
   function init_select2(icons)
   {
-    return icons.then(function(data) {
+      icons.then(function(data) {
         result = [];
         for (i = 0; i < data.length; i ++ ) {
             name = "<div>" + '<i class="right fa fa-2x ' + data[i].ref + '"></i> ' + data[i].name + "</div>";
@@ -129,22 +129,20 @@ function printListProducts(){
         });
       });
 
-
+      actualize_icons_select2();
+      return true;
   }
 
+  function actualize_icons_select2() {
+    return setTimeout(function() {
+      let list = getListProducts().responseJSON.products;
 
+      list.forEach(function(product) {
+        let icon_id = product.icon_id;
+        let id = product.id;
 
-
-  function actualize_icons_select2(){
-
-    let list = getListProducts().responseJSON.products;
-
-    list.forEach(function(product){
-
-      let icon_id = product.icon_id;
-      let id = product.id;
-      $("#input_icon_" + id).val(icon_id);
-      $("#input_icon_" + id).trigger('change');
+        $("#input_icon_" + id).val(icon_id);
+        $("#input_icon_" + id).trigger('change');
       });
-
+    }, 2000);
   }
