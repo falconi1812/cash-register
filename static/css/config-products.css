@@ -21,3 +21,7 @@
 .modal.modal-fixed-footer {
   height: 40%;
 }
+
+.card-title.activator{
+  font-size: 1em;
+}

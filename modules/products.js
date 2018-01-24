@@ -95,7 +95,10 @@ function printListProducts() {
         <i class="activator fa ' + icon + ' fa-10x"></i> \
       </div> \
       <div class="card-content"> \
-        <span class="card-title activator grey-text text-darken-4">' + name + ' <p class="right">' + price + '</p></span> \
+      <div class="card-action"> \
+        <span class="card-title activator grey-text text-darken-4"><p class="center"><b>' + name + '</b></p></span> \
+        <span class="card-title activator grey-text text-darken-4">Price :  <p class="right">' + price + '</p></span> \
+      </div> \
       </div> \
       <div class="card-action"> \
       <a class="red-text" href="#" onclick="deleteProduct(' + id + ');" >Delete</a>  \
