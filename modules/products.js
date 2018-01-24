@@ -88,6 +88,7 @@ function printListProducts(){
     let name = product.name;
     let price = product.price;
     let icon = product.icon_ref;
+    let id = product.id;
 
     let html = '<div class="card col s3 offset-s1 hoverable container"> \
       <div class="card-image waves-effect waves-block waves-light center-align"> \
@@ -96,8 +97,9 @@ function printListProducts(){
       <div class="card-content"> \
         <span class="card-title activator grey-text text-darken-4">' + name + ' <p class="right">' + price + '</p></span> \
       </div> \
-      <div class="card-action right-align"> \
-        <a class="blue-text modal-trigger" href="#modal_' + name + '">Edit</a>  \
+      <div class="card-action"> \
+      <a class="red-text" href="#" onclick="deleteProduct('+ id +');" >Delete</a>  \
+        <a class="blue-text modal-trigger right" href="#modal_' + name + '">Edit</a>  \
       <div class="card-reveal"> \
         <span class="card-title grey-text text-darken-4">' + name + '<i class="fa fa-times-circle-o right"></i></span> \
         <p> \

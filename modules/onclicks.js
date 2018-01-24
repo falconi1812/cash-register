@@ -20,14 +20,13 @@ function clickOnProduct(name, price, id, key){
 
 function clickInList(name, price, id, key){
 
-  let list_total = getList(key);
+    let list_total = getList(key);
 
     swal({ title : "Selectioner votre option" ,
     buttons: {
       "Suprimer": {
         value: "Suprimer",
       },
-
       "Tout": {
         value: "tout",
       },
@@ -38,6 +37,7 @@ function clickInList(name, price, id, key){
         value: "choisir",
       }
     }
+  })
     .then((value) => {
       switch (value) {
         case "Suprimer":
@@ -113,8 +113,6 @@ function clickInList(name, price, id, key){
           });
       }
     })
-
-  });
 }
 
 function clickInPay(name, price, id, key){
@@ -225,6 +223,7 @@ function clickLocation() {
              printClient(data);
 
 
+
            },
   });
 }
@@ -243,14 +242,14 @@ function clickQR() {
 
 
 function printClient(element){
-
+  console.log(element)
   let name = element.client.name;
   let type = element.location.type_id;
   let email = element.client.email;
   let phone = element.client.phone;
   let hour_start = element.location.hour_start;
   let hour_end = element.location.hour_end;
-  let terrain = element.location.terrain_id;
+  let terrain = element.location.terrain_id
   let players = element.location.players;
   let code = element.location.code;
   let html = '<a href="#modal2" class="modal-trigger brand-logo center">' + name + '</a>'
@@ -311,4 +310,41 @@ console.log("createProduct()")
 
     createProductAjax(dataJson);
     location.reload();
+}
+
+
+function deleteProduct(id){
+
+  swal({
+    title: "Are you sure?",
+    text: "Once deleted, you will not be able to recover this product!",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  })
+  .then((willDelete) => {
+    if (willDelete) {
+
+      let dataJson = {
+                      "ok": true
+                    };
+      let urls = PRODUCTSDELETE;
+      urls = urls.replace("{product_id}", id);
+      return $.ajax({
+      url: urls,
+      type: 'DELETE',
+      contentType: 'application/json',
+      data: JSON.stringify(dataJson),
+      async:false,
+      success: function(data){
+         location.reload();
+         return data;
+       }
+      });
+
+
+    } else {
+      swal("Your product is safe!");
+    }
+  });
 }

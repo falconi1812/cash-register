@@ -51,3 +51,7 @@ input.swal-content__input{
 .swal-button--Suprimer {
   background-color: #b71c1c;
 }
+
+div.collection.col.s12 {
+  border: 0px;
+}

@@ -5,8 +5,8 @@ function printProducts(){
   let totalInList = 0;
   let totalInPay = 0;
 
-  for(i = 0; i < products.length ; i++){
-    console.log(i);
+  for(i = 0; i < products.length  ; i++){
+
     let name = products[i].name;
     let icon = products[i].icon_ref;
     let price = products[i].price;
@@ -14,17 +14,20 @@ function printProducts(){
     let products_in_payment = products[i].products_in_payment;
     let id = products[i].id;
 
-    let html = '<a class="white-text imgicon col m12 l4" onclick="clickOnProduct(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')" aria-label="' + name + '"> \
+
+      let html =  '<a class="white-text imgicon col m12 l4" onclick="clickOnProduct(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')" aria-label="' + name + '"> \
        <i  class="fa ' + icon + ' fa-4x fa-border hoverable" aria-hidden="true" title="' + name + '"></i></i>\
       </a>';
 
-    let html2 = '<a class="white-text imgicon col m12 l4" onclick="clickInList(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')" aria-label="' + name + '"> \
+       let html2 =  '<a class="white-text imgicon col m12 l4" onclick="clickInList(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')" aria-label="' + name + '"> \
        <i id ="list'+ name +'" class="fa ' + icon + ' fa-3x fa-border hoverable" aria-hidden="true" title="' + name + '">'+products_in_list+'</i>\
       </a>';
 
-    let html3 = '<a class="white-text imgicon col m12 l4" onclick="clickInPay(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')" aria-label="' + name + '"> \
+     let html3 =  '<a class="white-text imgicon col m12 l4" onclick="clickInPay(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')" aria-label="' + name + '"> \
        <i id ="pay'+ name +'" class="fa ' + icon + ' fa-3x fa-border hoverable" aria-hidden="true" title="' + name + '">'+products_in_payment+'</i>\
       </a>';
+
+
 
       $('#products').append(html);
       $('#list').append(html2);
@@ -183,47 +186,7 @@ function parseResult(result) {
   return data;
 }
 
-function printClient(element) {
 
-  let name = element.client.name;
-  let type = element.type_id;
-  let email = element.client.email;
-  let phone = element.client.phone;
-  let hour_start = element.hour_start;
-  let hour_end = element.hour_end;
-  let terrain = element.terrain_id;
-  let players = element.players;
-  let code = element.code;
-  let html = '<a href="#modal2" class="modal-trigger brand-logo center">' + name + '</a>'
-  let html2 = '<table>\
-                  <tr> \
-                   <td><b>Email:</b></td>\
-                   <td>' + email + '</td>\
-                 </tr>\
-                  <tr> \
-                   <td><b>Phone:</b></td>\
-                   <td>' + phone + '</td>\
-                 </tr>\
-                  <tr> \
-                   <td><b>Terrain:</b></td>\
-                   <td>' + terrain + '</td>\
-                 </tr>\
-                  <tr> \
-                   <td><b>Hour Start:</b></td>\
-                   <td>' + hour_start + '</td>\
-                 </tr>\
-                  <tr> \
-                   <td><b>Hour End:</b></td>\
-                   <td>' + hour_end + '</td>\
-                 </tr>\
-                  <tr> \
-                   <td><b>Initial Players:</b></td>\
-                   <td>' + players + '</td>\
-                 </tr>'
-  $('#name_lastName').append(html);
-  $('#modal2_content').append(html2);
-
-}
 
 
 
