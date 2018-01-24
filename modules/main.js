@@ -126,18 +126,18 @@ function generateLocation(result) {
       let code = element.code;
       let html = '<div class="col s12 m6 l6"> \
                  <div onclick="writeLocation(\'' + code + '\')" class="hoverable">  \
-                   <div class="card light-blue darken-2">\
+                   <div class="card grey darken-4">\
                      <div class="card-content  black-text">\
                        <div class="row">\
                          <ul class="collection with-header">\
                            <li class="collection-header center"><h5>' + name + '</h5></li>\
-                           <a class="collection-item"><span class="badge black-text">' + type + '</span>Type: </a>\
-                           <a class="collection-item"><span class="badge black-text">' + phone + '</span>tel: </a>\
-                           <a class="collection-item"><span class="badge black-text">' + email + '</span>mail: </a>\
-                           <a class="collection-item"><span class="badge black-text">' + hour_start + '</span>Heure start: </a>\
-                           <a class="collection-item"><span class="badge black-text">' + hour_end + '</span>Heure end: </a>\
-                           <a class="collection-item"><span class="badge black-text">' + terrain + '</span>Terrain: </a>\
-                           <a class="collection-item"><span class="badge black-text">' + players + '</span>Nombre: </a>\
+                           <a class="collection-item grey-text darken-2"><span class="badge black-text">' + type + '</span>Type: </a>\
+                           <a class="collection-item grey-text darken-2"><span class="badge black-text">' + phone + '</span>tel: </a>\
+                           <a class="collection-item grey-text darken-2"><span class="badge black-text">' + email + '</span>mail: </a>\
+                           <a class="collection-item grey-text darken-2"><span class="badge black-text">' + hour_start + '</span>Heure start: </a>\
+                           <a class="collection-item grey-text darken-2"><span class="badge black-text">' + hour_end + '</span>Heure end: </a>\
+                           <a class="collection-item grey-text darken-2"><span class="badge black-text">' + terrain + '</span>Terrain: </a>\
+                           <a class="collection-item grey-text darken-2"><span class="badge black-text">' + players + '</span>Nombre: </a>\
                          </ul>\
                        </div>\
                      </div>\
