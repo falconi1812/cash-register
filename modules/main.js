@@ -1,11 +1,11 @@
-function printProducts(){
+function printProducts() {
 
   let result = getProducts();
   let products = result.responseJSON.products;
   let totalInList = 0;
   let totalInPay = 0;
 
-  for(i = 0; i < products.length  ; i++){
+  for (i = 0; i < products.length; i++) {
 
     let name = products[i].name;
     let icon = products[i].icon_ref;
@@ -15,26 +15,26 @@ function printProducts(){
     let id = products[i].id;
 
 
-      let html =  '<a class="white-text imgicon col m12 l4" onclick="clickOnProduct(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')" aria-label="' + name + '"> \
+    let html = '<a class="white-text imgicon col m12 l4" onclick="clickOnProduct(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')" aria-label="' + name + '"> \
        <i  class="fa ' + icon + ' fa-4x fa-border hoverable" aria-hidden="true" title="' + name + '"></i></i>\
       </a>';
 
-       let html2 =  '<a class="white-text imgicon col m12 l4" onclick="clickInList(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')" aria-label="' + name + '"> \
-       <i id ="list'+ name +'" class="fa ' + icon + ' fa-3x fa-border hoverable" aria-hidden="true" title="' + name + '">'+products_in_list+'</i>\
+    let html2 = '<a class="white-text imgicon col m12 l4" onclick="clickInList(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')" aria-label="' + name + '"> \
+       <i id ="list' + name + '" class="fa ' + icon + ' fa-3x fa-border hoverable" aria-hidden="true" title="' + name + '">' + products_in_list + '</i>\
       </a>';
 
-     let html3 =  '<a class="white-text imgicon col m12 l4" onclick="clickInPay(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')" aria-label="' + name + '"> \
-       <i id ="pay'+ name +'" class="fa ' + icon + ' fa-3x fa-border hoverable" aria-hidden="true" title="' + name + '">'+products_in_payment+'</i>\
+    let html3 = '<a class="white-text imgicon col m12 l4" onclick="clickInPay(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')" aria-label="' + name + '"> \
+       <i id ="pay' + name + '" class="fa ' + icon + ' fa-3x fa-border hoverable" aria-hidden="true" title="' + name + '">' + products_in_payment + '</i>\
       </a>';
 
 
 
-      $('#products').append(html);
-      $('#list').append(html2);
-      $('#topay').append(html3)
+    $('#products').append(html);
+    $('#list').append(html2);
+    $('#topay').append(html3)
 
-      totalInList += products_in_list * price;
-      totalInPay += products_in_payment * price;
+    totalInList += products_in_list * price;
+    totalInPay += products_in_payment * price;
   }
 
   $('#totalList').html(totalInList);
@@ -42,42 +42,42 @@ function printProducts(){
 }
 
 
-function getPay(key){
+function getPay(key) {
   let result = getProducts();
   let product = result.responseJSON.products[key].products_in_payment;
   return product;
 }
 
 
-function getList(key){
+function getList(key) {
   let result = getProducts();
   let product = result.responseJSON.products[key].products_in_list;
   return product;
 }
 
 
-function actualize(){
+function actualize() {
   let result = getProducts();
   let products = result.responseJSON.products;
   let totalInList = 0;
   let totalInPay = 0;
 
-  products.forEach(function(key){
-  let products_in_list = key.products_in_list;
-  let products_in_payment = key.products_in_payment;
-  let price = key.price;
-  let name = key.name;
+  products.forEach(function(key) {
+    let products_in_list = key.products_in_list;
+    let products_in_payment = key.products_in_payment;
+    let price = key.price;
+    let name = key.name;
 
-    $('#list'+ name).html(products_in_list);
-    $('#pay'+ name).html(products_in_payment);
+    $('#list' + name).html(products_in_list);
+    $('#pay' + name).html(products_in_payment);
 
 
     totalInList += products_in_list * price;
     totalInPay += products_in_payment * price;
-    })
+  })
 
-    $('#totalList').html(totalInList);
-    $('#totalPay').html(totalInPay);
+  $('#totalList').html(totalInList);
+  $('#totalPay').html(totalInPay);
 
 
 }

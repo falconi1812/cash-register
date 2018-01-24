@@ -1,31 +1,32 @@
 a.white-text.imgicon {
-    padding-bottom: 2%;
+  padding-bottom: 2%;
 }
 
 a.white-text.imgicon.col.m12.l4 {
-    padding-bottom: 20%;
+  padding-bottom: 20%;
 }
 
-a.white-text.imgicon.col.m12.l4{
+a.white-text.imgicon.col.m12.l4 {
   padding: 1%;
   padding-bottom: 2%;
 }
 
-input.swal-content__input{
+input.swal-content__input {
   font-size: 5rem;
   text-align: center;
-  height : auto;
+  height: auto;
 }
 
-.swal-text{
+.swal-text {
   font-size: 2.5rem;
 }
-.swal-button{
+
+.swal-button {
   font-size: 1.5rem;
 }
 
 .btn-large i {
-    font-size: 2rem;
+  font-size: 2rem;
 }
 
 .fa-6x {

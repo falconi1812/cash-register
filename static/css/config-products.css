@@ -1,18 +1,23 @@
 .fa-6x {
   font-size: 6em !important;
 }
+
 .fa-7x {
   font-size: 7em !important;
 }
+
 .fa-8x {
   font-size: 8em !important;
 }
+
 .fa-9x {
   font-size: 9em !important;
 }
+
 .fa-10x {
   font-size: 10em !important;
 }
+
 .modal.modal-fixed-footer {
   height: 40%;
 }

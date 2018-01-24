@@ -1,4 +1,3 @@
-
 const MAIN = "https://api-paintball.herokuapp.com";
 
 const CLIENTS = MAIN + "/clients/2017-10-28";
