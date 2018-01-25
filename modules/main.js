@@ -14,20 +14,17 @@ function printProducts() {
     let products_in_payment = products[i].products_in_payment;
     let id = products[i].id;
 
-
     let html = '<a class="white-text imgicon col m12 l4" onclick="clickOnProduct(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')" aria-label="' + name + '"> \
        <i  class="fa ' + icon + ' fa-4x fa-border hoverable" aria-hidden="true" title="' + name + '"></i></i>\
       </a>';
 
     let html2 = '<a class="white-text imgicon col m12 l4" onclick="clickInList(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')" aria-label="' + name + '"> \
-       <i id ="list' + name + '" class="fa ' + icon + ' fa-3x fa-border hoverable" aria-hidden="true" title="' + name + '">' + products_in_list + '</i>\
+       <i id ="list' + id + '" class="fa ' + icon + ' fa-3x fa-border hoverable" aria-hidden="true" title="' + name + '">' + products_in_list + '</i>\
       </a>';
 
     let html3 = '<a class="white-text imgicon col m12 l4" onclick="clickInPay(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')" aria-label="' + name + '"> \
-       <i id ="pay' + name + '" class="fa ' + icon + ' fa-3x fa-border hoverable" aria-hidden="true" title="' + name + '">' + products_in_payment + '</i>\
+       <i id ="pay' + id + '" class="fa ' + icon + ' fa-3x fa-border hoverable" aria-hidden="true" title="' + name + '">' + products_in_payment + '</i>\
       </a>';
-
-
 
     $('#products').append(html);
     $('#list').append(html2);
@@ -35,26 +32,23 @@ function printProducts() {
 
     totalInList += products_in_list * price;
     totalInPay += products_in_payment * price;
-  }
+    }
 
   $('#totalList').html(totalInList);
   $('#totalPay').html(totalInPay);
 }
 
-
 function getPay(key) {
   let result = getProducts();
   let product = result.responseJSON.products[key].products_in_payment;
   return product;
-}
-
+  }
 
 function getList(key) {
   let result = getProducts();
   let product = result.responseJSON.products[key].products_in_list;
   return product;
-}
-
+  }
 
 function actualize() {
   let result = getProducts();
@@ -66,11 +60,10 @@ function actualize() {
     let products_in_list = key.products_in_list;
     let products_in_payment = key.products_in_payment;
     let price = key.price;
-    let name = key.name;
+    let id = key.id;
 
-    $('#list' + name).html(products_in_list);
-    $('#pay' + name).html(products_in_payment);
-
+    $('#list' + id).html(products_in_list);
+    $('#pay' + id).html(products_in_payment);
 
     totalInList += products_in_list * price;
     totalInPay += products_in_payment * price;
@@ -78,8 +71,6 @@ function actualize() {
 
   $('#totalList').html(totalInList);
   $('#totalPay').html(totalInPay);
-
-
 }
 
 function getProducts() {
@@ -185,9 +176,5 @@ function parseResult(result) {
   })
   return data;
 }
-
-
-
-
 
 //printProducts();

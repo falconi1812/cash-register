@@ -262,7 +262,6 @@ function clickQR() {
 
 
 function printClient(element) {
-  console.log(element)
   let name = element.client.name;
   let type = element.location.type_id;
   let email = element.client.email;
@@ -320,7 +319,6 @@ function modifyProduct(id) {
 }
 
 function createProduct() {
-  console.log("createProduct()")
   let dataJson = {
 
     "icon_id": $("#input_icon_create_product").val(),

@@ -83,14 +83,20 @@ function printListProducts() {
     $('body').append(html);
   });
   let icons = getIcons();
+  let row = 1;
   list.forEach(function(product) {
 
     let name = product.name;
     let price = product.price;
     let icon = product.icon_ref;
     let id = product.id;
+    let html = '';
 
-    let html = '<div class="card col s3 offset-s1 hoverable container"> \
+    if (row % 3 == 0){
+      html = '<div class="row">'
+    }
+
+     html = html + '<div class="card col s3 offset-s1 hoverable container"> \
       <div class="card-image waves-effect waves-block waves-light center-align"> \
         <i class="activator fa ' + icon + ' fa-10x"></i> \
       </div> \
@@ -110,8 +116,9 @@ function printListProducts() {
         </p> \
       </div> \
     </div> ';
-    $('#products_list').append(html);
 
+    $('#products_list').append(html);
+    row++;
   });
 
   this.init_select2(icons);
