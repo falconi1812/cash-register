@@ -27,6 +27,7 @@
     "materialize-css": "^0.100.1",
     "mysql": "*",
     "sweetalert": "*",
-    "select2": "~4.0"
+    "select2": "~4.0",
+    "uglify-js": "*"
   }
 }
