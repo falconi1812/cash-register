@@ -6,7 +6,7 @@
   <meta http-equiv="cache-control" content="no-cache" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="-1" />
-  <title>Location (Client Name)</title>
+  <title></title>
   <link rel="stylesheet" href="node_modules/materialize-css/dist/css/materialize.min.css">
   <link href="static/css/main.css" rel="stylesheet">
   <link rel="stylesheet" href="static/line-awesome/css/line-awesome-font-awesome.min.css">
@@ -15,7 +15,7 @@
   </script>
   <script src="node_modules/sweetalert/dist/sweetalert.min.js" type="text/javascript">
   </script>
-  <script type="text/javascript" src="modules/modules.min.js">
+  <script type="text/javascript" src="modules/main.js">
   </script>
 </head>
 
@@ -68,9 +68,9 @@
     </ul>
 
 
-    <div class="col s12 m4 hoverable">
+    <div class="col s12 m4 hoverable" >
       <!--Container LIST-->
-      <div class="card teal darken-4 center">
+      <div class="card teal darken-4 center" id="container_list">
         <div class="card-content white-text row">
           <span class="card-title center">LIST</span>
           <div id="list" class "row">
@@ -78,7 +78,7 @@
           </div>
           <span class="card-title center col s12">LIST INFO</span>
           <div class="collection col s12">
-            <a class="collection-item teal-text darken-5 bold-text "><h5 class="left">Total</h5><h5 id="totalList"class="right-align">0 Fr</h5></a>
+            <a class="collection-item teal-text darken-5 bold-text "><h5 class="left">Total</h5><h5 id="totalList"class="right-align">0  CHF</h5></a>
           </div>
         </div>
       </div>
@@ -86,16 +86,16 @@
 
     <div class="col s12 m4 hoverable">
       <!--Container PAYMENT-->
-      <div class="card lime darken-4 center">
+      <div class="card lime darken-4 center" id="container_payment">
         <div class="card-content white-text row">
-          <span class="card-title center">PAYMENT</span>
-          <div id="topay" class "row">
+          <span class="card-title center disapear" id="PAYMENT">PAYMENT</span>
+          <div id="topay" class="row disapear">
             <!-- LISTE DES ARTICLES A PAYER -->
           </div>
-          <span class="card-title center row col s12">PAYMENT INFO</span>
+          <span class="card-title center row col s12" id="PAYMENT_INFO">PAYMENT INFO</span>
           <div class="collection col s12">
-            <a class="collection-item teal-text darken-5 bold-text"><h5 class="left">Total a Payer</h5><h5 id="totalPay"class="right-align">0 Fr</h5></a>
-            <a class="collection-item teal-text darken-5 bold-text"><h5 class="left">Total Payé</h5><h5 id="totalPayed"class="right-align">0 Fr</h5></a>
+            <a class="collection-item teal-text darken-5 bold-text disapear" id="total_a_payer"><h5 class="left">Total a Payer</h5><h5 id="totalPay"class="right-align">0 CHF</h5></a>
+            <a class="collection-item teal-text darken-5 bold-text"><h5 class="left">Payé</h5><h5 id="totalPayed"class="right-align">0 CHF</h5></a>
           </div>
         </div>
       </div>
@@ -108,16 +108,13 @@
         <i class="fa fa-shopping-cart" aria-hidden="true"></i>
       </a>
     <ul>
-      <li class="waves-effect waves-light"><a href="#!"><i class="fa fa-money fa-4x" aria-hidden="true"></i></a></li>
-      <li class="waves-effect waves-light"><a href="#!"><i class="fa fa-credit-card fa-4x" aria-hidden="true"></i></a></li>
-      <li class="waves-effect waves-light"><a <i class="fa fa-shopping-cart fa-4x" aria-hidden="true"></i></a></li>
+      <li class="waves-effect waves-light" onclick="close_Cash_register();"><a <i class="fa fa-shopping-cart fa-4x" aria-hidden="true"></i></a></li>
+      <li class="waves-effect waves-light lime darken-4" onclick="click_pay_cash()"><a href="#!"><i class="fa fa-money fa-4x" aria-hidden="true"></i></a></li>
+      <li class="waves-effect waves-light lime darken-4" onclick="click_pay_carte()"><a href="#!"><i class="fa fa-credit-card fa-4x" aria-hidden="true"></i></a></li>
     </ul>
   </div>
 
-
-
-  <script src="node_modules/materialize-css/dist/js/materialize.min.js" type="text/javascript">
-  </script>
+  <script src="node_modules/materialize-css/dist/js/materialize.min.js" type="text/javascript"></script>
   <script>
     $(document).ready(function() {
       $('.tabs').tabs({
