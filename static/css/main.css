@@ -1,5 +1,14 @@
 a.white-text.imgicon {
-  padding-bottom: 2%;
+  padding: 2%;
+  border: 0.17em solid;
+  border-radius: 8px;
+  display: inline-grid;
+  margin-top: 0.5em;
+  margin-right: 0.2em;
+  margin-bottom: 0.5em;
+  margin-left: 0.2em;
+  max-width: 10em;
+  min-width: 10em;
 }
 
 a.white-text.imgicon.col.m12.l4 {
@@ -7,7 +16,7 @@ a.white-text.imgicon.col.m12.l4 {
 }
 
 a.white-text.imgicon.col.m12.l4 {
-  padding: 1%;
+z
   padding-bottom: 2%;
 }
 
@@ -55,4 +64,16 @@ input.swal-content__input {
 
 div.collection.col.s12 {
   border: 0px;
+}
+
+
+
+.center_range{
+width: 400px;
+  margin: 60px auto;
+}
+.input-number{
+  width: 40% !important;
+  text-align: center !important;
+  font-size: 2em !important;
 }

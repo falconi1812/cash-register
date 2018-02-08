@@ -11,6 +11,7 @@ const DELETELOCAION = MAIN + "/locations/{location_code}"
 const MAINFRONT = "http://127.0.0.1:8080"
 const PUTPAYMENT = MAIN + "/payments/{location_id}/{type_id}"
 
+
 function printProducts() {
 
   let result = getProducts();
@@ -26,16 +27,16 @@ function printProducts() {
     let products_in_payment = products[i].products_in_payment;
     let id = products[i].id;
 
-    let html = '<a class="white-text imgicon col m12 l4"  onclick="clickOnProduct(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')" aria-label="' + name + '"> \
-       <i  class="fa ' + icon + ' fa-4x fa-border hoverable" aria-hidden="true" title="' + name + '"></i></i>\
+    let html = '<a class="white-text imgicon hoverable"  onclick="clickOnProduct(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')" aria-label="' + name + '"> \
+       <i  class="fa ' + icon + ' fa-4x  " aria-hidden="true" title="' + name + '"></i></i>\
       </a>';
 
-    let html2 = '<a class="white-text imgicon col m12 l4" id="list_fade'+ id +'" onclick="clickInList(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')" aria-label="' + name + '"> \
-       <i id ="list' + id + '" class="fa ' + icon + ' fa-3x fa-border hoverable" aria-hidden="true" title="' + name + '">' + products_in_list + '</i>\
+    let html2 = '<a class="white-text imgicon  hoverable" id="list_fade'+ id +'" onclick="clickInList(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')" aria-label="' + name + '"> \
+       <i id ="list' + id + '" class="fa ' + icon + ' fa-3x  " aria-hidden="true" title="' + name + '">' + products_in_list + '</i>\
       </a>';
 
-    let html3 = '<a class="white-text imgicon col m12 l4" id="pay_fade'+ id +'" onclick="clickInPay(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')" aria-label="' + name + '"> \
-       <i id ="pay' + id + '" class="fa ' + icon + ' fa-3x fa-border hoverable" aria-hidden="true" title="' + name + '">' + products_in_payment + '</i>\
+    let html3 = '<a class="white-text imgicon hoverable" id="pay_fade'+ id +'" onclick="clickInPay(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')" aria-label="' + name + '"> \
+       <i id ="pay' + id + '" class="fa ' + icon + ' fa-3x  " aria-hidden="true" title="' + name + '">' + products_in_payment + '</i>\
       </a>';
 
     $('#products').append(html);
@@ -242,85 +243,46 @@ function parseResult(result) {
 }
 function clickOnProduct(name, price, id, key) {
   swal("Ajouter -> " + name, {
-      content: "input",
+      content: create_minus_plus("1", "100", "0"),
     })
     .then((value) => {
-      if (value == 0) {
-        swal({
-          title: " Il faut écrire un numero",
-          icon: "warning",
-        });
-      } else {
+        value = $("#input_counter").val();
         addNumberList(id, parseInt(value));
         actualize();
         Materialize.toast(+value + '  ' + name + '   -> List', 3000);
-      }
     });
 }
 function clickInList(name, price, id, key) {
   let list_total = getList(key);
   swal({
       title: "Selectioner votre option",
+      content: create_minus_plus("1", list_total, "1"),
       buttons: {
         "Surimer": {
           value: "Suprimer",
         },
-        "Tout->": {
+        "Tout-->": {
           value: "tout",
         },
-        "Un->": {
-          value: "un",
-        },
-        "->": {
+        "OK-->": {
           value: "choisir",
         }
       }
     })
     .then((value) => {
       switch (value) {
-        case "Suprimer":
-          swal("Combien?", {
-              content: "input",
-            })
-            .then((value) => {
 
-              if (list_total > 0 && list_total >= parseInt(value)) {
+        case "Suprimer":
+                value = $("#input_counter").val();
                 removeNumberList(id, parseInt(value));
                 actualize();
                 Materialize.toast(parseInt(value) + '  ' + name + '   Deleted', 3000);
-
-              } else {
-                swal({
-                  title: " Il n'y a pas assez ---> " + name,
-                  icon: "warning",
-                });
-              }
-            });
-          break;
-
+                break;
         case "tout":
-
           if (list_total > 0) {
-
             editproduct(id, 0, list_total, list_total, 0);
             actualize();
             Materialize.toast(list_total + '  ' + name + '   -> Payment', 3000);
-          } else {
-
-            swal({
-              title: " Il n'y plus de " + name,
-              icon: "warning",
-            });
-          }
-          break;
-
-        case "un":
-          if (list_total > 0) {
-
-            editproduct(id, 0, 1, 1, 0);
-            actualize();
-            Materialize.toast(1 + '  ' + name + '   -> Payment', 3000);
-
           } else {
             swal({
               title: " Il n'y plus de " + name,
@@ -329,30 +291,11 @@ function clickInList(name, price, id, key) {
           }
           break;
         case "choisir":
-          swal("Combien?:", {
-              content: "input",
-            })
-            .then((value) => {
-
-              if (list_total > 0 && list_total >= parseInt(value)) {
-
+        value = $("#input_counter").val();
                 editproduct(id, 0, parseInt(value), parseInt(value), 0)
                 Materialize.toast(+value + '  ' + name + '   -> Payment', 3000);
                 actualize();
-
-              } else if (value == "0" | value == 0) {
-                swal({
-                  title: " Il faut écrire un numero",
-                  icon: "warning",
-                });
-              } else {
-                swal({
-                  title: " Il n'y a pas assez ---> " + name,
-                  icon: "warning",
-                });
-              }
-            });
-          break;
+        break;
         default:
           swal("Operation cancelé!", {
             className: "red",
@@ -366,84 +309,28 @@ function clickInPay(name, price, id, key) {
   let pay_total = getPay(key);
   swal({
       title: "Selectioner votre option",
+      content: create_minus_plus("1", pay_total, "1"),
       buttons: {
-        Suprimer: {
-          value: "Suprimer",
-        },
-        Tout: {
+        "<--Tout": {
           value: "tout",
         },
-        Un: {
-          value: "un",
-        },
-        "<=": {
+        "<--": {
           value: "choisir",
         }
       }
     })
     .then((value) => {
       switch (value) {
-
-        case "Suprimer":
-          swal("Combien?", {
-              content: "input",
-            })
-            .then((value) => {
-              if (pay_total > 0 && pay_total >= parseInt(value)) {
-                removeNumberPay(id, parseInt(value));
-                actualize();
-                Materialize.toast(parseInt(value) + '  ' + name + '   Deleted', 3000);
-
-              } else {
-                swal({
-                  title: " Il n'y a pas assez ---> " + name,
-                  icon: "warning",
-                });
-              }
-            });
-          break;
-
         case "tout":
           editproduct(id, pay_total, 0, 0, pay_total);
           actualize();
           Materialize.toast(+pay_total + '  ' + name + ' <-- List', 3000);
           break;
-
-        case "un":
-          if (pay_total > 0) {
-            editproduct(id, 1, 0, 0, 1);
-            actualize();
-            Materialize.toast(1 + '  ' + name + '   <- List', 3000);
-          } else {
-            swal({
-              title: " Il n'y plus de " + name,
-              icon: "warning",
-            });
-          }
-          break;
         case "choisir":
-          swal("Combien?:", {
-              content: "input",
-            })
-            .then((value) => {
-
-              if (pay_total > 0 && pay_total >= parseInt(value)) {
-
-                editproduct(id, parseInt(value), 0, 0, parseInt(value));
-                actualize();
-                Materialize.toast(+value + '  ' + name + '   <- List', 3000);
-              } else if (value == 0) {
-                swal({
-                  title: " Il faut écrire un numero",
-                  icon: "warning",
-                });
-              } else {
-                swal({
-                  title: " Il n'y a pas assez ---> " + name,
-                  icon: "warning",
-                });
-              }
-            });
+          value = $("#input_counter").val()
+          editproduct(id, parseInt(value), 0, 0, parseInt(value));
+          actualize();
+          Materialize.toast(+value + '  ' + name + '   <- List', 3000);
           break;
         default:
           swal("Operation cancelé!", {
@@ -860,7 +747,7 @@ function click_pay_cash(){
         location.reload();
       });
     } else {
-      swal("Your imaginary file is safe!");
+      swal("Vous n'avais rien encaissé!");
     }
   });
 }}
@@ -943,4 +830,133 @@ function pay_carte(){
     }
   });
   pay_products(2, to_pay, id_location)
+}
+function create_minus_plus(minimum, maximum, value){
+
+  let div_principal = document.createElement("div");
+  let div = document.createElement("div");
+  let spam_minus = document.createElement("span");
+  let button_minus = document.createElement("button");
+  let fa_minus = document.createElement("span");
+  let input = document.createElement("input");
+  let spam_plus = document.createElement("spam");
+  let button_plus = document.createElement("button");
+  let fa_plus = document.createElement("span");
+
+  $(div_principal).attr({
+    class: "center_range",
+    id: "div_counter"
+  });
+  $(button_minus).attr({
+    type: "button",
+    class: "btn-floating btn-large waves-effect waves-light red",
+    "data-type": "minus",
+    "data-field": "quant[2]"
+  });
+  $(fa_minus).attr("class", "fa fa-minus");
+  $(fa_plus).attr("class", "fa fa-plus");
+  $(button_plus).attr({
+    type: "button",
+    class: "btn-floating btn-large waves-effect waves-light green",
+    "data-type": "plus",
+    "data-field": "quant[2]"
+  });
+
+
+  $(input).attr({
+    type: "text",
+    name: "quant[2]",
+    class: "form-control input-number",
+    value: value,
+    min: minimum,
+    max: maximum,
+    id: "input_counter"
+  })
+
+  div_principal.appendChild(div);
+  div.appendChild(spam_minus);
+  div.appendChild(input);
+  div.appendChild(spam_plus);
+  spam_minus.appendChild(button_minus);
+  button_minus.appendChild(fa_minus);
+  spam_plus.appendChild(button_plus);
+  button_plus.appendChild(fa_plus);
+
+  let script = document.createElement("script");
+  script.innerHTML = `$('.btn-floating').click(function(e){
+      e.preventDefault();
+
+      fieldName = $(this).attr('data-field');
+      type      = $(this).attr('data-type');
+      var input = $("input[name='"+fieldName+"']");
+      var currentVal = parseInt(input.val());
+      if (!isNaN(currentVal)) {
+          if(type == 'minus') {
+
+              if(currentVal > input.attr('min')) {
+                  input.val(currentVal - 1).change();
+              }
+              if(parseInt(input.val()) == input.attr('min')) {
+                  $(this).attr('disabled', true);
+              }
+
+          } else if(type == 'plus') {
+
+              if(currentVal < input.attr('max')) {
+                  input.val(currentVal + 1).change();
+              }
+              if(parseInt(input.val()) == input.attr('max')) {
+                  $(this).attr('disabled', true);
+              }
+
+          }
+      } else {
+          input.val(0);
+      }
+  });
+  $('.input-number').focusin(function(){
+     $(this).data('oldValue', $(this).val());
+  });
+  $('.input-number').change(function() {
+
+      minValue =  parseInt($(this).attr('min'));
+      maxValue =  parseInt($(this).attr('max'));
+      valueCurrent = parseInt($(this).val());
+
+      name = $(this).attr('name');
+      if(valueCurrent >= minValue) {
+          $(".btn-floating[data-type='minus'][data-field='"+name+"']").removeAttr('disabled')
+      } else {
+          alert('Sorry, the minimum value was reached');
+          $(this).val($(this).data('oldValue'));
+      }
+      if(valueCurrent <= maxValue) {
+          $(".btn-floating[data-type='plus'][data-field='"+name+"']").removeAttr('disabled')
+      } else {
+        swal({title: "Vous avez depase le maximun posible",
+              icon: "warning",
+              });;
+          $(this).val($(this).data('oldValue'));
+      }
+
+
+  });
+  $(".input-number").keydown(function (e) {
+          // Allow: backspace, delete, tab, escape, enter and .
+          if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
+               // Allow: Ctrl+A
+              (e.keyCode == 65 && e.ctrlKey === true) ||
+               // Allow: home, end, left, right
+              (e.keyCode >= 35 && e.keyCode <= 39)) {
+                   // let it happen, don't do anything
+                   return;
+          }
+          // Ensure that it is a number and stop the keypress
+          if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+              e.preventDefault();
+          }
+      });`;
+  div_principal.appendChild(script);
+  console.log(div_principal)
+  return div_principal;
 }

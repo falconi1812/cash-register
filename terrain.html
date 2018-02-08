@@ -73,7 +73,7 @@
       <div class="card teal darken-4 center" id="container_list">
         <div class="card-content white-text row">
           <span class="card-title center">LIST</span>
-          <div id="list" class "row">
+          <div id="list" class "">
             <!-- LISTE DES ARTICLES A LIST -->
           </div>
           <span class="card-title center col s12">LIST INFO</span>
@@ -95,7 +95,7 @@
           <span class="card-title center row col s12" id="PAYMENT_INFO">PAYMENT INFO</span>
           <div class="collection col s12">
             <a class="collection-item teal-text darken-5 bold-text disapear" id="total_a_payer"><h5 class="left">Total a Payer</h5><h5 id="totalPay"class="right-align">0 CHF</h5></a>
-            <a class="collection-item teal-text darken-5 bold-text"><h5 class="left">Payé</h5><h5 id="totalPayed"class="right-align">0 CHF</h5></a>
+            <a class="collection-item teal-text darken-5 bold-text"><h5 class="left">Payé</h5><h5 id="totalPayed"class="right-align">200 CHF</h5></a>
           </div>
         </div>
       </div>
@@ -114,6 +114,8 @@
     </ul>
   </div>
 
+
+
   <script src="node_modules/materialize-css/dist/js/materialize.min.js" type="text/javascript"></script>
   <script>
     $(document).ready(function() {
@@ -127,10 +129,13 @@
   </script>
 
   <script type="text/javascript">
+
     $(document).ready(function() {
       $('.modal').modal();
       clickLocation();
     });
+
+
   </script>
 
 </body>
