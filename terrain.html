@@ -9,7 +9,7 @@
   <title></title>
   <link rel="stylesheet" href="node_modules/materialize-css/dist/css/materialize.min.css">
   <link href="static/css/main.css" rel="stylesheet">
-  <link rel="stylesheet" href="static/line-awesome/css/line-awesome-font-awesome.min.css">
+  <link rel="stylesheet" href="static/font-awesome-4.7.0/css/font-awesome.min.css">
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/3.3.3/adapter.min.js"></script>
   <script src="node_modules/jquery/dist/jquery.min.js" type="text/javascript">
   </script>
@@ -50,7 +50,7 @@
       <!--Container VENTE -->
       <div class="card  cyan darken-4">
         <div class="card-content white-text">
-          <span class="card-title center ">VENTE</span>
+          <span class="card-title center "><h3>VENTE</h3></span>
           <div class="center">
             <div id="products" class="row">
             </div>
@@ -70,15 +70,18 @@
 
     <div class="col s12 m4 hoverable" >
       <!--Container LIST-->
-      <div class="card teal darken-4 center" id="container_list">
-        <div class="card-content white-text row">
-          <span class="card-title center">LIST</span>
+      <div class="card teal darken-4 center" >
+        <div class="card-content white-text row" id="container_list">
+          <span class="card-title center" id="container_list1"><h3>LISTE</h3></span>
+          <div id="list_vide">
+            <h4>VIDE</h4>
+          </div>
           <div id="list" class "">
             <!-- LISTE DES ARTICLES A LIST -->
           </div>
-          <span class="card-title center col s12">LIST INFO</span>
-          <div class="collection col s12">
-            <a class="collection-item teal-text darken-5 bold-text "><h5 class="left">Total</h5><h5 id="totalList"class="right-align">0  CHF</h5></a>
+          <span class="card-title center col s12 " id="container_list2">LIST INFO</span>
+          <div class="collection col s12" id="container_list3">
+            <a class="collection-item teal-text darken-4 bold-text"><h5 class="left">Total</h5><h5 id="totalList"class="right-align">0  CHF</h5></a>
           </div>
         </div>
       </div>
@@ -86,16 +89,19 @@
 
     <div class="col s12 m4 hoverable">
       <!--Container PAYMENT-->
-      <div class="card lime darken-4 center" id="container_payment">
-        <div class="card-content white-text row">
-          <span class="card-title center disapear" id="PAYMENT">PAYMENT</span>
-          <div id="topay" class="row disapear">
+      <div class="card lime darken-4 center" >
+        <div class="card-content white-text row" id="container_payment">
+          <span class="card-title center" id="PAYMENT"><h3>PAYMENT</h3></span>
+          <div id="payment_vide">
+            <h4>VIDE</h4>
+          </div>
+          <div id="topay" class="row">
             <!-- LISTE DES ARTICLES A PAYER -->
           </div>
           <span class="card-title center row col s12" id="PAYMENT_INFO">PAYMENT INFO</span>
-          <div class="collection col s12">
-            <a class="collection-item teal-text darken-5 bold-text disapear" id="total_a_payer"><h5 class="left">Total a Payer</h5><h5 id="totalPay"class="right-align">0 CHF</h5></a>
-            <a class="collection-item teal-text darken-5 bold-text"><h5 class="left">Payé</h5><h5 id="totalPayed"class="right-align">200 CHF</h5></a>
+          <div class="collection col s12" id="payments_total">
+            <a class="collection-item teal-text darken-5 bold-text disapear" id="total_a_payer"><h5 class="left">Total à payer</h5><h5 id="totalPay"class="right-align">0 CHF</h5></a>
+            <a class="collection-item teal-text darken-5 bold-text"><h5 class="left">Payé</h5><h5 id="totalPayed"class="right-align">0  CHF</h5></a>
           </div>
         </div>
       </div>
@@ -133,6 +139,7 @@
     $(document).ready(function() {
       $('.modal').modal();
       clickLocation();
+
     });
 
 

@@ -27,16 +27,16 @@ function printProducts() {
     let products_in_payment = products[i].products_in_payment;
     let id = products[i].id;
 
-    let html = '<a class="white-text imgicon hoverable"  onclick="clickOnProduct(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')" aria-label="' + name + '"> \
-       <i  class="fa ' + icon + ' fa-4x  " aria-hidden="true" title="' + name + '"></i></i>\
+    let html = `<a class="white-text imgicon hoverable tooltipped" data-position="top" data-delay="50" style="cursor: pointer" data-tooltip="`+name+` Prix: `+price+`"  onclick="clickOnProduct(\'` + name + `\',\'` + price + `\',\'` + id + `\',\'` + i + `\')">
+       <i  class="fa ` + icon + ` fa-4x  " aria-hidden="true" title="` + name + `"></i></i>
+      </a>`
+
+    let html2 = '<a class="white-text imgicon  hoverable tooltipped" data-position="top" data-delay="50" style="cursor: pointer" data-tooltip="'+name+' Prix: '+price+'" id="list_fade'+ id +'" onclick="clickInList(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')"> \
+       <i id ="list' + id + '" class="fa ' + icon + ' fa-3x  " aria-hidden="true" title="' + name + '">&nbsp' + products_in_list + '</i>\
       </a>';
 
-    let html2 = '<a class="white-text imgicon  hoverable" id="list_fade'+ id +'" onclick="clickInList(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')" aria-label="' + name + '"> \
-       <i id ="list' + id + '" class="fa ' + icon + ' fa-3x  " aria-hidden="true" title="' + name + '">' + products_in_list + '</i>\
-      </a>';
-
-    let html3 = '<a class="white-text imgicon hoverable" id="pay_fade'+ id +'" onclick="clickInPay(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')" aria-label="' + name + '"> \
-       <i id ="pay' + id + '" class="fa ' + icon + ' fa-3x  " aria-hidden="true" title="' + name + '">' + products_in_payment + '</i>\
+    let html3 = '<a class="white-text imgicon hoverable tooltipped" data-position="top" data-delay="50" style="cursor: pointer" data-tooltip="'+name+' Prix: '+price+'" id="pay_fade'+ id +'" onclick="clickInPay(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')"> \
+       <i id ="pay' + id + '" class="fa ' + icon + ' fa-3x  " aria-hidden="true" title="' + name + '">&nbsp' + products_in_payment + '</i>\
       </a>';
 
     $('#products').append(html);
@@ -60,30 +60,7 @@ function printProducts() {
     }
   $('#totalList').html(totalInList + "  CHF");
   $('#totalPay').html(totalInPay + "  CHF");
-
-  if($("#totalList").text() === "0  CHF"){
-    $("#container_list").fadeOut();
-  }
-  else{
-    $("#container_list").fadeIn();
-  }
-  if($("#totalPay").text() === "0  CHF" && $("#totalPayed").text() === "0 CHF"){
-    $("#container_payment").fadeOut();
-  }
-  else if($("#totalPay").text() === "0  CHF" && $("#totalPayed").text() !== "0 CHF"){
-    $("#topay").fadeOut();
-    $("#PAYMENT").fadeOut();
-    $("#PAYMENT_INFO").fadeOut();
-    $("#total_a_payer").fadeOut();
-  }
-  else{
-    $("#container_payment").fadeIn();
-    $("#topay").fadeIn();
-    $("#PAYMENT").fadeIn();
-    $("#PAYMENT_INFO").fadeIn();
-    $("#total_a_payer").fadeIn();
-  }
-
+  actualize();
 }
 function getPay(key) {
   let result = getProducts();
@@ -129,26 +106,44 @@ function actualize() {
   $('#totalPay').html(totalInPay + "  CHF");
 
   if($("#totalList").text() === "0  CHF"){
-    $("#container_list").fadeOut();
+    $("#container_list").css("background-color","#7d7d7d");
+    $("#container_list1").fadeOut();
+    $("#container_list2").fadeOut();
+    $("#container_list3").fadeOut();
+    $("#list_vide").fadeIn();
   }
   else{
-    $("#container_list").fadeIn();
+    $("#container_list1").fadeIn();
+    $("#container_list2").fadeIn();
+    $("#container_list3").fadeIn();
+    $("#container_list").css("background-color","#004d40");
+    $("#list_vide").fadeOut();
   }
-  if($("#totalPay").text() === "0  CHF" && $("#totalPayed").text() === "0 CHF"){
-    $("#container_payment").fadeOut();
+  if($("#totalPay").text() === "0  CHF" && $("#totalPayed").text() === "0  CHF"){
+    $("#topay").fadeOut();
+    $("#PAYMENT").fadeOut();
+    $("#PAYMENT_INFO").fadeOut();
+    $("#total_a_payer").fadeOut();
+    $("#payments_total").fadeOut();
+    $("#container_payment").css("background-color","#7d7d7d");
+    $("#payment_vide").fadeIn();
   }
   else if($("#totalPay").text() === "0  CHF" && $("#totalPayed").text() !== "0 CHF"){
     $("#topay").fadeOut();
     $("#PAYMENT").fadeOut();
     $("#PAYMENT_INFO").fadeOut();
     $("#total_a_payer").fadeOut();
+    $("#container_payment").css("background-color","#7d7d7d");
+    $("#payment_vide").fadeIn();
   }
   else{
-    $("#container_payment").fadeIn();
     $("#topay").fadeIn();
     $("#PAYMENT").fadeIn();
     $("#PAYMENT_INFO").fadeIn();
     $("#total_a_payer").fadeIn();
+    $("#payments_total").fadeIn();
+    $("#container_payment").css("background-color","#827717");
+    $("#payment_vide").fadeOut();
   }
 }
 function getProducts() {
@@ -191,7 +186,7 @@ function generateLocation(result) {
       let terrain = element.terrain;
       let players = element.players;
       let code = element.code;
-      let html = '<div class="col s12 m6 l6"> \
+      let html = '<div class="col s12 m6 l6" style="cursor: pointer"> \
                    <div onclick="writeLocation(\'' + code + '\')" class="hoverable">  \
                      <div class="card grey darken-4">\
                        <div class="card-content  black-text">\
@@ -199,12 +194,12 @@ function generateLocation(result) {
                            <ul class="collection with-header">\
                              <li class="collection-header center"><h5>' + name + '</h5></li>\
                              <a class="collection-item grey-text darken-2"><span class="badge black-text">' + type + '</span>Type: </a>\
-                             <a class="collection-item grey-text darken-2"><span class="badge black-text">' + phone + '</span>tel: </a>\
-                             <a class="collection-item grey-text darken-2"><span class="badge black-text">' + email + '</span>mail: </a>\
-                             <a class="collection-item grey-text darken-2"><span class="badge black-text">' + hour_start + '</span>Heure start: </a>\
-                             <a class="collection-item grey-text darken-2"><span class="badge black-text">' + hour_end + '</span>Heure end: </a>\
+                             <a class="collection-item grey-text darken-2"><span class="badge black-text">' + phone + '</span>Tel: </a>\
+                             <a class="collection-item grey-text darken-2"><span class="badge black-text">' + email + '</span>Mail: </a>\
+                             <a class="collection-item grey-text darken-2"><span class="badge black-text">' + hour_start + '</span>Départ: </a>\
+                             <a class="collection-item grey-text darken-2"><span class="badge black-text">' + hour_end + '</span>Fin: </a>\
                              <a class="collection-item grey-text darken-2"><span class="badge black-text">' + terrain + '</span>Terrain: </a>\
-                             <a class="collection-item grey-text darken-2"><span class="badge black-text">' + players + '</span>Nombre: </a>\
+                             <a class="collection-item grey-text darken-2"><span class="badge black-text">' + players + '</span>Personnes: </a>\
                            </ul>\
                          </div>\
                        </div>\
@@ -250,6 +245,7 @@ function clickOnProduct(name, price, id, key) {
         addNumberList(id, parseInt(value));
         actualize();
         Materialize.toast(+value + '  ' + name + '   -> List', 3000);
+
     });
 }
 function clickInList(name, price, id, key) {
@@ -721,13 +717,13 @@ function close_Cash_register(){
       }
       });
     } else {
-      swal("tu as pas ferme la Caisse!");
+      swal("tu n'as pas fermé la caisse!");
     }
   });
 };
 function click_pay_cash(){
   if($("#totalPay").text() === "0  CHF"){
-    swal("Rien a encaisser","", "error");
+    swal("Rien à encaisser","", "error");
   }
   else{
   swal({
@@ -788,7 +784,7 @@ function pay_products(payment_type , to_pay, id_location){
 }
 function click_pay_carte(){
   if($("#totalPay").text() === "0  CHF"){
-    swal("Rien a encaisser","", "error");
+    swal("Rien à encaisser","", "error");
   }
   else{
   swal({
@@ -883,13 +879,18 @@ function create_minus_plus(minimum, maximum, value){
   button_plus.appendChild(fa_plus);
 
   let script = document.createElement("script");
-  script.innerHTML = `$('.btn-floating').click(function(e){
-      e.preventDefault();
+  script.innerHTML = `
 
+
+
+  $('.btn-floating').click(function(e){
+      e.preventDefault();
       fieldName = $(this).attr('data-field');
       type      = $(this).attr('data-type');
       var input = $("input[name='"+fieldName+"']");
       var currentVal = parseInt(input.val());
+
+
       if (!isNaN(currentVal)) {
           if(type == 'minus') {
 
@@ -922,18 +923,19 @@ function create_minus_plus(minimum, maximum, value){
       minValue =  parseInt($(this).attr('min'));
       maxValue =  parseInt($(this).attr('max'));
       valueCurrent = parseInt($(this).val());
-
       name = $(this).attr('name');
       if(valueCurrent >= minValue) {
           $(".btn-floating[data-type='minus'][data-field='"+name+"']").removeAttr('disabled')
       } else {
-          alert('Sorry, the minimum value was reached');
+        swal({title: "Vous avez depassé le minimum possible",
+              icon: "warning",
+              });;
           $(this).val($(this).data('oldValue'));
       }
       if(valueCurrent <= maxValue) {
           $(".btn-floating[data-type='plus'][data-field='"+name+"']").removeAttr('disabled')
       } else {
-        swal({title: "Vous avez depase le maximun posible",
+        swal({title: "Vous avez depassé le maximun possible",
               icon: "warning",
               });;
           $(this).val($(this).data('oldValue'));
@@ -955,7 +957,10 @@ function create_minus_plus(minimum, maximum, value){
           if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
               e.preventDefault();
           }
-      });`;
+      });
+
+
+`;
   div_principal.appendChild(script);
   console.log(div_principal)
   return div_principal;

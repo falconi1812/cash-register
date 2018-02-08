@@ -77,3 +77,11 @@ width: 400px;
   text-align: center !important;
   font-size: 2em !important;
 }
+
+.tap-target {
+  background-color: #006064 !important;
+}
+
+.tap-target-wave::before, .tap-target-wave::after{
+  background-color: #44b2b7 !important;
+}
