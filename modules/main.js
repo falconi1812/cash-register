@@ -10,57 +10,116 @@ const ICONSLIST = getIcons().responseJSON;
 const DELETELOCAION = MAIN + "/locations/{location_code}"
 const MAINFRONT = "http://127.0.0.1:8080"
 const PUTPAYMENT = MAIN + "/payments/{location_id}/{type_id}"
+const GETPAYEMETSPAYED = MAIN + "/payments/{location_id}"
+const DELETEPAYMENT = MAIN + "/payments/{payment_id}"
 
 
 function printProducts() {
 
   let result = getProducts();
   let products = result.responseJSON.products;
+  let location_id = result.responseJSON.location.id;
   let totalInList = 0;
   let totalInPay = 0;
   for (i = 0; i < products.length; i++) {
-
     let name = products[i].name;
     let icon = products[i].icon_ref;
     let price = products[i].price;
     let products_in_list = products[i].products_in_list;
     let products_in_payment = products[i].products_in_payment;
     let id = products[i].id;
-
     let html = `<a class="white-text imgicon hoverable tooltipped" data-position="top" data-delay="50" style="cursor: pointer" data-tooltip="`+name+` Prix: `+price+`"  onclick="clickOnProduct(\'` + name + `\',\'` + price + `\',\'` + id + `\',\'` + i + `\')">
        <i  class="fa ` + icon + ` fa-4x  " aria-hidden="true" title="` + name + `"></i></i>
       </a>`
-
-    let html2 = '<a class="white-text imgicon  hoverable tooltipped" data-position="top" data-delay="50" style="cursor: pointer" data-tooltip="'+name+' Prix: '+price+'" id="list_fade'+ id +'" onclick="clickInList(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')"> \
-       <i id ="list' + id + '" class="fa ' + icon + ' fa-3x  " aria-hidden="true" title="' + name + '">&nbsp' + products_in_list + '</i>\
+    let html2 = '<a class="white-text imgicon  hoverable tooltipped" data-position="top" data-delay="50" style="cursor: pointer;" data-tooltip="'+name+' Prix: '+price+'" id="list_fade'+ id +'" onclick="clickInList(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')"> \
+       <i id ="list' + id + '" class="fa ' + icon + ' fa-3x  " aria-hidden="true" title="' + name + '">' + products_in_list + '</i>\
       </a>';
-
     let html3 = '<a class="white-text imgicon hoverable tooltipped" data-position="top" data-delay="50" style="cursor: pointer" data-tooltip="'+name+' Prix: '+price+'" id="pay_fade'+ id +'" onclick="clickInPay(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')"> \
-       <i id ="pay' + id + '" class="fa ' + icon + ' fa-3x  " aria-hidden="true" title="' + name + '">&nbsp' + products_in_payment + '</i>\
+       <i id ="pay' + id + '" class="fa ' + icon + ' fa-3x  " aria-hidden="true" title="' + name + '">' + products_in_payment + '</i>\
       </a>';
-
     $('#products').append(html);
     $('#list').append(html2);
     $('#topay').append(html3)
-
-    if (products_in_list == 0){
-      $("#list_fade"+id+"").fadeOut();
-    }
-    else{
-      $("#list_fade"+id+"").fadeIn();
-    }
-    if (products_in_payment == 0 ){
-      $("#pay_fade"+id+"").fadeOut();
-    }
-    else{
-      $("#pay_fade"+id+"").fadeIn();
-    }
     totalInList += products_in_list * price;
     totalInPay += products_in_payment * price;
     }
   $('#totalList').html(totalInList + "  CHF");
   $('#totalPay').html(totalInPay + "  CHF");
   actualize();
+}
+function printProductsPayed(location_id){
+
+  let products_payed = getProductsPayed(location_id).responseJSON;
+  let total_payed = 0;
+  let final_html;
+
+  products_payed.forEach(function(payment) {
+    let payment_id = payment.id;
+    let product_name = payment.product.name;
+    let product_price = payment.product.price;
+    let quantity = payment.quantity;
+    let type_id = payment.type_id;
+    let icon_number = payment.product.icon_id
+    let total = product_price * quantity;
+    total_payed += total;
+    let icon_type;
+
+    if (type_id === 1){
+      icon_type = `fa-money green-text`
+    }
+    if (type_id === 2){
+      icon_type = `fa-credit-card blue-text`
+    }
+
+    let html = `
+            <tr>
+              <td>` + product_name + `</td>
+              <td><i class="fa ` + ICONSLIST.find(item => item.id === icon_number).ref + ` fa-2x" aria-hidden="true"></td>
+              <td style="text-align: center">` + quantity + `</td>
+              <td><i class="fa ` + icon_type + ` fa-3x" aria-hidden="true"></td>
+              <td style="text-align: right">` + product_price + `</td>
+              <td style="text-align: right">` + total + `</td>
+              <td style="text-align: center"><a class="waves-effect waves-light btn red" onclick="delete_payment(` + payment_id + `)" style="margin-left: 2em"><i class="fa fa-times"></i></a></td>
+            </tr>`;
+
+    final_html += html;
+  });
+
+  $('#tbody_products_payed').html(final_html);
+  $('#totalPayed').html(total_payed + "  CHF");
+  $('#table_total_payed').html(total_payed);
+}
+function delete_payment(id){
+  swal({
+      title: "Es-tu sûr?",
+      text: "Une fois suprimé, cette payment sera imposible de recuperér!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        let dataJson = {
+          "ok": true
+        };
+        let urls = DELETEPAYMENT;
+        urls = urls.replace("{payment_id}", id);
+        return $.ajax({
+          url: urls,
+          type: 'DELETE',
+          contentType: 'application/json',
+          data: JSON.stringify(`{"ok": true}`),
+          async: false,
+          success: function(data) {
+            location.reload();
+            return data;
+          }
+        });
+      } else {
+        swal("Le payment est ok!");
+      }
+    });
+
 }
 function getPay(key) {
   let result = getProducts();
@@ -77,6 +136,8 @@ function actualize() {
   let products = result.responseJSON.products;
   let totalInList = 0;
   let totalInPay = 0;
+  let location_id = result.responseJSON.location.id;
+  printProductsPayed(location_id);
 
   products.forEach(function(key) {
     let products_in_list = key.products_in_list;
@@ -120,20 +181,18 @@ function actualize() {
     $("#list_vide").fadeOut();
   }
   if($("#totalPay").text() === "0  CHF" && $("#totalPayed").text() === "0  CHF"){
-    $("#topay").fadeOut();
-    $("#PAYMENT").fadeOut();
-    $("#PAYMENT_INFO").fadeOut();
-    $("#total_a_payer").fadeOut();
-    $("#payments_total").fadeOut();
-    $("#container_payment").css("background-color","#7d7d7d");
+    $("#topay, #PAYMENT, #PAYMENT_INFO, #total_a_payer, #payments_total").fadeOut();
+    $("#container_payment, #bottom_payment_card, #bottom_payment_cash, #bottom_list_payment").css("background-color","#7d7d7d");
     $("#payment_vide").fadeIn();
+
   }
   else if($("#totalPay").text() === "0  CHF" && $("#totalPayed").text() !== "0 CHF"){
     $("#topay").fadeOut();
     $("#PAYMENT").fadeOut();
     $("#PAYMENT_INFO").fadeOut();
     $("#total_a_payer").fadeOut();
-    $("#container_payment").css("background-color","#7d7d7d");
+    $("#container_payment, #bottom_payment_card, #bottom_payment_cash").css("background-color","#7d7d7d");
+    $("#bottom_list_payment").css("background-color","#827717");
     $("#payment_vide").fadeIn();
   }
   else{
@@ -142,8 +201,11 @@ function actualize() {
     $("#PAYMENT_INFO").fadeIn();
     $("#total_a_payer").fadeIn();
     $("#payments_total").fadeIn();
-    $("#container_payment").css("background-color","#827717");
+    $("#container_payment, #bottom_payment_card, #bottom_payment_cash, #bottom_list_payment").css("background-color","#827717");
     $("#payment_vide").fadeOut();
+  }
+  if($("#totalPayed").text() == "0  CHF"){
+    $("#bottom_list_payment").css("background-color","#7d7d7d");
   }
 }
 function getProducts() {
@@ -156,6 +218,18 @@ function getProducts() {
     async: false,
     success: function(data) {
       return data.products;
+    },
+  });
+}
+function getProductsPayed(location_id) {
+  let urls = GETPAYEMETSPAYED.replace("{location_id}", location_id);
+  return $.ajax({
+    url: urls,
+    type: 'GET',
+    dataType: 'json',
+    async: false,
+    success: function(data) {
+      return data;
     },
   });
 }
@@ -186,6 +260,7 @@ function generateLocation(result) {
       let terrain = element.terrain;
       let players = element.players;
       let code = element.code;
+
       let html = '<div class="col s12 m6 l6" style="cursor: pointer"> \
                    <div onclick="writeLocation(\'' + code + '\')" class="hoverable">  \
                      <div class="card grey darken-4">\
@@ -364,7 +439,16 @@ function printClient(element) {
   let players = element.location.players;
   let code = element.location.code;
   let location_id = element.location.id;
-  let html = '<a href="#modal2" class="modal-trigger brand-logo center">' + name + '</a>'
+  if (terrain == 1){
+    terrain = "Terrain P"
+  }
+  if (terrain == 2){
+    terrain = "Terrain A"
+  }
+  if (terrain == 3){
+    terrain = "Terrain S"
+  }
+  let html = '<a href="#modal2" class="modal-trigger brand-logo center"><b>' + name + '</b>  (' + terrain + ') de '+ hour_start+ ' à  ' + hour_end + '</a>'
   let html2 = '<table>\
                   <tr> \
                    <td><b>Email:</b></td>\
@@ -640,7 +724,6 @@ function printListProducts() {
         </p> \
       </div> \
     </div> ';
-
     $('#products_list').append(html);
     row++;
   });
@@ -736,11 +819,18 @@ function click_pay_cash(){
   .then((willDelete) => {
     if (willDelete) {
       pay_cash();
-      swal("C'est Fait" , {
-        icon: "success",
+      swal({
+        text:"Argent reçu:",
+        content: "input",
       })
       .then((value) => {
+        let retour = value - parseInt($("#totalPay").text().replace("CHF", ""));
+        swal("C'est fait, le retour est : " + retour + " CHF", {
+          icon: "success",
+        })
+        .then((value) => {
         location.reload();
+      })
       });
     } else {
       swal("Vous n'avais rien encaissé!");
@@ -752,7 +842,6 @@ function pay_cash(){
   let products =  origin.responseJSON.products;
   let id_location = origin.responseJSON.location.id;
   let to_pay = [];
-
   products.forEach(function(product){
     let in_payment = product.products_in_payment
     let id_product = product.id
@@ -957,11 +1046,8 @@ function create_minus_plus(minimum, maximum, value){
           if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
               e.preventDefault();
           }
-      });
-
-
-`;
-  div_principal.appendChild(script);
-  console.log(div_principal)
-  return div_principal;
+      });`;
+    div_principal.appendChild(script);
+    console.log(div_principal)
+    return div_principal;
 }

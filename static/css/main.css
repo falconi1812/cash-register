@@ -85,3 +85,7 @@ width: 400px;
 .tap-target-wave::before, .tap-target-wave::after{
   background-color: #44b2b7 !important;
 }
+
+#nav_principal {
+  background-color: #a84551 !important;
+}
