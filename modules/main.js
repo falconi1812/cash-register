@@ -91,8 +91,8 @@ function printProductsPayed(location_id){
 }
 function delete_payment(id){
   swal({
-      title: "Es-tu sûr?",
-      text: "Une fois suprimé, cette payment sera imposible de recuperér!",
+      title: "ATTENTION",
+      text: "Une fois suprimé, ce payment sera impossible à recuperer!",
       icon: "warning",
       buttons: true,
       dangerMode: true,
@@ -312,14 +312,42 @@ function parseResult(result) {
   return data;
 }
 function clickOnProduct(name, price, id, key) {
-  swal("Ajouter -> " + name, {
+  swal(name, {
       content: create_minus_plus("1", "100", "0"),
+      buttons : {
+        "ANNULER": {
+          value: "annuler",
+        },
+        "AJOUTER": {
+          value: "ajouter",
+        }
+      }
     })
     .then((value) => {
+      switch (value) {
+
+        case "annuler":
+        swal("Operation cancelée!", {
+          className: "red",
+          buttons: false,
+          timer: 600,
+        });
+        break;
+
+        case "ajouter":
         value = $("#input_counter").val();
         addNumberList(id, parseInt(value));
         actualize();
         Materialize.toast(+value + '  ' + name + '   -> List', 3000);
+        break;
+
+        default:
+          swal("Operation cancelée!", {
+            className: "red",
+            buttons: false,
+            timer: 600,
+          });
+      }
 
     });
 }
@@ -329,13 +357,13 @@ function clickInList(name, price, id, key) {
       title: "Selectioner votre option",
       content: create_minus_plus("1", list_total, "1"),
       buttons: {
-        "Surimer": {
+        "SUPRIMER": {
           value: "Suprimer",
         },
-        "Tout-->": {
+        "TOUT": {
           value: "tout",
         },
-        "OK-->": {
+        "OK": {
           value: "choisir",
         }
       }
@@ -368,7 +396,7 @@ function clickInList(name, price, id, key) {
                 actualize();
         break;
         default:
-          swal("Operation cancelé!", {
+          swal("Operation cancelée!", {
             className: "red",
             buttons: false,
             timer: 600,
@@ -379,13 +407,13 @@ function clickInList(name, price, id, key) {
 function clickInPay(name, price, id, key) {
   let pay_total = getPay(key);
   swal({
-      title: "Selectioner votre option",
+      title: "Enlever du payment",
       content: create_minus_plus("1", pay_total, "1"),
       buttons: {
-        "<--Tout": {
+        "TOUT": {
           value: "tout",
         },
-        "<--": {
+        "ENLEVER": {
           value: "choisir",
         }
       }
@@ -404,7 +432,7 @@ function clickInPay(name, price, id, key) {
           Materialize.toast(+value + '  ' + name + '   <- List', 3000);
           break;
         default:
-          swal("Operation cancelé!", {
+          swal("Operation cancelée!", {
             className: "red",
             buttons: false,
             timer: 600,
@@ -782,8 +810,8 @@ function close_Cash_register(){
   let urls = DELETELOCAION.replace("{location_code}", code_loc);
   let dataJson = '{"ok": true}'
   swal({
-  title: "tu est sûr de fermer la caisse? ",
-  text: "Le client va recevoir une mail avec la facture jointe comme PDF",
+  title: "Fermeture de la caisse ",
+  text: "Un mail sera envoyé au client, y compris la facture en PDF",
   icon: "warning",
   buttons: true,
   dangerMode: true,
@@ -800,7 +828,7 @@ function close_Cash_register(){
       }
       });
     } else {
-      swal("tu n'as pas fermé la caisse!");
+      swal("La caisse ne s'est pas fermée", {icon: "info",});
     }
   });
 };
@@ -810,7 +838,7 @@ function click_pay_cash(){
   }
   else{
   swal({
-  title: "tu es sûr de encaisser en CASH?",
+  title: "Payment en CASH",
   text: $("#totalPay").text(),
   icon: "warning",
   buttons: true,
@@ -825,7 +853,7 @@ function click_pay_cash(){
       })
       .then((value) => {
         let retour = value - parseInt($("#totalPay").text().replace("CHF", ""));
-        swal("C'est fait, le retour est : " + retour + " CHF", {
+        swal("Payment réalisé, à rendre : " + retour + " CHF", {
           icon: "success",
         })
         .then((value) => {
@@ -833,7 +861,7 @@ function click_pay_cash(){
       })
       });
     } else {
-      swal("Vous n'avais rien encaissé!");
+      swal("Vous n'avez rien encaissé!");
     }
   });
 }}
@@ -877,7 +905,7 @@ function click_pay_carte(){
   }
   else{
   swal({
-  title: "tu es sûr de encaisser en CARTE?",
+  title: "Payment par CARTE",
   text: $("#totalPay").text(),
   icon: "warning",
   buttons: true,
@@ -893,7 +921,7 @@ function click_pay_carte(){
         location.reload();
       });
     } else {
-      swal("Vous n'avais rien encaissé!");
+      swal("Vous n'avez rien encaissé!");
     }
   });
 }}
