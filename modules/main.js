@@ -92,7 +92,7 @@ function printProductsPayed(location_id){
 function delete_payment(id){
   swal({
       title: "ATTENTION",
-      text: "Une fois suprimé, ce payment sera impossible à recuperer!",
+      text: "Une fois supprimé, ce payment sera impossible à récupérer!",
       icon: "warning",
       buttons: true,
       dangerMode: true,
@@ -357,8 +357,8 @@ function clickInList(name, price, id, key) {
       title: "Selectioner votre option",
       content: create_minus_plus("1", list_total, "1"),
       buttons: {
-        "SUPRIMER": {
-          value: "Suprimer",
+        "SUPPRIMER": {
+          value: "Supprimer",
         },
         "TOUT": {
           value: "tout",
@@ -371,7 +371,7 @@ function clickInList(name, price, id, key) {
     .then((value) => {
       switch (value) {
 
-        case "Suprimer":
+        case "Supprimer":
                 value = $("#input_counter").val();
                 removeNumberList(id, parseInt(value));
                 actualize();
@@ -715,7 +715,7 @@ function printListProducts() {
     </div>  \
     <div class="modal-footer">  \
       <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat orange-text">Cancel</a>  \
-      <a href="#!" onclick="deleteProduct(' + id + '); location.reload();" class="modal-action modal-close waves-effect waves-green btn-flat red-text">Suprimer</a> \
+      <a href="#!" onclick="deleteProduct(' + id + '); location.reload();" class="modal-action modal-close waves-effect waves-green btn-flat red-text">Supprimer</a> \
       <a href="#!" onclick="modifyProduct(' + id + ')" class="modal-action modal-close waves-effect waves-green btn-flat green-text">Modifier</a>  \
     </div>  \
   </div>';
@@ -849,8 +849,14 @@ function click_pay_cash(){
       pay_cash();
       swal({
         text:"Argent reçu:",
-        content: "input",
-      })
+        content: {
+        element: "input",
+        attributes: {
+
+          type: "number",
+        },
+      }
+    })
       .then((value) => {
         let retour = value - parseInt($("#totalPay").text().replace("CHF", ""));
         swal("Payment réalisé, à rendre : " + retour + " CHF", {
@@ -914,7 +920,7 @@ function click_pay_carte(){
   .then((willDelete) => {
     if (willDelete) {
       pay_carte();
-      swal("C'est Fait" , {
+      swal("C'est fait" , {
         icon: "success",
       })
       .then((value) => {
@@ -977,7 +983,7 @@ function create_minus_plus(minimum, maximum, value){
 
 
   $(input).attr({
-    type: "text",
+    type: "number",
     name: "quant[2]",
     class: "form-control input-number",
     value: value,
