@@ -1,4 +1,5 @@
 const MAIN = "https://api-paintball.herokuapp.com";
+const MAINFRONT = "http://cashier-paintball.herokuapp.com/"
 const CLIENTS = MAIN + "/clients/2017-10-29";
 const LOCATIONSGET = MAIN + "/locations/{locationid}";
 const LOCATIONPUT = MAIN + "/locations/products/{location_code}/{product_id}";
@@ -8,7 +9,6 @@ const PRODUCTSDELETE = MAIN + "/products/{product_id}";
 const ICONS = MAIN + "/icons";
 const ICONSLIST = getIcons().responseJSON;
 const DELETELOCAION = MAIN + "/locations/{location_code}"
-const MAINFRONT = "http://127.0.0.1:8080"
 const PUTPAYMENT = MAIN + "/payments/{location_id}/{type_id}"
 const GETPAYEMETSPAYED = MAIN + "/payments/{location_id}"
 const DELETEPAYMENT = MAIN + "/payments/{payment_id}"
@@ -73,13 +73,13 @@ function printProductsPayed(location_id){
 
     let html = `
             <tr>
-              <td>` + product_name + `</td>
+              <td><h5>` + product_name + `</h5></td>
               <td><i class="fa ` + ICONSLIST.find(item => item.id === icon_number).ref + ` fa-2x" aria-hidden="true"></td>
-              <td style="text-align: center">` + quantity + `</td>
+              <td style="text-align: center"><h5>` + quantity + `</h5></td>
               <td><i class="fa ` + icon_type + ` fa-3x" aria-hidden="true"></td>
-              <td style="text-align: right">` + product_price + `</td>
-              <td style="text-align: right">` + total + `</td>
-              <td style="text-align: center"><a class="waves-effect waves-light btn red" onclick="delete_payment(` + payment_id + `)" style="margin-left: 2em"><i class="fa fa-times"></i></a></td>
+              <td style="text-align: right"><h5>` + product_price + `</h5></td>
+              <td style="text-align: right"><h5>` + total + `</h5></td>
+              <td style="text-align: center"><h5><a class="waves-effect waves-light btn red" onclick="delete_payment(` + payment_id + `)" style="margin-left: 2em"><i class="fa fa-times"></i></a></h5></td>
             </tr>`;
 
     final_html += html;
@@ -479,28 +479,28 @@ function printClient(element) {
   let html = '<a href="#modal2" class="modal-trigger brand-logo center"><b>' + name + '</b>  (' + terrain + ') de '+ hour_start+ ' à  ' + hour_end + '</a>'
   let html2 = '<table>\
                   <tr> \
-                   <td><b>Email:</b></td>\
-                   <td>' + email + '</td>\
+                   <td><h3><b>Email:</b></h3></td>\
+                   <td><h3>' + email + '</h3></td>\
                  </tr>\
                   <tr> \
-                   <td><b>Phone:</b></td>\
-                   <td>' + phone + '</td>\
+                   <td><h3><b>Phone:</b></h3></td>\
+                   <td><h3>' + phone + '</h3></td>\
                  </tr>\
                   <tr> \
-                   <td><b>Terrain:</b></td>\
-                   <td>' + terrain + '</td>\
+                   <td><h3><b>Terrain:</b></h3></td>\
+                   <td><h3>' + terrain + '</h3></td>\
                  </tr>\
                   <tr> \
-                   <td><b>Hour Start:</b></td>\
-                   <td>' + hour_start + '</td>\
+                   <td><h3><b>Hour Start:</b></h3></td>\
+                   <td><h3>' + hour_start + '</h3></td>\
                  </tr>\
                   <tr> \
-                   <td><b>Hour End:</b></td>\
-                   <td>' + hour_end + '</td>\
+                   <td><h3><b>Hour End:</b></h3></td>\
+                   <td><h3>' + hour_end + '</h3></td>\
                  </tr>\
                   <tr> \
-                   <td><b>Initial Players:</b></td>\
-                   <td>' + players + '</td>\
+                   <td><h3><b>Initial Players:</b></h3></td>\
+                   <td><h3>' + players + '</h3></td>\
                  </tr>';
   let html3 = name;
   $('title').append(html3)
