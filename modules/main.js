@@ -92,7 +92,11 @@ function printProductsPayed(location_id){
 function delete_payment(id){
   swal({
       title: "ATTENTION",
+<<<<<<< HEAD
       text: "Une fois supprimé, ce payment sera impossible à récupérer!",
+=======
+      text: "Une fois suprimé, ce payment sera impossible à recuperer!",
+>>>>>>> efec5644ef818a8d404285cb3d5893d5e2100ba2
       icon: "warning",
       buttons: true,
       dangerMode: true,
@@ -357,8 +361,13 @@ function clickInList(name, price, id, key) {
       title: "Selectioner votre option",
       content: create_minus_plus("1", list_total, "1"),
       buttons: {
+<<<<<<< HEAD
         "SUPPRIMER": {
           value: "Supprimer",
+=======
+        "SUPRIMER": {
+          value: "Suprimer",
+>>>>>>> efec5644ef818a8d404285cb3d5893d5e2100ba2
         },
         "TOUT": {
           value: "tout",
