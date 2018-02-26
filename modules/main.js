@@ -361,6 +361,7 @@ function clickInList(name, price, id, key) {
           value: "Supprimer",
         },
         "TOUT": {
+          text: "TOUT OK",
           value: "tout",
         },
         "OK": {
@@ -411,6 +412,7 @@ function clickInPay(name, price, id, key) {
       content: create_minus_plus("1", pay_total, "1"),
       buttons: {
         "TOUT": {
+          text: "TOUT ENLEVER",
           value: "tout",
         },
         "ENLEVER": {
@@ -453,6 +455,7 @@ function clickLocation() {
     success: function(data) {
       productForSell = data.products;
       printClient(data);
+      console.log(data);
     },
   });
 }
@@ -467,6 +470,7 @@ function printClient(element) {
   let players = element.location.players;
   let code = element.location.code;
   let location_id = element.location.id;
+  let last_name = element.client.last_name;
   if (terrain == 1){
     terrain = "Terrain P"
   }
@@ -476,14 +480,14 @@ function printClient(element) {
   if (terrain == 3){
     terrain = "Terrain S"
   }
-  let html = '<a href="#modal2" class="modal-trigger brand-logo center"><b>' + name + '</b>  (' + terrain + ') de '+ hour_start+ ' à  ' + hour_end + '</a>'
+  let html = '<a  class="brand-logo center"><b>' + name + ' '+last_name+'</b></a>'
   let html2 = '<table>\
                   <tr> \
                    <td><h3><b>Email:</b></h3></td>\
                    <td><h3>' + email + '</h3></td>\
                  </tr>\
                   <tr> \
-                   <td><h3><b>Phone:</b></h3></td>\
+                   <td><h3><b>Portable:</b></h3></td>\
                    <td><h3>' + phone + '</h3></td>\
                  </tr>\
                   <tr> \
@@ -491,20 +495,24 @@ function printClient(element) {
                    <td><h3>' + terrain + '</h3></td>\
                  </tr>\
                   <tr> \
-                   <td><h3><b>Hour Start:</b></h3></td>\
+                   <td><h3><b>Départ:</b></h3></td>\
                    <td><h3>' + hour_start + '</h3></td>\
                  </tr>\
                   <tr> \
-                   <td><h3><b>Hour End:</b></h3></td>\
+                   <td><h3><b>Fin:</b></h3></td>\
                    <td><h3>' + hour_end + '</h3></td>\
                  </tr>\
                   <tr> \
-                   <td><h3><b>Initial Players:</b></h3></td>\
+                   <td><h3><b>Joueurs:</b></h3></td>\
                    <td><h3>' + players + '</h3></td>\
                  </tr>';
   let html3 = name;
+  let html4 = `<ul class="right">
+               <li><a href="#modal2" class="modal-trigger" style="font-size: 3rem;"> <b>` + terrain + `</b> `+ hour_start+` à `  + hour_end +` </a></li>
+               </ul>`
   $('title').append(html3)
   $('#name_lastName').append(html);
+  $('#name_lastName').append(html4);
   $('#modal2_content').append(html2);
 }
 function modifyProduct(id) {

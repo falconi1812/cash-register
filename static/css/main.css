@@ -62,8 +62,15 @@ input.swal-content__input {
   font-size: 10em !important;
 }
 
-.swal-button--Suprimer {
+.swal-button--ANNULER, .swal-button--SUPPRIMER, .swal-button--ENLEVER {
   background-color: #b71c1c;
+}
+
+.swal-button--AJOUTER, .swal-button--OK {
+  background-color: #00695C;
+}
+.swal-button--TOUT {
+  background-color: #E65100;
 }
 
 div.collection.col.s12 {
@@ -92,4 +99,37 @@ width: 400px;
 
 #nav_principal {
   background-color: #a84551 !important;
+}
+
+.btn-floating.btn-large i {
+  line-height: 100px !important;
+}
+
+.btn-floating.btn-large {
+  width: 100px !important;
+  height: 100px !important;
+}
+
+.fixed-action-btn.toolbar{
+  height: 85px !important  ;
+}
+.fixed-action-btn.toolbar ul li a{
+  line-height: 85px;
+}
+
+nav .brand-logo {
+  font-size: 3rem;
+}
+
+nav {
+  height: 85px;
+  line-height: 85px;
+}
+
+nav .nav-wrapper i{
+  line-height: 85px;
+}
+
+.btn-flat{
+  font-size: 2rem;
 }

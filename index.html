@@ -3,6 +3,16 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport"
+  content="
+    height = 1000px,
+    width = 1000px,
+    initial-scale = 0.6,
+    minimum-scale = 0.6,
+    maximum-scale = 0.6,
+    user-scalable = no,
+    target-densitydpi = device-dpi
+    " />
   <meta name="mobile-web-app-capable" content="yes">
   <title>Caisse enregistreuse</title>
   <link rel="stylesheet" href="node_modules/materialize-css/dist/css/materialize.min.css">
@@ -28,18 +38,14 @@
   <nav id="nav_principal">
     <div id="name_lastName" class="nav-wrapper z-depth-5">
       <a href="#!" class="brand-logo center">Locations</a>
-      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="fa fa-bars fa-3x" aria-hidden="true"></i></a>
-      <ul class="right hide-on-med-and-down">
-        <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Menu<i class="fa fa-bars fa-3x right"></i></a></li>
+
+      <ul class="right ">
+        <li><a  href="config-products.html" >Config products<i class="fa fa-cogs fa-3x right"></i></a></li>
       </ul>
     </div>
-    <ul id="dropdown1" class="dropdown-content">
-      <li class="divider"></li>
-      <li><a href="config-products.html" class="grey-text darken-2">Configuration products</a></li>
-      <li class="divider"></li>
-    </ul>
+
   </nav>
-  <ul class="side-nav" id="mobile-demo"> 
+  <ul class="side-nav" id="mobile-demo">
     <li><a href="config-products.html" class="grey-text darken-2">Configuration products</a></li>
   </ul>
 
