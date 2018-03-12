@@ -1,6 +1,6 @@
-const MAIN = "https://dev-api-paintball.herokuapp.com";
-const MAINFRONT = "http://cashier-paintball.herokuapp.com/"
-const CLIENTS = MAIN + "/clients";
+youconst MAIN = "https://dev-api-paintball.herokuapp.com";
+const MAINFRONT = "https://dev-cashier-paintball.herokuapp.com/index.html"
+const CLIENTS = MAIN + "/clients/2017-10-21";
 const LOCATIONSGET = MAIN + "/locations/{locationid}";
 const LOCATIONPUT = MAIN + "/locations/products/{location_code}/{product_id}";
 const PRODUCTS = MAIN + "/products";
@@ -12,6 +12,8 @@ const DELETELOCAION = MAIN + "/locations/{location_code}"
 const PUTPAYMENT = MAIN + "/payments/{location_id}/{type_id}"
 const GETPAYEMETSPAYED = MAIN + "/payments/{location_id}"
 const DELETEPAYMENT = MAIN + "/payments/{payment_id}"
+const GETLOCATIONTRASH = MAIN + "/locations/in-trash/2017-10-21"
+const GETLOCATIONBYCODE = MAIN + "/locations/{location_code}"
 
 
 function printProducts() {
@@ -45,6 +47,7 @@ function printProducts() {
   }
   $('#totalList').html(totalInList + "  CHF");
   $('#totalPay').html(totalInPay + "  CHF");
+
   actualize();
 }
 
@@ -113,12 +116,15 @@ function delete_payment(id) {
           data: JSON.stringify(`{"ok": true}`),
           async: false,
           success: function(data) {
-            location.reload();
+            actualize();
             return data;
           }
         });
       } else {
-        swal("Le payment est ok!");
+        swal("Le payment est ok!", {
+          timer: 750,
+          buttons: false,
+        });
       }
     });
 
@@ -137,6 +143,7 @@ function getList(key) {
 }
 
 function actualize() {
+  start_loading();
   let result = getProducts();
   let products = result.responseJSON.products;
   let totalInList = 0;
@@ -150,17 +157,21 @@ function actualize() {
     let price = key.price;
     let id = key.id;
     if (products_in_list == 0) {
-      $("#list_fade" + id + "").fadeOut();
+      $("#list_fade" + id + "").fadeOut(1);
+
     } else {
-      $("#list_fade" + id + "").fadeIn();
+      $("#list_fade" + id + "").fadeIn(1);
     }
+    start_loading();
     if (products_in_payment == 0) {
-      $("#pay_fade" + id + "").fadeOut();
+      $("#pay_fade" + id + "").fadeOut(1);
     } else {
-      $("#pay_fade" + id + "").fadeIn();
+      $("#pay_fade" + id + "").fadeIn(1);
     }
+    start_loading();
     $('#list' + id).html(products_in_list);
     $('#pay' + id).html(products_in_payment);
+
 
     totalInList += products_in_list * price;
     totalInPay += products_in_payment * price;
@@ -169,45 +180,49 @@ function actualize() {
   $('#totalList').html(totalInList + "  CHF");
   $('#totalPay').html(totalInPay + "  CHF");
   $('#modal_cash_total_to_pay').html(totalInPay);
+  start_loading();
 
   if ($("#totalList").text() === "0  CHF") {
     $("#container_list").css("background-color", "#7d7d7d");
-    $("#container_list1").fadeOut();
-    $("#container_list2").fadeOut();
-    $("#container_list3").fadeOut();
-    $("#list_vide").fadeIn();
+    $("#container_list1").fadeOut(1);
+    $("#container_list2").fadeOut(1);
+    $("#container_list3").fadeOut(1);
+    $("#list_vide").fadeIn(1);
   } else {
-    $("#container_list1").fadeIn();
-    $("#container_list2").fadeIn();
-    $("#container_list3").fadeIn();
+    $("#container_list1").fadeIn(1);
+    $("#container_list2").fadeIn(1);
+    $("#container_list3").fadeIn(1);
     $("#container_list").css("background-color", "#004d40");
-    $("#list_vide").fadeOut();
+    $("#list_vide").fadeOut(1);
   }
+  start_loading();
   if ($("#totalPay").text() === "0  CHF" && $("#totalPayed").text() === "0  CHF") {
-    $("#topay, #PAYMENT, #PAYMENT_INFO, #total_a_payer, #payments_total").fadeOut();
+    $("#topay, #PAYMENT, #PAYMENT_INFO, #total_a_payer, #payments_total").fadeOut(1);
     $("#container_payment, #bottom_payment_card, #bottom_payment_cash, #bottom_list_payment").css("background-color", "#7d7d7d");
-    $("#payment_vide").fadeIn();
+    $("#payment_vide").fadeIn(1);
 
   } else if ($("#totalPay").text() === "0  CHF" && $("#totalPayed").text() !== "0 CHF") {
-    $("#topay").fadeOut();
-    $("#PAYMENT").fadeOut();
-    $("#PAYMENT_INFO").fadeOut();
-    $("#total_a_payer").fadeOut();
+    $("#topay").fadeOut(1);
+    $("#PAYMENT").fadeOut(1);
+    $("#PAYMENT_INFO").fadeOut(1);
+    $("#total_a_payer").fadeOut(1);
     $("#container_payment, #bottom_payment_card, #bottom_payment_cash").css("background-color", "#7d7d7d");
     $("#bottom_list_payment").css("background-color", "#827717");
-    $("#payment_vide").fadeIn();
+    $("#payment_vide").fadeIn(1);
   } else {
-    $("#topay").fadeIn();
-    $("#PAYMENT").fadeIn();
-    $("#PAYMENT_INFO").fadeIn();
-    $("#total_a_payer").fadeIn();
-    $("#payments_total").fadeIn();
+    $("#topay").fadeIn(1);
+    $("#PAYMENT").fadeIn(1);
+    $("#PAYMENT_INFO").fadeIn(1);
+    $("#total_a_payer").fadeIn(1);
+    $("#payments_total").fadeIn(1);
     $("#container_payment, #bottom_payment_card, #bottom_payment_cash, #bottom_list_payment").css("background-color", "#827717");
-    $("#payment_vide").fadeOut();
+    $("#payment_vide").fadeOut(1);
   }
+  start_loading();
   if ($("#totalPayed").text() == "0  CHF") {
     $("#bottom_list_payment").css("background-color", "#7d7d7d");
   }
+  stop_loading();
 }
 
 function getProducts() {
@@ -220,6 +235,18 @@ function getProducts() {
     async: false,
     success: function(data) {
       return data.products;
+    },
+  });
+}
+function getProductsByCode(code_loc) {
+  let urls = GETLOCATIONBYCODE.replace("{location_code}", code_loc);
+  return $.ajax({
+    url: urls,
+    type: 'GET',
+    dataType: 'json',
+    async: false,
+    success: function(data) {
+      console.log(data);
     },
   });
 }
@@ -238,6 +265,7 @@ function getProductsPayed(location_id) {
 }
 
 function generateLocation(result) {
+  start_loading();
   if (result.length == 0) {
     let html = '<div class="col s12 m12 l4"> \
                     </div>\
@@ -267,7 +295,49 @@ function generateLocation(result) {
 
       let html = '<div class="col s12 m6 l6" style="cursor: pointer"> \
                    <div onclick="writeLocation(\'' + code + '\')" class="hoverable">  \
-                     <div class="card grey darken-4">\
+                     <div class="card green lighten-1">\
+                       <div class="card-content  black-text">\
+                         <div class="row">\
+                           <ul class="collection with-header">\
+                             <li class="collection-header center"><h5>' + name + '</h5></li>\
+                             <a class="collection-item grey-text darken-2"><span class="badge black-text">' + type + '</span>Type: </a>\
+                             <a class="collection-item grey-text darken-2"><span class="badge black-text">' + phone + '</span>Tel: </a>\
+                             <a class="collection-item grey-text darken-2"><span class="badge black-text">' + email + '</span>Mail: </a>\
+                             <a class="collection-item grey-text darken-2"><span class="badge black-text">' + hour_start + '</span>Départ: </a>\
+                             <a class="collection-item grey-text darken-2"><span class="badge black-text">' + hour_end + '</span>Fin: </a>\
+                             <a class="collection-item grey-text darken-2"><span class="badge black-text">' + terrain + '</span>Terrain: </a>\
+                             <a class="collection-item grey-text darken-2"><span class="badge black-text">' + players + '</span>Personnes: </a>\
+                           </ul>\
+                         </div>\
+                       </div>\
+                     </div>\
+                   </div>\
+                 </div>';
+      $('#locations').append(html);
+      stop_loading();
+    });
+  }
+}
+
+function generateLocation_trash(result) {
+
+  if (! result.length == 0) {
+    result.forEach(function(element) {
+
+      console.log(getProductsByCode(element.code))
+
+      let name = element.client_name;
+      let type = element.type;
+      let email = element.client_email;
+      let phone = element.phone;
+      let hour_start = element.hour_start;
+      let hour_end = element.hour_end;
+      let terrain = element.terrain;
+      let players = element.players;
+
+      let html = '<div class="col s12 m6 l6" style="cursor: pointer"> \
+                   <div onclick="writeLocation(\'' + code + '\')" class="hoverable">  \
+                     <div class="card grey lighten-4">\
                        <div class="card-content  black-text">\
                          <div class="row">\
                            <ul class="collection with-header">\
@@ -290,6 +360,7 @@ function generateLocation(result) {
   }
 }
 
+
 function countingAll() {
   productForSell.forEach(function(key) {
     $("#list" + key.name + "").append(key.products_in_list);
@@ -299,22 +370,36 @@ function countingAll() {
 
 function parseResult(result) {
   let data = [];
-  result.forEach(function(element, i) {
+  if (! jQuery.isEmptyObject(result)){
+    result.forEach(function(element, i) {
 
-    if (element.location != null) {
-      data[i] = {};
-      data[i].client_name = element.client.name + " " + element.client.last_name;
-      data[i].client_email = element.client.email;
-      data[i].type = element.location.type.name;
-      data[i].phone = element.client.phone;
-      data[i].hour_start = element.location.hour_start;
-      data[i].hour_end = element.location.hour_end;
-      data[i].players = element.location.players;
-      data[i].code = element.location.code;
-      data[i].terrain = element.location.terrain.name;
-    }
+      if (element.location != null) {
+        data[i] = {};
+        data[i].client_name = element.client.name + " " + element.client.last_name;
+        data[i].client_email = element.client.email;
+        data[i].type = element.location.type.name;
+        data[i].phone = element.client.phone;
+        data[i].hour_start = element.location.hour_start;
+        data[i].hour_end = element.location.hour_end;
+        data[i].players = element.location.players;
+        data[i].code = element.location.code;
+        data[i].terrain = element.location.terrain.name;
+      }
 
-  })
+    })}
+  return data;
+}
+function parseResult_Trash(result) {
+  let data = [];
+  if (! jQuery.isEmptyObject(result)){
+    result.forEach(function(element, i) {
+      if (element != null) {
+        data[i] = {};
+        data[i].code = element.code;
+        data[i].deleted_at = element.deleted_at;
+      }
+    })}
+    console.log(data);
   return data;
 }
 
@@ -342,6 +427,7 @@ function clickOnProduct(name, price, id, key) {
           break;
 
         case "ajouter":
+          start_loading();
           value = $("#input_counter").val();
           addNumberList(id, parseInt(value));
           actualize();
@@ -381,12 +467,14 @@ function clickInList(name, price, id, key) {
       switch (value) {
 
         case "Supprimer":
+          start_loading();
           value = $("#input_counter").val();
           removeNumberList(id, parseInt(value));
           actualize();
           Materialize.toast(parseInt(value) + '  ' + name + '   Deleted', 3000);
           break;
         case "tout":
+          start_loading();
           if (list_total > 0) {
             editproduct(id, 0, list_total, list_total, 0);
             actualize();
@@ -399,6 +487,7 @@ function clickInList(name, price, id, key) {
           }
           break;
         case "choisir":
+          start_loading();
           value = $("#input_counter").val();
           editproduct(id, 0, parseInt(value), parseInt(value), 0)
           Materialize.toast(+value + '  ' + name + '   -> Payment', 3000);
@@ -432,11 +521,13 @@ function clickInPay(name, price, id, key) {
     .then((value) => {
       switch (value) {
         case "tout":
+          start_loading();
           editproduct(id, pay_total, 0, 0, pay_total);
           actualize();
           Materialize.toast(+pay_total + '  ' + name + ' <-- List', 3000);
           break;
         case "choisir":
+          start_loading();
           value = $("#input_counter").val()
           editproduct(id, parseInt(value), 0, 0, parseInt(value));
           actualize();
@@ -533,7 +624,7 @@ function modifyProduct(id) {
     "price": $("#input_price_" + id + "").val()
   }
   modifyProductAjax(id, dataJson);
-  location.reload();
+  actualize_config_products()
 }
 
 function createProduct() {
@@ -543,7 +634,7 @@ function createProduct() {
     "price": $("#input_price_create_product").val()
   }
   createProductAjax(dataJson);
-  location.reload();
+  actualize_config_products()
 }
 
 function deleteProduct(id) {
@@ -568,7 +659,7 @@ function deleteProduct(id) {
           data: JSON.stringify(dataJson),
           async: false,
           success: function(data) {
-            location.reload();
+            actualize_config_products();
             return data;
           }
         });
@@ -718,13 +809,14 @@ function printIconsList() {
 }
 
 function printListProducts() {
+
   let list = getListProducts().responseJSON.products;
   list.forEach(function(product) {
     let name = product.name;
     let price = product.price;
     let icon = product.icon_ref;
     let id = product.id;
-    let html = '<div id="modal_' + name + '" class="modal modal-fixed-footer">  \
+    let html = '<div id="modal_' + id + '" class="modal modal-fixed-footer">  \
     <div class="modal-content">  \
       <h4>' + name + '</h4>  \
       <div class="row">  \
@@ -747,11 +839,11 @@ function printListProducts() {
     </div>  \
     <div class="modal-footer">  \
       <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat orange-text">Cancel</a>  \
-      <a href="#!" onclick="deleteProduct(' + id + '); location.reload();" class="modal-action modal-close waves-effect waves-green btn-flat red-text">Supprimer</a> \
+      <a href="#!" onclick="deleteProduct(' + id + ');" class="modal-action modal-close waves-effect waves-green btn-flat red-text">Supprimer</a> \
       <a href="#!" onclick="modifyProduct(' + id + ')" class="modal-action modal-close waves-effect waves-green btn-flat green-text">Modifier</a>  \
     </div>  \
   </div>';
-    $('body').append(html);
+    $('#products_body').append(html);
   });
   let icons = getIcons();
   let row = 1;
@@ -775,8 +867,8 @@ function printListProducts() {
       </div> \
       </div> \
       <div class="card-action"> \
-      <a class="red-text" href="#" onclick="deleteProduct(' + id + ');" >Delete</a>  \
-        <a class="blue-text modal-trigger right" href="#modal_' + name + '">Edit</a>  \
+      <a class="red-text" href="#" onclick="deleteProduct(' + id + ');" >Supprimer</a>  \
+        <a class="blue-text modal-trigger right" href="#modal_' + id + '">Editer</a>  \
       <div class="card-reveal"> \
         <span class="card-title grey-text text-darken-4">' + name + '<i class="fa fa-times-circle-o right"></i></span> \
         <p> \
@@ -788,6 +880,14 @@ function printListProducts() {
     row++;
   });
   this.init_select2(icons);
+  $('.modal').modal();
+  stop_loading();
+}
+
+function actualize_config_products(){
+  $('#products_list').html('');
+  $('#products_body').html('');
+  printListProducts();
 }
 
 function init_select2(icons) {
@@ -830,13 +930,23 @@ function actualize_icons_select2() {
 }
 
 function getLocation() {
-  jQuery.support.cors = true;
   $.ajax({
     url: CLIENTS,
     type: "GET",
     dataType: 'json',
     success: function(result) {
       generateLocation(parseResult(result));
+    }
+  });
+}
+function getLocation_Trash() {
+  $.ajax({
+    url: GETLOCATIONTRASH,
+    type: "GET",
+    dataType: 'json',
+    success: function(result) {
+      console.log(result)
+      generateLocation_trash(parseResult_Trash(result));
     }
   });
 }
@@ -866,6 +976,8 @@ function close_Cash_register() {
       } else {
         swal("La caisse ne s'est pas fermée", {
           icon: "info",
+          timer: 650,
+          buttons: false,
         });
       }
     });
@@ -873,45 +985,14 @@ function close_Cash_register() {
 
 function click_pay_cash() {
   if ($("#totalPay").text() === "0  CHF") {
-    swal("Rien à encaisser", "", "error");
+    swal("Rien à encaisser", {
+      timer: 750,
+      buttons: false,
+      icon: "error",
+    });
   } else {
     $('#modal_pay_cash').modal('open')
   }
-  /*
-  swal({
-  title: "Payment en CASH",
-  text: $("#totalPay").text(),
-  icon: "warning",
-  buttons: true,
-  dangerMode: false,
-  })
-  .then((willDelete) => {
-    if (willDelete) {
-      pay_cash();
-      swal({
-        text:"Argent reçu:",
-        content: {
-        element: "input",
-        attributes: {
-
-          type: "number",
-        },
-      }
-    })
-      .then((value) => {
-        let retour = value - parseInt($("#totalPay").text().replace("CHF", ""));
-        swal("Payment réalisé, à rendre : " + retour + " CHF", {
-          icon: "success",
-        })
-        .then((value) => {
-        location.reload();
-      })
-      });
-    } else {
-      swal("Vous n'avez rien encaissé!");
-    }
-  });
-}}*/
 }
 
 function pay_cash() {
@@ -952,7 +1033,11 @@ function pay_products(payment_type, to_pay, id_location) {
 
 function click_pay_carte() {
   if ($("#totalPay").text() === "0  CHF") {
-    swal("Rien à encaisser", "", "error");
+    swal("Rien à encaisser", {
+      timer: 750,
+      buttons: false,
+      icon: "error",
+    });
   } else {
     swal({
         title: "Payment par CARTE",
@@ -963,12 +1048,15 @@ function click_pay_carte() {
       })
       .then((willDelete) => {
         if (willDelete) {
+          start_loading();
           pay_carte();
           swal("C'est fait", {
               icon: "success",
+              timer: 650,
+              buttons: false,
             })
             .then((value) => {
-              location.reload();
+              actualize();
             });
         } else {
           swal("Vous n'avez rien encaissé!");
@@ -1131,4 +1219,13 @@ function create_minus_plus(minimum, maximum, value) {
   div_principal.appendChild(script);
   console.log(div_principal)
   return div_principal;
+}
+
+function start_loading(){
+  $('#loading_section').css("opacity","0.2");
+  $('#loading').fadeIn(1);
+}
+function stop_loading(){
+  $('#loading_section').css("opacity","1");
+  $('#loading').fadeOut(1);
 }

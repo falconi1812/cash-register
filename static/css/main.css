@@ -142,3 +142,79 @@ nav .nav-wrapper i{
 #table_money  td{
   font-size: 1.5em;
 }
+
+@keyframes lds-double-ring {
+  0% {
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes lds-double-ring {
+  0% {
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes lds-double-ring_reverse {
+  0% {
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+  }
+  100% {
+    -webkit-transform: rotate(-360deg);
+    transform: rotate(-360deg);
+  }
+}
+@-webkit-keyframes lds-double-ring_reverse {
+  0% {
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+  }
+  100% {
+    -webkit-transform: rotate(-360deg);
+    transform: rotate(-360deg);
+  }
+}
+.lds-double-ring {
+  position: relative;
+}
+.lds-double-ring div {
+  position: absolute;
+  width: 184px;
+  height: 184px;
+  top: 8px;
+  left: 8px;
+  border-radius: 50%;
+  border: 6px solid #000;
+  border-color: #006064 transparent #006064 transparent;
+  -webkit-animation: lds-double-ring 1.2s linear infinite;
+  animation: lds-double-ring 1.2s linear infinite;
+}
+.lds-double-ring div:nth-child(2) {
+  width: 168px;
+  height: 168px;
+  top: 16px;
+  left: 16px;
+  border-color: transparent #827717 transparent #827717;
+  -webkit-animation: lds-double-ring_reverse 1.2s linear infinite;
+  animation: lds-double-ring_reverse 1.2s linear infinite;
+}
+.lds-double-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  width: 150px;
+  height: 150px;
+  margin: -75px 0 0 -75px;
+  -webkit-transform: translate(-100px, -100px) scale(1) translate(100px, 100px);
+  transform: translate(-100px, -100px) scale(1) translate(100px, 100px);
+}

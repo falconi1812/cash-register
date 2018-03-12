@@ -31,7 +31,10 @@
   </script>
 </head>
 
-<body onload="printProducts()">
+<body  onload="start_loading();printProducts()">
+
+  <div id="loading" class="lds-css ng-scope"><div style="width:100%;height:100%" class="lds-double-ring"><div></div><div></div></div></div>
+
 
   <div id="modal2" class="modal">
     <div class="modal-content" id="modal2_content">
@@ -49,7 +52,7 @@
     </div>
   </nav>
 
-
+  <div id="loading_section">
   <div class="row">
     <div class="col s12 m4 hoverable">
       <!--Container VENTE -->
@@ -99,7 +102,7 @@
           <span class="card-title center row col s12" id="PAYMENT_INFO"></span>
           <div class="collection col s12" id="payments_total">
             <a class="collection-item teal-text darken-5 bold-text disapear" id="total_a_payer"><h5 class="left">Total à payer</h5><h5 id="totalPay"class="right-align">0 CHF</h5></a>
-            <a class="collection-item teal-text darken-5 bold-text" href="#modal_products_payed"><h5 class="left">Payé</h5><h5 id="totalPayed"class="right-align">0  CHF</h5></a>
+            <a class="collection-item teal-text darken-5 bold-text" onclick="$('#modal_products_payed').modal('open')" href="#modal_products_payed"><h5 class="left">Payé</h5><h5 id="totalPayed"class="right-align">0  CHF</h5></a>
           </div>
         </div>
       </div>
@@ -174,14 +177,14 @@
     </tr>
       <tr>
       <td style="text-align: center;" id="5fr"><p id="5fr_quantity" >  0 </p><img src="static/money/5fr.png"   height="125" width="125"></a></td>
-      <td></td>
-      <td style="text-align: center;"><a onclick="clean_money();  " class="waves-effect waves-light btn-large red" style="height: 8em; width: 16em;" ><i class="fa fa-close	fa-5x" style="font-size: 8rem; margin-top: 2rem;" aria-hidden="true"></i></a></td>
-      <td  style="text-align: center;"><a class="waves-effect waves-light btn-large" style="height: 8em; width: 16em;" ><i class="fa fa-check
- fa-5x" style="font-size: 8rem; margin-top: 2rem;" aria-hidden="true"></i></a></td>
+      <td style="text-align: center;"><a onclick="clean_money();" class="waves-effect waves-light btn-large orange" style="height: 8em; width: 16em;" ><i class="fa fa-refresh	fa-4x" style="font-size: 7rem; margin-top: 2rem;" aria-hidden="true"></i></a></td>
+      <td style="text-align: center;"><a onclick="clean_money(); $('#modal_pay_cash').modal('close');" class="waves-effect waves-light btn-large red" style="height: 8em; width: 16em;" ><i class="fa fa-close	fa-5x" style="font-size: 8rem; margin-top: 2rem;" aria-hidden="true"></i></a></td>
+      <td  style="text-align: center;"><a onclick="pay_cash_modal();" class="waves-effect waves-light btn-large" style="height: 8em; width: 16em;" ><i class="fa fa-check fa-5x" style="font-size: 8rem; margin-top: 2rem;" aria-hidden="true"></i></a></td>
       </tr>
 
   </table>
 
+</div>
 </div>
 </div>
 
@@ -229,7 +232,7 @@
       $(money_quantity_id).html(Number($( money_quantity_id ).text()) + 1);
       $("#modal_cash_total").html((Number($( "#modal_cash_total" ).text()) + number).toFixed(2));
       if ((Number($("#modal_cash_total").text())) > (Number($("#modal_cash_total_to_pay").text()))) {
-        $("#modal_cash_change").html((Number($( "#modal_cash_total" ).text())) - (Number($( "#modal_cash_total_to_pay" ).text())));
+        $("#modal_cash_change").html(((Number($( "#modal_cash_total" ).text())) - (Number($( "#modal_cash_total_to_pay" ).text()))).toFixed(2));
       }
       else {
         $("#modal_cash_change").html(0);
@@ -273,8 +276,47 @@
       $("#modal_cash_total").html(0);
       $("#modal_cash_change").html(0);
 
+
   }
 
+  function pay_cash_modal(){
+    if ((Number($("#modal_cash_total").text())) >= (Number($( "#modal_cash_total_to_pay" ).text()))){
+    swal({
+        title: "Payment en CASH",
+        text: $("#totalPay").text(),
+        icon: "warning",
+        buttons: true,
+        dangerMode: false,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+          start_loading();
+          pay_cash();
+          swal("C'est fait", {
+              icon: "success",
+              timer: 650,
+              buttons: false,
+            })
+            .then((value) => {
+              actualize();
+              $("#modal_pay_cash").modal('close');
+
+            });
+        } else {
+          swal("Vous n'avez rien encaissé!", {
+            timer: 700,
+            buttons: false,
+          });
+        }
+      });
+    }
+    else{
+      swal("L'argent reçu est insuffisant", {
+        timer: 700,
+        buttons: false,
+      });
+    }
+  }
 
   </script>
 </body>
