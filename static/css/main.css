@@ -133,3 +133,12 @@ nav .nav-wrapper i{
 .btn-flat{
   font-size: 2rem;
 }
+
+.modal {
+  max-height: 90% !important;
+  width: 90% !important ;
+}
+
+#table_money  td{
+  font-size: 1.5em;
+}

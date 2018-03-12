@@ -1,4 +1,4 @@
-const MAIN = "https://api-paintball.herokuapp.com";
+const MAIN = "https://dev-api-paintball.herokuapp.com";
 const MAINFRONT = "http://cashier-paintball.herokuapp.com/"
 const CLIENTS = MAIN + "/clients/2017-10-29";
 const LOCATIONSGET = MAIN + "/locations/{locationid}";
@@ -28,13 +28,13 @@ function printProducts() {
     let products_in_list = products[i].products_in_list;
     let products_in_payment = products[i].products_in_payment;
     let id = products[i].id;
-    let html = `<a class="white-text imgicon hoverable tooltipped" data-position="top" data-delay="50" style="cursor: pointer" data-tooltip="`+name+` Prix: `+price+`"  onclick="clickOnProduct(\'` + name + `\',\'` + price + `\',\'` + id + `\',\'` + i + `\')">
+    let html = `<a class="white-text imgicon hoverable tooltipped" data-position="top" data-delay="50" style="cursor: pointer" data-tooltip="` + name + ` Prix: ` + price + `"  onclick="clickOnProduct(\'` + name + `\',\'` + price + `\',\'` + id + `\',\'` + i + `\')">
        <i  class="fa ` + icon + ` fa-4x  " aria-hidden="true" title="` + name + `"></i></i>
       </a>`
-    let html2 = '<a class="white-text imgicon  hoverable tooltipped" data-position="top" data-delay="50" style="cursor: pointer;" data-tooltip="'+name+' Prix: '+price+'" id="list_fade'+ id +'" onclick="clickInList(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')"> \
+    let html2 = '<a class="white-text imgicon  hoverable tooltipped" data-position="top" data-delay="50" style="cursor: pointer;" data-tooltip="' + name + ' Prix: ' + price + '" id="list_fade' + id + '" onclick="clickInList(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')"> \
        <i id ="list' + id + '" class="fa ' + icon + ' fa-3x  " aria-hidden="true" title="' + name + '">' + products_in_list + '</i>\
       </a>';
-    let html3 = '<a class="white-text imgicon hoverable tooltipped" data-position="top" data-delay="50" style="cursor: pointer" data-tooltip="'+name+' Prix: '+price+'" id="pay_fade'+ id +'" onclick="clickInPay(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')"> \
+    let html3 = '<a class="white-text imgicon hoverable tooltipped" data-position="top" data-delay="50" style="cursor: pointer" data-tooltip="' + name + ' Prix: ' + price + '" id="pay_fade' + id + '" onclick="clickInPay(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')"> \
        <i id ="pay' + id + '" class="fa ' + icon + ' fa-3x  " aria-hidden="true" title="' + name + '">' + products_in_payment + '</i>\
       </a>';
     $('#products').append(html);
@@ -42,12 +42,13 @@ function printProducts() {
     $('#topay').append(html3)
     totalInList += products_in_list * price;
     totalInPay += products_in_payment * price;
-    }
+  }
   $('#totalList').html(totalInList + "  CHF");
   $('#totalPay').html(totalInPay + "  CHF");
   actualize();
 }
-function printProductsPayed(location_id){
+
+function printProductsPayed(location_id) {
 
   let products_payed = getProductsPayed(location_id).responseJSON;
   let total_payed = 0;
@@ -64,10 +65,10 @@ function printProductsPayed(location_id){
     total_payed += total;
     let icon_type;
 
-    if (type_id === 1){
+    if (type_id === 1) {
       icon_type = `fa-money green-text`
     }
-    if (type_id === 2){
+    if (type_id === 2) {
       icon_type = `fa-credit-card blue-text`
     }
 
@@ -89,7 +90,8 @@ function printProductsPayed(location_id){
   $('#totalPayed').html(total_payed + "  CHF");
   $('#table_total_payed').html(total_payed);
 }
-function delete_payment(id){
+
+function delete_payment(id) {
   swal({
       title: "ATTENTION",
       text: "Une fois supprimé, ce payment sera impossible à récupérer!",
@@ -121,16 +123,19 @@ function delete_payment(id){
     });
 
 }
+
 function getPay(key) {
   let result = getProducts();
   let product = result.responseJSON.products[key].products_in_payment;
   return product;
 }
+
 function getList(key) {
   let result = getProducts();
   let product = result.responseJSON.products[key].products_in_list;
   return product;
 }
+
 function actualize() {
   let result = getProducts();
   let products = result.responseJSON.products;
@@ -144,17 +149,15 @@ function actualize() {
     let products_in_payment = key.products_in_payment;
     let price = key.price;
     let id = key.id;
-    if (products_in_list == 0){
-      $("#list_fade"+id+"").fadeOut();
+    if (products_in_list == 0) {
+      $("#list_fade" + id + "").fadeOut();
+    } else {
+      $("#list_fade" + id + "").fadeIn();
     }
-    else{
-      $("#list_fade"+id+"").fadeIn();
-    }
-    if (products_in_payment == 0){
-      $("#pay_fade"+id+"").fadeOut();
-    }
-    else{
-      $("#pay_fade"+id+"").fadeIn();
+    if (products_in_payment == 0) {
+      $("#pay_fade" + id + "").fadeOut();
+    } else {
+      $("#pay_fade" + id + "").fadeIn();
     }
     $('#list' + id).html(products_in_list);
     $('#pay' + id).html(products_in_payment);
@@ -165,49 +168,48 @@ function actualize() {
 
   $('#totalList').html(totalInList + "  CHF");
   $('#totalPay').html(totalInPay + "  CHF");
+  $('#modal_cash_total_to_pay').html(totalInPay);
 
-  if($("#totalList").text() === "0  CHF"){
-    $("#container_list").css("background-color","#7d7d7d");
+  if ($("#totalList").text() === "0  CHF") {
+    $("#container_list").css("background-color", "#7d7d7d");
     $("#container_list1").fadeOut();
     $("#container_list2").fadeOut();
     $("#container_list3").fadeOut();
     $("#list_vide").fadeIn();
-  }
-  else{
+  } else {
     $("#container_list1").fadeIn();
     $("#container_list2").fadeIn();
     $("#container_list3").fadeIn();
-    $("#container_list").css("background-color","#004d40");
+    $("#container_list").css("background-color", "#004d40");
     $("#list_vide").fadeOut();
   }
-  if($("#totalPay").text() === "0  CHF" && $("#totalPayed").text() === "0  CHF"){
+  if ($("#totalPay").text() === "0  CHF" && $("#totalPayed").text() === "0  CHF") {
     $("#topay, #PAYMENT, #PAYMENT_INFO, #total_a_payer, #payments_total").fadeOut();
-    $("#container_payment, #bottom_payment_card, #bottom_payment_cash, #bottom_list_payment").css("background-color","#7d7d7d");
+    $("#container_payment, #bottom_payment_card, #bottom_payment_cash, #bottom_list_payment").css("background-color", "#7d7d7d");
     $("#payment_vide").fadeIn();
 
-  }
-  else if($("#totalPay").text() === "0  CHF" && $("#totalPayed").text() !== "0 CHF"){
+  } else if ($("#totalPay").text() === "0  CHF" && $("#totalPayed").text() !== "0 CHF") {
     $("#topay").fadeOut();
     $("#PAYMENT").fadeOut();
     $("#PAYMENT_INFO").fadeOut();
     $("#total_a_payer").fadeOut();
-    $("#container_payment, #bottom_payment_card, #bottom_payment_cash").css("background-color","#7d7d7d");
-    $("#bottom_list_payment").css("background-color","#827717");
+    $("#container_payment, #bottom_payment_card, #bottom_payment_cash").css("background-color", "#7d7d7d");
+    $("#bottom_list_payment").css("background-color", "#827717");
     $("#payment_vide").fadeIn();
-  }
-  else{
+  } else {
     $("#topay").fadeIn();
     $("#PAYMENT").fadeIn();
     $("#PAYMENT_INFO").fadeIn();
     $("#total_a_payer").fadeIn();
     $("#payments_total").fadeIn();
-    $("#container_payment, #bottom_payment_card, #bottom_payment_cash, #bottom_list_payment").css("background-color","#827717");
+    $("#container_payment, #bottom_payment_card, #bottom_payment_cash, #bottom_list_payment").css("background-color", "#827717");
     $("#payment_vide").fadeOut();
   }
-  if($("#totalPayed").text() == "0  CHF"){
-    $("#bottom_list_payment").css("background-color","#7d7d7d");
+  if ($("#totalPayed").text() == "0  CHF") {
+    $("#bottom_list_payment").css("background-color", "#7d7d7d");
   }
 }
+
 function getProducts() {
   let code_loc = location.search.split('code_loc=')[1]
   let urls = LOCATIONSGET.replace("{locationid}", code_loc);
@@ -221,6 +223,7 @@ function getProducts() {
     },
   });
 }
+
 function getProductsPayed(location_id) {
   let urls = GETPAYEMETSPAYED.replace("{location_id}", location_id);
   return $.ajax({
@@ -233,6 +236,7 @@ function getProductsPayed(location_id) {
     },
   });
 }
+
 function generateLocation(result) {
   if (result.length == 0) {
     let html = '<div class="col s12 m12 l4"> \
@@ -285,17 +289,19 @@ function generateLocation(result) {
     });
   }
 }
+
 function countingAll() {
   productForSell.forEach(function(key) {
     $("#list" + key.name + "").append(key.products_in_list);
     $("#pay" + key.name + "").append(key.products_in_payment);
   });
 }
+
 function parseResult(result) {
   let data = [];
   result.forEach(function(element, i) {
 
-    if(element.location != null){
+    if (element.location != null) {
       data[i] = {};
       data[i].client_name = element.client.name + " " + element.client.last_name;
       data[i].client_email = element.client.email;
@@ -311,10 +317,11 @@ function parseResult(result) {
   })
   return data;
 }
+
 function clickOnProduct(name, price, id, key) {
   swal(name, {
       content: create_minus_plus("1", "100", "0"),
-      buttons : {
+      buttons: {
         "ANNULER": {
           value: "annuler",
         },
@@ -327,19 +334,19 @@ function clickOnProduct(name, price, id, key) {
       switch (value) {
 
         case "annuler":
-        swal("Operation cancelée!", {
-          className: "red",
-          buttons: false,
-          timer: 600,
-        });
-        break;
+          swal("Operation cancelée!", {
+            className: "red",
+            buttons: false,
+            timer: 600,
+          });
+          break;
 
         case "ajouter":
-        value = $("#input_counter").val();
-        addNumberList(id, parseInt(value));
-        actualize();
-        Materialize.toast(+value + '  ' + name + '   -> List', 3000);
-        break;
+          value = $("#input_counter").val();
+          addNumberList(id, parseInt(value));
+          actualize();
+          Materialize.toast(+value + '  ' + name + '   -> List', 3000);
+          break;
 
         default:
           swal("Operation cancelée!", {
@@ -351,6 +358,7 @@ function clickOnProduct(name, price, id, key) {
 
     });
 }
+
 function clickInList(name, price, id, key) {
   let list_total = getList(key);
   swal({
@@ -373,11 +381,11 @@ function clickInList(name, price, id, key) {
       switch (value) {
 
         case "Supprimer":
-                value = $("#input_counter").val();
-                removeNumberList(id, parseInt(value));
-                actualize();
-                Materialize.toast(parseInt(value) + '  ' + name + '   Deleted', 3000);
-                break;
+          value = $("#input_counter").val();
+          removeNumberList(id, parseInt(value));
+          actualize();
+          Materialize.toast(parseInt(value) + '  ' + name + '   Deleted', 3000);
+          break;
         case "tout":
           if (list_total > 0) {
             editproduct(id, 0, list_total, list_total, 0);
@@ -391,11 +399,11 @@ function clickInList(name, price, id, key) {
           }
           break;
         case "choisir":
-        value = $("#input_counter").val();
-                editproduct(id, 0, parseInt(value), parseInt(value), 0)
-                Materialize.toast(+value + '  ' + name + '   -> Payment', 3000);
-                actualize();
-        break;
+          value = $("#input_counter").val();
+          editproduct(id, 0, parseInt(value), parseInt(value), 0)
+          Materialize.toast(+value + '  ' + name + '   -> Payment', 3000);
+          actualize();
+          break;
         default:
           swal("Operation cancelée!", {
             className: "red",
@@ -405,6 +413,7 @@ function clickInList(name, price, id, key) {
       }
     })
 }
+
 function clickInPay(name, price, id, key) {
   let pay_total = getPay(key);
   swal({
@@ -442,9 +451,11 @@ function clickInPay(name, price, id, key) {
       }
     });
 }
+
 function writeLocation(code_loc) {
   window.open("terrain?code_loc=" + code_loc, "_self");
 }
+
 function clickLocation() {
   let code_loc = location.search.split('code_loc=')[1]
   let urls = LOCATIONSGET.replace("{locationid}", code_loc);
@@ -459,7 +470,9 @@ function clickLocation() {
     },
   });
 }
+
 function printClient(element) {
+  console.log(element)
   let name = element.client.name;
   let type = element.location.type_id;
   let email = element.client.email;
@@ -471,16 +484,16 @@ function printClient(element) {
   let code = element.location.code;
   let location_id = element.location.id;
   let last_name = element.client.last_name;
-  if (terrain == 1){
+  if (terrain == 1) {
     terrain = "Terrain P"
   }
-  if (terrain == 2){
+  if (terrain == 2) {
     terrain = "Terrain A"
   }
-  if (terrain == 3){
+  if (terrain == 3) {
     terrain = "Terrain S"
   }
-  let html = '<a  class="brand-logo center"><b>' + name + ' '+last_name+'</b></a>'
+  let html = '<a href="#modal2"  class=" modal-trigger brand-logo center"><b>' + name + ' ' + last_name + '</b> (' + terrain + ') </a>'
   let html2 = '<table>\
                   <tr> \
                    <td><h3><b>Email:</b></h3></td>\
@@ -507,14 +520,11 @@ function printClient(element) {
                    <td><h3>' + players + '</h3></td>\
                  </tr>';
   let html3 = name;
-  let html4 = `<ul class="right">
-               <li><a href="#modal2" class="modal-trigger" style="font-size: 3rem;"> <b>` + terrain + `</b> `+ hour_start+` à `  + hour_end +` </a></li>
-               </ul>`
   $('title').append(html3)
   $('#name_lastName').append(html);
-  $('#name_lastName').append(html4);
   $('#modal2_content').append(html2);
 }
+
 function modifyProduct(id) {
   let dataJson = {
 
@@ -525,6 +535,7 @@ function modifyProduct(id) {
   modifyProductAjax(id, dataJson);
   location.reload();
 }
+
 function createProduct() {
   let dataJson = {
     "icon_id": $("#input_icon_create_product").val(),
@@ -534,6 +545,7 @@ function createProduct() {
   createProductAjax(dataJson);
   location.reload();
 }
+
 function deleteProduct(id) {
   swal({
       title: "Are you sure?",
@@ -565,6 +577,7 @@ function deleteProduct(id) {
       }
     });
 }
+
 function addNumberList(key, quantity) {
   let dataJson = {
     "add": {
@@ -574,6 +587,7 @@ function addNumberList(key, quantity) {
   };
   productsAjax(key, dataJson);
 }
+
 function removeNumberList(key, quantity) {
   let dataJson = {
     "remove": {
@@ -583,6 +597,7 @@ function removeNumberList(key, quantity) {
   };
   productsAjax(key, dataJson);
 }
+
 function addNumberPay(key, quantity) {
   let dataJson = {
     "add": {
@@ -592,6 +607,7 @@ function addNumberPay(key, quantity) {
   };
   productsAjax(key, dataJson);
 }
+
 function removeNumberPay(key, quantity) {
   let dataJson = {
     "remove": {
@@ -601,6 +617,7 @@ function removeNumberPay(key, quantity) {
   };
   productsAjax(key, dataJson);
 }
+
 function editproduct(key, add_List, remove_List, add_Pay, remove_Pay) {
   let dataJson = {
     "add": {
@@ -614,6 +631,7 @@ function editproduct(key, add_List, remove_List, add_Pay, remove_Pay) {
   }
   productsAjax(key, dataJson);
 }
+
 function productsAjax(key, dataJson) {
 
   let code_loc = location.search.split('code_loc=')[1];
@@ -631,6 +649,7 @@ function productsAjax(key, dataJson) {
     }
   });
 }
+
 function modifyProductAjax(key, dataJson) {
   let urls = PRODUCTSPUT;
   urls = urls.replace("{product_id}", key);
@@ -645,6 +664,7 @@ function modifyProductAjax(key, dataJson) {
     }
   });
 }
+
 function createProductAjax(dataJson) {
   let urls = PRODUCTS;
   return $.ajax({
@@ -658,6 +678,7 @@ function createProductAjax(dataJson) {
     }
   });
 }
+
 function getListProducts() {
   let urls = PRODUCTS;
   return $.ajax({
@@ -670,6 +691,7 @@ function getListProducts() {
     }
   });
 }
+
 function getIcons() {
   let urls = ICONS;
   return $.ajax({
@@ -682,6 +704,7 @@ function getIcons() {
     }
   });
 }
+
 function printIconsList() {
   let html = '<datalist id="icons">'
   ICONSLIST.forEach(function(icon) {
@@ -693,6 +716,7 @@ function printIconsList() {
   html = html + '</datalist>'
   $('body').append(html);
 }
+
 function printListProducts() {
   let list = getListProducts().responseJSON.products;
   list.forEach(function(product) {
@@ -765,6 +789,7 @@ function printListProducts() {
   });
   this.init_select2(icons);
 }
+
 function init_select2(icons) {
   icons.then(function(data) {
     result = [];
@@ -789,6 +814,7 @@ function init_select2(icons) {
   actualize_icons_select2();
   return true;
 }
+
 function actualize_icons_select2() {
   return setTimeout(function() {
     let list = getListProducts().responseJSON.products;
@@ -802,6 +828,7 @@ function actualize_icons_select2() {
     });
   }, 2000);
 }
+
 function getLocation() {
   jQuery.support.cors = true;
   $.ajax({
@@ -813,38 +840,44 @@ function getLocation() {
     }
   });
 }
-function close_Cash_register(){
+
+function close_Cash_register() {
   let code_loc = location.search.split('code_loc=')[1];
   let urls = DELETELOCAION.replace("{location_code}", code_loc);
   let dataJson = '{"ok": true}'
   swal({
-  title: "Fermeture de la caisse ",
-  text: "Un mail sera envoyé au client, y compris la facture en PDF",
-  icon: "warning",
-  buttons: true,
-  dangerMode: true,
-  })
-  .then((ok) => {
-    if (ok) {
-      $.ajax({
-        url: urls,
-        type: "DELETE",
-        contentType: 'application/json',
-        data: JSON.stringify(dataJson),
-        success: function(result){
-          location.href = MAINFRONT;
+      title: "Fermeture de la caisse ",
+      text: "Un mail sera envoyé au client, y compris la facture en PDF",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((ok) => {
+      if (ok) {
+        $.ajax({
+          url: urls,
+          type: "DELETE",
+          contentType: 'application/json',
+          data: JSON.stringify(dataJson),
+          success: function(result) {
+            location.href = MAINFRONT;
+          }
+        });
+      } else {
+        swal("La caisse ne s'est pas fermée", {
+          icon: "info",
+        });
       }
-      });
-    } else {
-      swal("La caisse ne s'est pas fermée", {icon: "info",});
-    }
-  });
+    });
 };
-function click_pay_cash(){
-  if($("#totalPay").text() === "0  CHF"){
-    swal("Rien à encaisser","", "error");
+
+function click_pay_cash() {
+  if ($("#totalPay").text() === "0  CHF") {
+    swal("Rien à encaisser", "", "error");
+  } else {
+    $('#modal_pay_cash').modal('open')
   }
-  else{
+  /*
   swal({
   title: "Payment en CASH",
   text: $("#totalPay").text(),
@@ -878,16 +911,18 @@ function click_pay_cash(){
       swal("Vous n'avez rien encaissé!");
     }
   });
-}}
-function pay_cash(){
+}}*/
+}
+
+function pay_cash() {
   let origin = getProducts();
-  let products =  origin.responseJSON.products;
+  let products = origin.responseJSON.products;
   let id_location = origin.responseJSON.location.id;
   let to_pay = [];
-  products.forEach(function(product){
+  products.forEach(function(product) {
     let in_payment = product.products_in_payment
     let id_product = product.id
-    if(in_payment > 0) {
+    if (in_payment > 0) {
       let object = {}
       object.product_id = id_product;
       object.quantity = in_payment;
@@ -897,7 +932,8 @@ function pay_cash(){
   });
   pay_products(1, to_pay, id_location)
 }
-function pay_products(payment_type , to_pay, id_location){
+
+function pay_products(payment_type, to_pay, id_location) {
 
   let urls = PUTPAYMENT;
   urls = urls.replace("{location_id}", id_location);
@@ -907,48 +943,50 @@ function pay_products(payment_type , to_pay, id_location){
     type: "PUT",
     contentType: 'application/json',
     data: JSON.stringify(to_pay),
-    success: function(result){
+    success: function(result) {
       //location.href = MAINFRONT;
       console.log(result);
-  }
-  });
-}
-function click_pay_carte(){
-  if($("#totalPay").text() === "0  CHF"){
-    swal("Rien à encaisser","", "error");
-  }
-  else{
-  swal({
-  title: "Payment par CARTE",
-  text: $("#totalPay").text(),
-  icon: "warning",
-  buttons: true,
-  dangerMode: false,
-  })
-  .then((willDelete) => {
-    if (willDelete) {
-      pay_carte();
-      swal("C'est fait" , {
-        icon: "success",
-      })
-      .then((value) => {
-        location.reload();
-      });
-    } else {
-      swal("Vous n'avez rien encaissé!");
     }
   });
-}}
-function pay_carte(){
+}
+
+function click_pay_carte() {
+  if ($("#totalPay").text() === "0  CHF") {
+    swal("Rien à encaisser", "", "error");
+  } else {
+    swal({
+        title: "Payment par CARTE",
+        text: $("#totalPay").text(),
+        icon: "warning",
+        buttons: true,
+        dangerMode: false,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+          pay_carte();
+          swal("C'est fait", {
+              icon: "success",
+            })
+            .then((value) => {
+              location.reload();
+            });
+        } else {
+          swal("Vous n'avez rien encaissé!");
+        }
+      });
+  }
+}
+
+function pay_carte() {
   let origin = getProducts();
-  let products =  origin.responseJSON.products;
+  let products = origin.responseJSON.products;
   let id_location = origin.responseJSON.location.id;
   let to_pay = [];
 
-  products.forEach(function(product){
+  products.forEach(function(product) {
     let in_payment = product.products_in_payment
     let id_product = product.id
-    if(in_payment > 0) {
+    if (in_payment > 0) {
       let object = {}
       object.product_id = id_product;
       object.quantity = in_payment;
@@ -958,7 +996,8 @@ function pay_carte(){
   });
   pay_products(2, to_pay, id_location)
 }
-function create_minus_plus(minimum, maximum, value){
+
+function create_minus_plus(minimum, maximum, value) {
 
   let div_principal = document.createElement("div");
   let div = document.createElement("div");
@@ -1089,7 +1128,7 @@ function create_minus_plus(minimum, maximum, value){
               e.preventDefault();
           }
       });`;
-    div_principal.appendChild(script);
-    console.log(div_principal)
-    return div_principal;
+  div_principal.appendChild(script);
+  console.log(div_principal)
+  return div_principal;
 }

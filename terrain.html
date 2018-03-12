@@ -141,6 +141,53 @@
 </div>
 
 
+<div id="modal_pay_cash" class="modal">
+<div class="modal-content center" id="">
+  <table>
+    <tr>
+      <td style="text-align: center;"><h4>Total <span id="modal_cash_total"> 0 </span> CHF </h4></td>
+      <td style="text-align: center;"><h4>Total à payer: <span id="modal_cash_total_to_pay"> 0 </span> CHF </h4></td>
+      <td style="text-align: center;"><h4>Retour : <span id="modal_cash_change"> 0 </span> CHF </h4></td>
+    </tr>
+  </table>
+  <table id= "table_money">
+
+    <tr>
+      <td style="text-align: center;" id="10fr"><p id="10fr_quantity"> 0 </p><img src="static/money/10fr.jpeg"   height="120" width="185"></td>
+      <td style="text-align: center;" id="20fr"><p id="20fr_quantity"> 0 </p><img src="static/money/20fr.jpg"   height="120" width="195"></td>
+      <td style="text-align: center;" id="50fr"><p id="50fr_quantity" >  0 </p><img src="static/money/50fr.jpg"   height="120" width="205"></td>
+      <td style="text-align: center;" id="100fr"><p id="100fr_quantity" >  0 </p><img src="static/money/100fr.jpeg"   height="120" width="215"></td>
+    </tr>
+    <tr>
+      <td style="text-align: center;" id="200fr"><p id="200fr_quantity" >  0 </p><img src="static/money/200fr.jpeg"   height="120" width="225"></td>
+      <td style="text-align: center;" id="1000fr"><p id="1000fr_quantity" > 0 </p><img src="static/money/1000fr.jpg"  height="120" width="235" ></td>
+      <td style="text-align: center;" id="0_05fr"><p id="0_05fr_quantity" >  0 </p><img src="static/money/0.05.png"   height="120" width="120"></td>
+      <td style="text-align: center;" id="0_1fr"><p id="0_1fr_quantity" >  0 </p><img src="static/money/0.10fr.png"   height="120" width="120"></td>
+    </tr>
+
+    <tr>
+
+      <td style="text-align: center;" id="0_2fr"><p id="0_2fr_quantity" >  0 </p><img src="static/money/0.20.png"   height="120" width="120"></td>
+      <td style="text-align: center;" id="0_5fr"><p id="0_5fr_quantity" >  0 </p><img src="static/money/0.5fr.png"   height="120" width="120"></td>
+      <td style="text-align: center;" id="1fr"><p id="1fr_quantity" >  0 </p><img src="static/money/1fr.png"   height="125" width="125"></td>
+      <td style="text-align: center;" id="2fr"><p id="2fr_quantity" > 0 </p><img src="static/money/2fr.png"   height="125" width="125"></td>
+    </tr>
+      <tr>
+      <td style="text-align: center;" id="5fr"><p id="5fr_quantity" >  0 </p><img src="static/money/5fr.png"   height="125" width="125"></a></td>
+      <td></td>
+      <td style="text-align: center;"><a onclick="clean_money();" class="waves-effect waves-light btn-large red" style="height: 8em; width: 16em;" ><i class="fa fa-close	fa-5x" style="font-size: 8rem; margin-top: 2rem;" aria-hidden="true"></i></a></td>
+      <td  style="text-align: center;"><a class="waves-effect waves-light btn-large" style="height: 8em; width: 16em;" ><i class="fa fa-check
+ fa-5x" style="font-size: 8rem; margin-top: 2rem;" aria-hidden="true"></i></a></td>
+      </tr>
+
+  </table>
+
+</div>
+</div>
+
+
+
+
   <div class="fixed-action-btn toolbar">
     <a class="btn-floating btn-large red darken-4">
         <i class="fa fa-shopping-cart fa-5x" aria-hidden="true"></i>
@@ -148,7 +195,7 @@
     <ul>
       <li class="waves-effect waves-light" onclick="close_Cash_register();"><a <i class="fa fa-shopping-cart fa-5x" aria-hidden="true"></i></a></li>
       <li class="waves-effect waves-light lime darken-4"><a class="modal-trigger btn " id="bottom_list_payment" href="#modal_products_payed"><i style="font-size: 5em;"class="fa fa-bars" aria-hidden="true"></i></a></li>
-      <li class="waves-effect waves-light lime darken-4" onclick="click_pay_cash()" ><a href="#!" id="bottom_payment_cash"><i class="fa fa-money fa-5x" aria-hidden="true"></i></a></li>
+      <li class="waves-effect waves-light lime darken-4" onclick="click_pay_cash()" ><a  id="bottom_payment_cash"><i class="fa fa-money fa-5x" aria-hidden="true"></i></a></li>
       <li class="waves-effect waves-light lime darken-4" onclick="click_pay_carte()" ><a href="#!" id="bottom_payment_card"><i class="fa fa-credit-card fa-5x" aria-hidden="true"></i></a></li>
     </ul>
   </div>
@@ -173,6 +220,62 @@
       $('.modal').modal();
       clickLocation();
     });
+  </script>
+
+  <script type="text/javascript">
+
+  function calculate_money (img_id, money_quantity_id, number) {
+    $( img_id ).on( "click", function() {
+      $(money_quantity_id).html(Number($( money_quantity_id ).text()) + 1);
+      $("#modal_cash_total").html((Number($( "#modal_cash_total" ).text()) + number).toFixed(2));
+      if ((Number($("#modal_cash_total").text())) > (Number($("#modal_cash_total_to_pay").text()))) {
+        $("#modal_cash_change").html((Number($( "#modal_cash_total" ).text())) - (Number($( "#modal_cash_total_to_pay" ).text())));
+      }
+      else {
+        $("#modal_cash_change").html(0);
+      }
+
+    });
+    $( img_id ).on('touchstart', function (e) {
+        if (e.touches.length == 2 && ((Number($( money_quantity_id ).text()))- 1) >= 0 ){
+        $(money_quantity_id).html(Number($( money_quantity_id ).text()) - 1);
+        $("#modal_cash_total").html((Number($( "#modal_cash_total" ).text()) - number).toFixed(2));
+        if ((Number($("#modal_cash_total").text())) > (Number($("#modal_cash_total_to_pay").text()))) {
+          $("#modal_cash_change").html((Number($( "#modal_cash_total" ).text())) - (Number($( "#modal_cash_total_to_pay" ).text())));
+        }
+        else {
+          $("#modal_cash_change").html(0);
+        }
+        }
+    });
+  }
+  let money_array = [0.05, 0.10 , 0.20, 0.50, 1, 2, 5, 10, 20, 50, 100, 200, 1000];
+  money_array.forEach(function(money){
+    if (String(money).includes(".")){
+      let money_ = String(money).replace(".", "_");
+      calculate_money("#"+money_+"fr", "#"+money_+"fr_quantity", money);
+    }
+    else{
+      calculate_money("#"+money+"fr", "#"+money+"fr_quantity", money);
+    }
+  });
+
+  function clean_money(){
+      money_array.forEach(function(money){
+        if (String(money).includes(".")){
+          let money_ = String(money).replace(".", "_");
+          $("#"+money_+"fr_quantity").html(0);
+        }
+        else{
+          $("#"+money+"fr_quantity").html(0);
+        }
+      });
+      $("#modal_cash_total").html(0);
+      $("#modal_cash_change").html(0);
+
+  }
+
+
   </script>
 </body>
 
