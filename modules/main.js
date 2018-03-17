@@ -111,7 +111,7 @@ function delete_payment(id){
           data: JSON.stringify(`{"ok": true}`),
           async: false,
           success: function(data) {
-            location.reload();
+            actualize();
             return data;
           }
         });
@@ -556,7 +556,7 @@ function deleteProduct(id) {
           data: JSON.stringify(dataJson),
           async: false,
           success: function(data) {
-            location.reload();
+            actualize();
             return data;
           }
         });
@@ -866,13 +866,11 @@ function click_pay_cash(){
       }
     })
       .then((value) => {
+        actualize();
         let retour = value - parseInt($("#totalPay").text().replace("CHF", ""));
         swal("Payment réalisé, à rendre : " + retour + " CHF", {
           icon: "success",
         })
-        .then((value) => {
-        location.reload();
-      })
       });
     } else {
       swal("Vous n'avez rien encaissé!");
@@ -932,7 +930,7 @@ function click_pay_carte(){
         icon: "success",
       })
       .then((value) => {
-        location.reload();
+        actualize();
       });
     } else {
       swal("Vous n'avez rien encaissé!");
