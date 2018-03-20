@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 youconst MAIN = "https://dev-api-paintball.herokuapp.com";
 const MAINFRONT = "https://dev-cashier-paintball.herokuapp.com/index.html"
+=======
+const MAIN = "https://dev-api-paintball.herokuapp.com";
+const MAINFRONT = "http://cashier-paintball.herokuapp.com/"
+>>>>>>> 660e74673e9e01f96b51db0e8e1b33dd835f9d4e
 const CLIENTS = MAIN + "/clients/2017-10-21";
 const LOCATIONSGET = MAIN + "/locations/{locationid}";
 const LOCATIONPUT = MAIN + "/locations/products/{location_code}/{product_id}";
