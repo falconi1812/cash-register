@@ -1,4 +1,4 @@
-youconst MAIN = "https://dev-api-paintball.herokuapp.com";
+const MAIN = "https://dev-api-paintball.herokuapp.com";
 const MAINFRONT = "https://dev-cashier-paintball.herokuapp.com/index.html"
 const CLIENTS = MAIN + "/clients/2017-10-21";
 const LOCATIONSGET = MAIN + "/locations/{locationid}";
