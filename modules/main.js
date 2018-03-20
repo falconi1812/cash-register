@@ -1,3 +1,4 @@
+
 const MAIN = "https://dev-api-paintball.herokuapp.com";
 const MAINFRONT = "https://dev-cashier-paintball.herokuapp.com/index.html"
 const CLIENTS = MAIN + "/clients/2017-10-21";
@@ -14,7 +15,6 @@ const GETPAYEMETSPAYED = MAIN + "/payments/{location_id}"
 const DELETEPAYMENT = MAIN + "/payments/{payment_id}"
 const GETLOCATIONTRASH = MAIN + "/locations/in-trash/2017-10-21"
 const GETLOCATIONBYCODE = MAIN + "/locations/{location_code}"
-
 
 function printProducts() {
 
