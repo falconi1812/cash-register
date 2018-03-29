@@ -64,17 +64,19 @@
       <div class="row">
         <form class="col s12">
           <div class="row">
-            <div class="input-field col s6">
+            <div class="input-field col s5">
               <input value="" id="input_name_create_product" type="text" class="validate">
               <label for="first_name">Name</label>
             </div>
-          </div>
-          <div class="input-field col s6">
+          <div class="input-field col s2">
             <input value="" id="input_price_create_product" type="number" class="validate">
             <label for="first_name">Price in Fr</label>
           </div>
-          <div class="input-field col s6">
+          <div class="input-field col s5">
             <select value="null" class="icons-select" id="input_icon_create_product"></select>
+          </div>
+          </div>
+          <div id="types_to_check_new" class="row">
           </div>
         </form>
       </div>
@@ -95,6 +97,18 @@
       // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
       $('.modal').modal();
     });
+    let list_types = get_types_locations().responseJSON.types;
+    let html_types = "";
+    list_types.forEach(function(type){
+        let type_id = type.id;
+        let type_name = type.name;
+        html_types +=  '<p class="col 3">\
+                      <input value="'+ type_id +'" type="checkbox" class="filled-in" id="type_'+ type_id +'_new"/> \
+                      <label for="type_'+ type_id +'_new">' + type_name + '</label> \
+                    </p>';
+
+      });
+    document.getElementById("types_to_check_new").innerHTML = html_types;
   </script>
 
 

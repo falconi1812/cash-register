@@ -25,10 +25,8 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/3.3.3/adapter.min.js"></script>
   <script src="node_modules/jquery/dist/jquery.min.js" type="text/javascript">
   </script>
-  <script src="node_modules/sweetalert/dist/sweetalert.min.js" type="text/javascript">
-  </script>
-  <script type="text/javascript" src="modules/main.js">
-  </script>
+  <script src="node_modules/sweetalert/dist/sweetalert.min.js" type="text/javascript"></script>
+  <script type="text/javascript" src="modules/main.js"></script>
 </head>
 
 <body  onload="start_loading();printProducts()">
@@ -222,6 +220,7 @@
     $(document).ready(function() {
       $('.modal').modal();
       clickLocation();
+      stop_loading();
     });
   </script>
 

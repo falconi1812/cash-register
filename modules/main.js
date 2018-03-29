@@ -1,7 +1,7 @@
 
 const MAIN = "https://dev-api-paintball.herokuapp.com";
 const MAINFRONT = "https://dev-cashier-paintball.herokuapp.com/index.html"
-const CLIENTS = MAIN + "/clients/2017-10-21";
+const CLIENTS = MAIN + "/clients/2018-03-17";
 const LOCATIONSGET = MAIN + "/locations/{locationid}";
 const LOCATIONPUT = MAIN + "/locations/products/{location_code}/{product_id}";
 const PRODUCTS = MAIN + "/products";
@@ -9,12 +9,16 @@ const PRODUCTSPUT = MAIN + "/products/{product_id}";
 const PRODUCTSDELETE = MAIN + "/products/{product_id}";
 const ICONS = MAIN + "/icons";
 const ICONSLIST = getIcons().responseJSON;
-const DELETELOCAION = MAIN + "/locations/{location_code}"
-const PUTPAYMENT = MAIN + "/payments/{location_id}/{type_id}"
-const GETPAYEMETSPAYED = MAIN + "/payments/{location_id}"
-const DELETEPAYMENT = MAIN + "/payments/{payment_id}"
-const GETLOCATIONTRASH = MAIN + "/locations/in-trash/2017-10-21"
-const GETLOCATIONBYCODE = MAIN + "/locations/{location_code}"
+const DELETELOCAION = MAIN + "/locations/{location_code}";
+const PUTPAYMENT = MAIN + "/payments/{location_id}/{type_id}";
+const GETPAYEMETSPAYED = MAIN + "/payments/{location_id}";
+const DELETEPAYMENT = MAIN + "/payments/{payment_id}";
+const GETLOCATIONTRASH = MAIN + "/locations/in-trash/2018-03-17";
+const GETLOCATIONBYCODE = MAIN + "/locations/{location_code}";
+const PUTRESTORELOCATION = MAIN + "/locations/in-trash/{location_code}";
+const GETTYPESLOCATION = MAIN +"/type-of-location";
+const TYPE = MAIN + "/products/per/type/{product_id}/{type_id}";
+
 
 function printProducts() {
 
@@ -218,7 +222,6 @@ function actualize() {
     $("#container_payment, #bottom_payment_card, #bottom_payment_cash, #bottom_list_payment").css("background-color", "#827717");
     $("#payment_vide").fadeOut(1);
   }
-  start_loading();
   if ($("#totalPayed").text() == "0  CHF") {
     $("#bottom_list_payment").css("background-color", "#7d7d7d");
   }
@@ -314,18 +317,17 @@ function generateLocation(result) {
                    </div>\
                  </div>';
       $('#locations').append(html);
-      stop_loading();
+
     });
   }
+  stop_loading();
 }
 
 function generateLocation_trash(result) {
 
   if (! result.length == 0) {
     result.forEach(function(element) {
-
-      console.log(getProductsByCode(element.code))
-
+      let code = element.code;
       let name = element.client_name;
       let type = element.type;
       let email = element.client_email;
@@ -336,7 +338,7 @@ function generateLocation_trash(result) {
       let players = element.players;
 
       let html = '<div class="col s12 m6 l6" style="cursor: pointer"> \
-                   <div onclick="writeLocation(\'' + code + '\')" class="hoverable">  \
+                   <div>  \
                      <div class="card grey lighten-4">\
                        <div class="card-content  black-text">\
                          <div class="row">\
@@ -351,6 +353,9 @@ function generateLocation_trash(result) {
                              <a class="collection-item grey-text darken-2"><span class="badge black-text">' + players + '</span>Personnes: </a>\
                            </ul>\
                          </div>\
+                         <div class="center">\
+                         <a class="waves-effect waves-light btn" onclick="restore_Location(`' + code + '`);"  >Restaurer Location</a>\
+                       </div>\
                        </div>\
                      </div>\
                    </div>\
@@ -390,6 +395,7 @@ function parseResult(result) {
   return data;
 }
 function parseResult_Trash(result) {
+
   let data = [];
   if (! jQuery.isEmptyObject(result)){
     result.forEach(function(element, i) {
@@ -397,9 +403,16 @@ function parseResult_Trash(result) {
         data[i] = {};
         data[i].code = element.code;
         data[i].deleted_at = element.deleted_at;
+        data[i].client_name = element.clients.client.name + " " + element.clients.client.last_name;
+        data[i].client_email = element.clients.client.email;
+        data[i].phone = element.clients.client.phone;
+        data[i].type = element.type.name;
+        data[i].hour_start = element.hour_start;
+        data[i].hour_end = element.hour_end;
+        data[i].players = element.players;
+        data[i].terrain = element.terrain_id;
       }
     })}
-    console.log(data);
   return data;
 }
 
@@ -557,13 +570,11 @@ function clickLocation() {
     success: function(data) {
       productForSell = data.products;
       printClient(data);
-      console.log(data);
     },
   });
 }
 
 function printClient(element) {
-  console.log(element)
   let name = element.client.name;
   let type = element.location.type_id;
   let email = element.client.email;
@@ -616,9 +627,42 @@ function printClient(element) {
   $('#modal2_content').append(html2);
 }
 
-function modifyProduct(id) {
-  let dataJson = {
 
+function modifyProduct(id) {
+
+  let list_types = get_types_locations().responseJSON.types;
+
+  list_types.forEach(function(type){
+    if ($("#type_" + type.id + "_" + id).is(':checked') == true){
+
+      urls = TYPE.replace("{product_id}", id).replace("{type_id}", type.id);
+      $.ajax({
+        url: urls,
+        type: 'POST',
+        contentType: 'application/json',
+        async: false,
+        success: function(data) {
+          console.log("POST")
+        }
+      });
+    }
+    else{
+
+      urls = TYPE.replace("{product_id}", id).replace("{type_id}", type.id);
+      $.ajax({
+        url: urls,
+        type: 'DELETE',
+        contentType: 'application/json',
+        data: JSON.stringify(`{"ok": true}`),
+        async: false,
+        success: function(data) {
+          console.log("DELETE")
+        }
+      });
+    }
+  });
+
+  let dataJson = {
     "icon_id": $("#input_icon_" + id + "").val(),
     "name": $("#input_name_" + id + "").val(),
     "price": $("#input_price_" + id + "").val()
@@ -628,13 +672,22 @@ function modifyProduct(id) {
 }
 
 function createProduct() {
+
   let dataJson = {
     "icon_id": $("#input_icon_create_product").val(),
     "name": $("#input_name_create_product").val(),
-    "price": $("#input_price_create_product").val()
+    "price": $("#input_price_create_product").val(),
+    "type": []
   }
-  createProductAjax(dataJson);
-  actualize_config_products()
+
+    let list_types = get_types_locations().responseJSON.types;
+    list_types.forEach(function(type){
+      if ($("#type_" + type.id + "_new").is(':checked') == true){
+        dataJson.type.push({id: type.id});
+      };
+    });
+    createProductAjax(dataJson)
+    location.reload();
 }
 
 function deleteProduct(id) {
@@ -755,6 +808,18 @@ function modifyProductAjax(key, dataJson) {
     }
   });
 }
+function get_types_locations(){
+  let urls = GETTYPESLOCATION;
+  return $.ajax({
+    url: urls,
+    type: 'GET',
+    contentType: 'application/json',
+    async: false,
+    success: function(data) {
+      return data;
+    }
+  });
+}
 
 function createProductAjax(dataJson) {
   let urls = PRODUCTS;
@@ -766,6 +831,7 @@ function createProductAjax(dataJson) {
     async: false,
     success: function(data) {
       return data;
+      console.log(data);
     }
   });
 }
@@ -811,29 +877,66 @@ function printIconsList() {
 function printListProducts() {
 
   let list = getListProducts().responseJSON.products;
+  let list_types = get_types_locations().responseJSON.types;
+  let html_types = '';
+
   list.forEach(function(product) {
     let name = product.name;
     let price = product.price;
     let icon = product.icon_ref;
     let id = product.id;
+    let product_type_ids = product.type
+
+
+
+
+    list_types.forEach(function(type){
+        let type_id = type.id;
+        let type_name = type.name;
+        let type_check = false;
+        product_type_ids.forEach(function(type_checked){
+          if (type_id == type_checked.type_id){
+            type_check = true;
+          }
+        })
+
+        if (type_check){
+          html_types +=  ' <p class="col 3">\
+                        <input value="'+ type_id +'" type="checkbox" class="filled-in" id="type_'+ type_id +'_' + id + '" checked="checked"/> \
+                        <label for="type_'+ type_id +'_' + id + '">' + type_name + '</label> \
+                      </p>';
+        }
+
+        else{
+        html_types +=  ' <p class="col 3">\
+                      <input value="'+ type_id +'" type="checkbox" class="filled-in" id="type_'+ type_id +'_' + id + '"/> \
+                      <label for="type_'+ type_id +'_' + id + '">' + type_name + '</label> \
+                    </p>';
+          }
+      });
+
     let html = '<div id="modal_' + id + '" class="modal modal-fixed-footer">  \
     <div class="modal-content">  \
       <h4>' + name + '</h4>  \
       <div class="row">  \
         <form class="col s12">  \
           <div class="row">  \
-            <div class="input-field col s6">  \
+            <div class="input-field col s5">  \
               <input value="' + name + '" id="input_name_' + id + '" type="text" class="validate">  \
-              <label for="first_name">Name</label>  \
+              <label for="first_name"></label>  \
             </div>  \
-            </div>  \
-            <div class="input-field col s6">  \
+             \
+            <div class="input-field col s2">  \
               <input value="' + price + '" id="input_price_' + id + '" type="text" class="validate">  \
-              <label for="first_name">Price in Fr</label>  \
+              <label for="first_name"></label>  \
             </div>  \
-            <div class="input-field col s6">  \
+            <div class="input-field col s5">  \
               <select value="' + icon + '" class="icons-select" id="input_icon_' + id + '"></select>  \
           </div>  \
+          </div> \
+          <div class="row"> \
+          '+ html_types +' \
+          </div> \
         </form>  \
       </div>  \
     </div>  \
@@ -844,6 +947,7 @@ function printListProducts() {
     </div>  \
   </div>';
     $('#products_body').append(html);
+    html_types = '';
   });
   let icons = getIcons();
   let row = 1;
@@ -936,6 +1040,7 @@ function getLocation() {
     dataType: 'json',
     success: function(result) {
       generateLocation(parseResult(result));
+      getLocation_Trash();
     }
   });
 }
@@ -945,16 +1050,45 @@ function getLocation_Trash() {
     type: "GET",
     dataType: 'json',
     success: function(result) {
-      console.log(result)
       generateLocation_trash(parseResult_Trash(result));
     }
   });
 }
 
+function restore_Location(code) {
+  swal({
+      title: "Reouverture de la caisse ",
+      text: "Un mail a déjà été envoyé au client, y compris la facture en PDF",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((ok) => {
+      if (ok) {
+        urls = PUTRESTORELOCATION;
+        urls = urls.replace("{location_code}", code);
+        $.ajax({
+          url: urls,
+          type: "PUT",
+          dataType: 'json',
+          success: function(result) {
+            location.reload();
+          }
+        });
+      } else {
+        swal("La caisse ne s'est pas fermée", {
+          icon: "info",
+          timer: 650,
+          buttons: false,
+        });
+      }
+    });
+}
+
 function close_Cash_register() {
   let code_loc = location.search.split('code_loc=')[1];
   let urls = DELETELOCAION.replace("{location_code}", code_loc);
-  let dataJson = '{"ok": true}'
+  let dataJson = '{"ok": true}';
   swal({
       title: "Fermeture de la caisse ",
       text: "Un mail sera envoyé au client, y compris la facture en PDF",
@@ -1026,7 +1160,6 @@ function pay_products(payment_type, to_pay, id_location) {
     data: JSON.stringify(to_pay),
     success: function(result) {
       //location.href = MAINFRONT;
-      console.log(result);
     }
   });
 }
@@ -1217,7 +1350,6 @@ function create_minus_plus(minimum, maximum, value) {
           }
       });`;
   div_principal.appendChild(script);
-  console.log(div_principal)
   return div_principal;
 }
 
