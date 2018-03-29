@@ -5,7 +5,8 @@
   "icons": [
     {
       "src": "caisse.png",
-      "sizes": "192x192",
+      "sizes": "192x192"
+      
     }
   ],
   "name": "Caisse Enregistreuse",
