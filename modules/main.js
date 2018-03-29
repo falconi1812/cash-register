@@ -633,7 +633,7 @@ function modifyProduct(id) {
   let list_types = get_types_locations().responseJSON.types;
 
   list_types.forEach(function(type){
-    if ($("#type_" + type.id + "_" + id).is(':checked') == true){
+    if ($("#type_" + type.id + "_" + id).is(':checked') == true && $("#type_" + type.id + "_" + id).attr("data") == "false"){
 
       urls = TYPE.replace("{product_id}", id).replace("{type_id}", type.id);
       $.ajax({
@@ -646,7 +646,7 @@ function modifyProduct(id) {
         }
       });
     }
-    else{
+    if ($("#type_" + type.id + "_" + id).is(':checked') == false && $("#type_" + type.id + "_" + id).attr("data") == "true"){
 
       urls = TYPE.replace("{product_id}", id).replace("{type_id}", type.id);
       $.ajax({
@@ -902,14 +902,14 @@ function printListProducts() {
 
         if (type_check){
           html_types +=  ' <p class="col 3">\
-                        <input value="'+ type_id +'" type="checkbox" class="filled-in" id="type_'+ type_id +'_' + id + '" checked="checked"/> \
+                        <input data="true" value="'+ type_id +'" type="checkbox" class="filled-in" id="type_'+ type_id +'_' + id + '" checked="checked"/> \
                         <label for="type_'+ type_id +'_' + id + '">' + type_name + '</label> \
                       </p>';
         }
 
         else{
         html_types +=  ' <p class="col 3">\
-                      <input value="'+ type_id +'" type="checkbox" class="filled-in" id="type_'+ type_id +'_' + id + '"/> \
+                      <input data="false" value="'+ type_id +'" type="checkbox" class="filled-in" id="type_'+ type_id +'_' + id + '"/> \
                       <label for="type_'+ type_id +'_' + id + '">' + type_name + '</label> \
                     </p>';
           }
@@ -960,7 +960,7 @@ function printListProducts() {
     if (row % 3 == 0) {
       html = '<div class="row">'
     }
-    html = html + '<div class="card col s3 offset-s1 hoverable container"> \
+    html = html + '<div class="col s1"></div><div class="card col s2 hoverable container"  > \
       <div class="card-image waves-effect waves-block waves-light center-align"> \
         <i class="activator fa ' + icon + ' fa-10x"></i> \
       </div> \
@@ -978,8 +978,8 @@ function printListProducts() {
         <p> \
           Icon Name: ' + icon + '<br><br> Description: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad.<br> \
         </p> \
-      </div> \
-    </div> ';
+      </div> </div> \
+    </div><div class="col s1"></div> ';
     $('#products_list').append(html);
     row++;
   });
@@ -1354,10 +1354,10 @@ function create_minus_plus(minimum, maximum, value) {
 }
 
 function start_loading(){
-  $('#loading_section').css("opacity","0.2");
+  document.getElementById('loading_section').style.opacity = 0.2;
   $('#loading').fadeIn(1);
 }
 function stop_loading(){
-  $('#loading_section').css("opacity","1");
+  document.getElementById('loading_section').style.opacity = 1;
   $('#loading').fadeOut(1);
 }
