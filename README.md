@@ -7,5 +7,3 @@ Easy enough steps:
 - `http-server`
 
 Go to localhost:8000 and should be it.
-
-## You need to add the extension CORS and turn it on.
