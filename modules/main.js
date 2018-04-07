@@ -1,7 +1,7 @@
 
-const MAIN = "https://dev-api-paintball.herokuapp.com";
-const MAINFRONT = "https://dev-cashier-paintball.herokuapp.com/index.html"
-const CLIENTS = MAIN + "/clients/2018-03-17";
+const MAIN = "https://api-paintball.herokuapp.com";
+const MAINFRONT = "https://cashier-paintball.herokuapp.com/index.html"
+const CLIENTS = MAIN + "/clients";
 const LOCATIONSGET = MAIN + "/locations/{locationid}";
 const LOCATIONPUT = MAIN + "/locations/products/{location_code}/{product_id}";
 const PRODUCTS = MAIN + "/products";
@@ -13,10 +13,10 @@ const DELETELOCAION = MAIN + "/locations/{location_code}";
 const PUTPAYMENT = MAIN + "/payments/{location_id}/{type_id}";
 const GETPAYEMETSPAYED = MAIN + "/payments/{location_id}";
 const DELETEPAYMENT = MAIN + "/payments/{payment_id}";
-const GETLOCATIONTRASH = MAIN + "/locations/in-trash/2018-03-17";
+const GETLOCATIONTRASH = MAIN + "/locations/in-trash";
 const GETLOCATIONBYCODE = MAIN + "/locations/{location_code}";
 const PUTRESTORELOCATION = MAIN + "/locations/in-trash/{location_code}";
-const GETTYPESLOCATION = MAIN +"/type-of-location";
+//const GETTYPESLOCATION = MAIN +"/type-of-location";
 const TYPE = MAIN + "/products/per/type/{product_id}/{type_id}";
 
 
@@ -630,9 +630,9 @@ function printClient(element) {
 
 function modifyProduct(id) {
 
-  let list_types = get_types_locations().responseJSON.types;
+  //let list_types = get_types_locations().responseJSON.types;
 
-  list_types.forEach(function(type){
+/*  list_types.forEach(function(type){
     if ($("#type_" + type.id + "_" + id).is(':checked') == true && $("#type_" + type.id + "_" + id).attr("data") == "false"){
 
       urls = TYPE.replace("{product_id}", id).replace("{type_id}", type.id);
@@ -660,7 +660,7 @@ function modifyProduct(id) {
         }
       });
     }
-  });
+  });*/
 
   let dataJson = {
     "icon_id": $("#input_icon_" + id + "").val(),
@@ -808,7 +808,7 @@ function modifyProductAjax(key, dataJson) {
     }
   });
 }
-function get_types_locations(){
+/*function get_types_locations(){
   let urls = GETTYPESLOCATION;
   return $.ajax({
     url: urls,
@@ -819,7 +819,7 @@ function get_types_locations(){
       return data;
     }
   });
-}
+}*/
 
 function createProductAjax(dataJson) {
   let urls = PRODUCTS;
@@ -877,7 +877,7 @@ function printIconsList() {
 function printListProducts() {
 
   let list = getListProducts().responseJSON.products;
-  let list_types = get_types_locations().responseJSON.types;
+/*  let list_types = get_types_locations().responseJSON.types;*/
   let html_types = '';
 
   list.forEach(function(product) {
@@ -890,7 +890,7 @@ function printListProducts() {
 
 
 
-    list_types.forEach(function(type){
+  /*  list_types.forEach(function(type){
         let type_id = type.id;
         let type_name = type.name;
         let type_check = false;
@@ -913,7 +913,7 @@ function printListProducts() {
                       <label for="type_'+ type_id +'_' + id + '">' + type_name + '</label> \
                     </p>';
           }
-      });
+      });*/   
 
     let html = '<div id="modal_' + id + '" class="modal modal-fixed-footer">  \
     <div class="modal-content">  \
