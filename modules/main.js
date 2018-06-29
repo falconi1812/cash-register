@@ -458,7 +458,7 @@ function clickOnProduct(name, price, id, key) {
     });
 
     let input = document.getElementById("input_counter");
-    input.addEventListener("keyup", function(event) {
+    input.addEventListener("keyup", function a(event) {
       event.preventDefault();
       if (event.keyCode === 13) {
         value = $("#input_counter").val();
@@ -466,9 +466,11 @@ function clickOnProduct(name, price, id, key) {
         actualize();
         Materialize.toast(+value + '  ' + name + '   -> List', 3000);
         swal.close();
+        input.removeEventListener ("keyup", a );
       }
     });
-}
+    }
+
 
 function clickInList(name, price, id, key) {
   let list_total = getList(key);
@@ -522,7 +524,7 @@ function clickInList(name, price, id, key) {
     })
 
     let input = document.getElementById("input_counter");
-    input.addEventListener("keyup", function(event) {
+    input.addEventListener("keyup", function a(event) {
       event.preventDefault();
       if (event.keyCode === 13) {
         value = $("#input_counter").val();
@@ -530,6 +532,7 @@ function clickInList(name, price, id, key) {
         Materialize.toast(+value + '  ' + name + '   -> Payment', 3000);
         actualize();
         swal.close();
+        input.removeEventListener ("keyup", a );
       }
     });
 }
@@ -1059,7 +1062,6 @@ function getLocation() {
     success: function(result) {
       generateLocation(parseResult(result));
       getLocation_Trash();
-      console.log(result)
     }
   });
 }
