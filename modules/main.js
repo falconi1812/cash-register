@@ -1,7 +1,7 @@
 
 const MAIN = "https://api-paintball.herokuapp.com";
 const MAINFRONT = "https://cashier-paintball.herokuapp.com/index.html"
-const CLIENTS = MAIN + "/clients/2018-06-27";
+const CLIENTS = MAIN + "/clients";
 const LOCATIONSGET = MAIN + "/locations/{locationid}";
 const LOCATIONPUT = MAIN + "/locations/products/{location_code}/{product_id}";
 const PRODUCTS = MAIN + "/products";
