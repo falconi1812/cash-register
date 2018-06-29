@@ -419,8 +419,10 @@ function parseResult_Trash(result) {
 }
 
 function clickOnProduct(name, price, id, key) {
+
+
   swal(name, {
-      content: create_minus_plus("1", "100", "0"),
+      content: create_minus_plus("1", "100", "1"),
       buttons: {
         "ANNULER": {
           value: "annuler",
@@ -431,6 +433,9 @@ function clickOnProduct(name, price, id, key) {
       }
     })
     .then((value) => {
+
+
+
       switch (value) {
 
         case "annuler":
@@ -448,15 +453,20 @@ function clickOnProduct(name, price, id, key) {
           actualize();
           Materialize.toast(+value + '  ' + name + '   -> List', 3000);
           break;
-
-        default:
-          swal("Operation cancelée!", {
-            className: "red",
-            buttons: false,
-            timer: 600,
-          });
       }
 
+    });
+
+    let input = document.getElementById("input_counter");
+    input.addEventListener("keyup", function(event) {
+      event.preventDefault();
+      if (event.keyCode === 13) {
+        value = $("#input_counter").val();
+        addNumberList(id, parseInt(value));
+        actualize();
+        Materialize.toast(+value + '  ' + name + '   -> List', 3000);
+        swal.close();
+      }
     });
 }
 
@@ -508,14 +518,20 @@ function clickInList(name, price, id, key) {
           Materialize.toast(+value + '  ' + name + '   -> Payment', 3000);
           actualize();
           break;
-        default:
-          swal("Operation cancelée!", {
-            className: "red",
-            buttons: false,
-            timer: 600,
-          });
       }
     })
+
+    let input = document.getElementById("input_counter");
+    input.addEventListener("keyup", function(event) {
+      event.preventDefault();
+      if (event.keyCode === 13) {
+        value = $("#input_counter").val();
+        editproduct(id, 0, parseInt(value), parseInt(value), 0)
+        Materialize.toast(+value + '  ' + name + '   -> Payment', 3000);
+        actualize();
+        swal.close();
+      }
+    });
 }
 
 function clickInPay(name, price, id, key) {
@@ -681,13 +697,13 @@ function createProduct() {
     "price": $("#input_price_create_product").val(),
     "type": []
   }
-
+/*
     let list_types = get_types_locations().responseJSON.types;
     list_types.forEach(function(type){
       if ($("#type_" + type.id + "_new").is(':checked') == true){
         dataJson.type.push({id: type.id});
       };
-    });
+    });*/
     createProductAjax(dataJson)
     location.reload();
 }
@@ -1260,8 +1276,9 @@ function create_minus_plus(minimum, maximum, value) {
     value: value,
     min: minimum,
     max: maximum,
+    autofocus: "",
     id: "input_counter"
-  })
+  });
 
   div_principal.appendChild(div);
   div.appendChild(spam_minus);
@@ -1277,7 +1294,14 @@ function create_minus_plus(minimum, maximum, value) {
 
 
 
-  $('.btn-floating').click(function(e){
+
+  $(document).ready(function(){
+var autoselect = document.getElementById('input_counter');
+autoselect.select();
+
+  });
+
+    $('.btn-floating').click(function(e){
       e.preventDefault();
       fieldName = $(this).attr('data-field');
       type      = $(this).attr('data-type');
