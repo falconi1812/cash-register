@@ -1,7 +1,7 @@
 
 const MAIN = "https://api-paintball.herokuapp.com";
 const MAINFRONT = "https://cashier-paintball.herokuapp.com/index.html"
-const CLIENTS = MAIN + "/clients";
+const CLIENTS = MAIN + "/clients/2018-06-27";
 const LOCATIONSGET = MAIN + "/locations/{locationid}";
 const LOCATIONPUT = MAIN + "/locations/products/{location_code}/{product_id}";
 const PRODUCTS = MAIN + "/products";
@@ -22,20 +22,22 @@ const TYPE = MAIN + "/products/per/type/{product_id}/{type_id}";
 
 function printProducts() {
 
+
   let result = getProducts();
   let products = result.responseJSON.products;
   let location_id = result.responseJSON.location.id;
   let totalInList = 0;
   let totalInPay = 0;
   for (i = 0; i < products.length; i++) {
+
     let name = products[i].name;
     let icon = products[i].icon_ref;
     let price = products[i].price;
     let products_in_list = products[i].products_in_list;
     let products_in_payment = products[i].products_in_payment;
     let id = products[i].id;
-    let html = `<a class="white-text imgicon hoverable tooltipped" data-position="top" data-delay="50" style="cursor: pointer" data-tooltip="` + name + ` Prix: ` + price + `"  onclick="clickOnProduct(\'` + name + `\',\'` + price + `\',\'` + id + `\',\'` + i + `\')">
-       <i  class="fa ` + icon + ` fa-4x  " aria-hidden="true" title="` + name + `"></i></i>
+    let html = `<a class="white-text imgicon hoverable tooltipped" data-position="top" data-delay="50" style="cursor: pointer; min-height: 13em;" data-tooltip="` + name + ` Prix: ` + price + `"  onclick="clickOnProduct(\'` + name + `\',\'` + price + `\',\'` + id + `\',\'` + i + `\')">
+       <i  class="fa ` + icon + ` fa-4x  " aria-hidden="true" title="` + name + `"></i><p>`  + name +  `<br>`  + price +  ` Fr </p>
       </a>`
     let html2 = '<a class="white-text imgicon  hoverable tooltipped" data-position="top" data-delay="50" style="cursor: pointer;" data-tooltip="' + name + ' Prix: ' + price + '" id="list_fade' + id + '" onclick="clickInList(\'' + name + '\',\'' + price + '\',\'' + id + '\',\'' + i + '\')"> \
        <i id ="list' + id + '" class="fa ' + icon + ' fa-3x  " aria-hidden="true" title="' + name + '">' + products_in_list + '</i>\
@@ -1041,6 +1043,7 @@ function getLocation() {
     success: function(result) {
       generateLocation(parseResult(result));
       getLocation_Trash();
+      console.log(result)
     }
   });
 }
